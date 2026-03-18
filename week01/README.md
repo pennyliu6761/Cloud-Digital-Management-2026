@@ -133,12 +133,15 @@
     <img width="640" height="886" alt="image" src="https://github.com/user-attachments/assets/1223f07c-5993-4b5d-bea5-2de99dd59f43" />
 
 4. 點擊右上角「📤 傳送」→「🔗 連結」→ 縮短 URL 並複製備用
+
     <img width="539" height="482" alt="image" src="https://github.com/user-attachments/assets/44fc5726-cf3d-48bd-bf0c-93e16cd7b36f" />
 
-5. 填寫問卷
-    <img width="645" height="891" alt="image" src="https://github.com/user-attachments/assets/2c254cfa-1334-40df-b92c-70a09f33956f" />
+6. 填寫問卷
 
-6. 點擊右上角「**⋮**」→「**回覆**」→ 點擊綠色試算表圖示「**建立試算表**」→ 命名為 `金門聚落文化營_報名總表`
+   <img width="645" height="891" alt="image" src="https://github.com/user-attachments/assets/2c254cfa-1334-40df-b92c-70a09f33956f" />
+
+7. 點擊右上角「**⋮**」→「**回覆**」→ 點擊綠色試算表圖示「**建立試算表**」→ 命名為 `金門聚落文化營_報名總表`
+
     <img width="788" height="842" alt="image" src="https://github.com/user-attachments/assets/53180fef-734b-45aa-9b47-5d5e1b9e1f0f" />
 
     <img width="550" height="257" alt="image" src="https://github.com/user-attachments/assets/04185617-cbaa-4d96-b7b3-8b97995096ab" />
@@ -372,7 +375,6 @@
 
 <img width="399" height="711" alt="image" src="https://github.com/user-attachments/assets/be25e2e4-4fbd-4705-b45c-521aec172229" />
 
-
 5. **建立報到狀態圓餅圖**
    - 「**新增圖表**」→「**圓形圖 (Pie Chart)**」
    - 維度：`報到狀態`；指標：`Count(姓名)`
@@ -384,7 +386,6 @@
    - 標題：「📅 各場次報名人數」
 
 <img width="1897" height="923" alt="image" src="https://github.com/user-attachments/assets/ced86a39-0528-4041-bce0-b89c7fdc6cf4" />
-
 
 7. 點擊右上角「**分享**」→ 複製連結，貼到 LINE 群組，讓所有工作人員都能用手機即時追蹤
 
