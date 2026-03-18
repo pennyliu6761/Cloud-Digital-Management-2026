@@ -102,7 +102,6 @@
 
 <img width="611" height="212" alt="image" src="https://github.com/user-attachments/assets/4819770e-9c96-49b2-9b66-237447f3129a" />
 
-
 ---
 
 ### 📌 任務 1-2：AutoCrat — 自動寄出個人化 PDF 報到憑證
@@ -129,7 +128,6 @@
 
     <img width="640" height="886" alt="image" src="https://github.com/user-attachments/assets/1223f07c-5993-4b5d-bea5-2de99dd59f43" />
 
-
 4. 點擊右上角「📤 傳送」→「🔗 連結」→ 縮短 URL 並複製備用
     <img width="539" height="482" alt="image" src="https://github.com/user-attachments/assets/44fc5726-cf3d-48bd-bf0c-93e16cd7b36f" />
 
@@ -143,8 +141,6 @@
 
     <img width="993" height="288" alt="image" src="https://github.com/user-attachments/assets/40403bb2-136e-4757-94ca-624a74b0df7d" />
 
-
-
 ---
 
 #### 步驟二：設計憑證模板（含動態標籤）
@@ -153,7 +149,6 @@
 2. 輸入以下內文（`<<標籤>>` 是 AutoCrat 的特殊語法，等下會自動替換成真實資料）：
 
 <img width="1064" height="717" alt="image" src="https://github.com/user-attachments/assets/061a2111-92fd-4d33-b735-a5dc1bff42d8" />
-
 
 ---
 
@@ -250,10 +245,9 @@
 <img width="383" height="477" alt="image" src="https://github.com/user-attachments/assets/e45f163a-e63f-40f8-9e7f-ebd032130332" />
 
 
-:::success
-**🏆 Checkpoint 1-2 完成！**
-你剛剛做到了什麼？你用零程式碼，實現了一個完整的「事件驅動自動化」——有人填表（事件發生）→ 系統自動處理（AutoCrat 執行）→ 個人化輸出（PDF 寄出）。這是現代企業工作流的基礎模式。
-:::
+> [!TIP]
+> **🏆 Checkpoint 1-2 完成！**
+> 你剛剛做到了什麼？你用零程式碼，實現了一個完整的「事件驅動自動化」——有人填表（事件發生）→ 系統自動處理（AutoCrat 執行）→ 個人化輸出（PDF 寄出）。這是現代企業工作流的基礎模式。
 
 ---
 
@@ -392,17 +386,14 @@
 
 <img width="1540" height="974" alt="image" src="https://github.com/user-attachments/assets/4b22e463-a9ca-413c-a151-efea679ab904" />
 
-:::success
-**🏆 第 1 小時 Checkpoint 完成！**
-
-恭喜！你剛剛以零成本、零程式碼建立了：
-- ✅ 符合企業規格的雲端資料架構
-- ✅ 自動寄發 PDF 憑證的報名系統
-- ✅ 手機操作的現場報到 App
-- ✅ 即時顯示戰況的視覺化儀表板
-
-在外面，這套系統至少要請工程師開發 **兩週、花費三萬元**。你用了不到 60 分鐘。
-:::
+> [!TIP]
+> **🏆 第 1 小時 Checkpoint 完成！**
+> 恭喜！你剛剛以零成本、零程式碼建立了：
+> - ✅ 符合企業規格的雲端資料架構
+> - ✅ 自動寄發 PDF 憑證的報名系統
+> - ✅ 手機操作的現場報到 App
+> - ✅ 即時顯示戰況的視覺化儀表板
+> 在外面，這套系統至少要請工程師開發 **兩週、花費三萬元**。你用了不到 60 分鐘。
 
 ---
 
@@ -433,7 +424,6 @@
 - `<<場次說明>>`：根據場次顯示集合地點
 
 > 💡 提示：`<<場次說明>>` 是一個「新欄位」，你需要先去試算表手動新增這一欄並填入對應的地點說明文字（例如 A場：金城鎮中央公園 / B場：金湖鎮瓊林聚落），再回到 AutoCrat 做標籤對應。
-
 
 重新執行 AutoCrat（送出一筆新表單），確認 PDF 中出現了新欄位，截圖 PDF 的畫面。
 
