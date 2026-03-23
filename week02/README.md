@@ -222,6 +222,7 @@ Make 把複雜的 API 程式碼變成**視覺化拖拉節點**，讓不懂程式
 **🔔 機器人的警報訊息到了！**
 
 <img width="750" height="601" alt="image" src="https://github.com/user-attachments/assets/f12f9d5f-0e2e-46a5-8ad0-8ad1b56a1772" />
+<img width="852" height="490" alt="image" src="https://github.com/user-attachments/assets/18e6c180-3c87-4aac-97dc-6abfbcb5d217" />
 
 ---
 
