@@ -18,7 +18,7 @@
 **API（Application Programming Interface）** 是讓不同軟體互相溝通的橋樑。
 ```
 你（軟體 A）  →  API（服務生）  →  Discord 伺服器（廚房）
-     下訂單              傳遞需求              執行出餐
+   下訂單         傳遞需求              執行出餐
 ```
 
 #### Webhook vs 傳統 API 輪詢
@@ -38,7 +38,7 @@
 Make 把複雜的 API 程式碼變成**視覺化拖拉節點**，讓不懂程式的人也能串接任何系統。
 ```
 [ Google Sheets ] ──→ [ Filter 過濾器 ] ──→ [ Discord Webhook ]
-   監控新報名              只讓 VIP 通過           發送警報訊息
+   監控新報名            只讓 VIP 通過           發送警報訊息
 ```
 
 ---
@@ -50,11 +50,14 @@ Make 把複雜的 API 程式碼變成**視覺化拖拉節點**，讓不懂程式
 #### 步驟一：建立 Discord 伺服器
 
 1. 前往 [discord.com](https://discord.com) 或開啟 Discord App，登入帳號
-2. 點擊左側伺服器列表最下方「**+**」→「**親自建立**」→「**僅供我和我的朋友使用**」
+2. 點擊左側伺服器列表最下方「**+**」→「**新增一個伺服器**」→「**建立自己的**」→「**我和我的好友**」
 3. 伺服器名稱輸入：`金門聚落文化營 戰情指揮部`
 4. 點擊「**建立**」
 
-<!-- 📸 截圖：Discord 伺服器建立完成畫面 -->
+<img width="376" height="349" alt="image" src="https://github.com/user-attachments/assets/c6ff117d-0613-413f-ad42-d961562da491" />
+<img width="434" height="544" alt="image" src="https://github.com/user-attachments/assets/9df92433-89d5-44e5-a358-baaaeb974891" />
+<img width="433" height="367" alt="image" src="https://github.com/user-attachments/assets/c16a9730-5264-4a13-86fa-556b5866f954" />
+<img width="438" height="405" alt="image" src="https://github.com/user-attachments/assets/3fdd725f-692b-495c-99f7-856ec08267b3" />
 
 ---
 
