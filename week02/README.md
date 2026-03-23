@@ -168,6 +168,7 @@ Make 把複雜的 API 程式碼變成**視覺化拖拉節點**，讓不懂程式
 
 <img width="798" height="515" alt="image" src="https://github.com/user-attachments/assets/f608b723-a9fe-4910-9d70-54385e4d4ede" />
 <img width="784" height="518" alt="image" src="https://github.com/user-attachments/assets/f629bb12-c89e-4700-af66-abf29917bbf6" />
+<img width="1045" height="523" alt="image" src="https://github.com/user-attachments/assets/659200ff-9202-49c3-a55b-ddadc15a6a19" />
 
 > [!NOTE]
 > 找不到 Discord 模組？可改用通用方式：
@@ -180,7 +181,10 @@ Make 把複雜的 API 程式碼變成**視覺化拖拉節點**，讓不懂程式
     | Webhook URL | 貼上任務 2-1 複製的 Discord Webhook URL |
     | Username | `營隊戰情機器人` |
 
-https://discord.com/api/webhooks/1485591726373601290/VwN8RWhGwz6mmzekXsoEsTplo3CF3tVj3XeFPdyYd3o4ffgwQMLBJCx9kAnf0EtTbttl
+<img width="677" height="376" alt="image" src="https://github.com/user-attachments/assets/41c53033-3286-48e5-917b-150c5c599261" />
+<img width="754" height="785" alt="image" src="https://github.com/user-attachments/assets/fe104103-67a9-4941-961d-c47900df7757" />
+<img width="471" height="659" alt="image" src="https://github.com/user-attachments/assets/b7f6ffbb-19da-484a-87a5-030a3e00d587" />
+
 
 4. **Content 欄位**組裝以下訊息（`{{ }}` 從左邊 Google Sheets 帶入動態變數）：
 ```
