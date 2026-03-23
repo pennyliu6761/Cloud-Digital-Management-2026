@@ -141,27 +141,7 @@ Make 把複雜的 API 程式碼變成**視覺化拖拉節點**，讓不懂程式
 
 ---
 
-#### 步驟二：設定過濾器（只有 VIP 才發警報）
-
-1. 滑鼠移到 Google Sheets 節點右邊，**右鍵點擊連接線**
-2. 選擇「**Add a filter**」
-3. 設定過濾條件：
-
-    | 設定項目 | 填入內容 |
-    |---------|---------|
-    | Label | `僅限 VIP 警報` |
-    | Condition | `是否為VIP貴賓？` → `Equal to (text)` → `是` |
-
-<img width="845" height="482" alt="image" src="https://github.com/user-attachments/assets/94558880-28ce-4f3c-9916-821fc579a555" />
-
-> [!NOTE]
-> **這就是商業邏輯！**
-> 不需要寫 `if (vip === "是") { sendAlert() }`，
-> 用拖拉的方式就完成了條件判斷。
-
----
-
-#### 步驟三：設定動作（Discord Webhook 推播）
+#### 步驟二：設定動作（Discord Webhook 推播）
 
 1. 點擊過濾器右邊「**+**」
 2. 搜尋「**Discord**」→ 選擇「**Send a Message by Webhook Bot**」
@@ -208,6 +188,26 @@ Make 把複雜的 API 程式碼變成**視覺化拖拉節點**，讓不懂程式
 > Discord 支援 Markdown 語法，`**文字**` 顯示為粗體，讓警報訊息排版更清晰易讀。
 
 <img width="765" height="379" alt="image" src="https://github.com/user-attachments/assets/58dc3628-d297-49ff-8bfe-59aee6b7a69b" />
+
+---
+
+#### 步驟三：設定過濾器（只有 VIP 才發警報）
+
+1. 滑鼠移到 Google Sheets 節點右邊，**右鍵點擊連接線**
+2. 選擇「**Add a filter**」
+3. 設定過濾條件：
+
+    | 設定項目 | 填入內容 |
+    |---------|---------|
+    | Label | `僅限 VIP 警報` |
+    | Condition | `是否為VIP貴賓？` → `Equal to (text)` → `是` |
+
+<img width="845" height="482" alt="image" src="https://github.com/user-attachments/assets/94558880-28ce-4f3c-9916-821fc579a555" />
+
+> [!NOTE]
+> **這就是商業邏輯！**
+> 不需要寫 `if (vip === "是") { sendAlert() }`，
+> 用拖拉的方式就完成了條件判斷。
 
 ---
 
