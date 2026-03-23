@@ -222,7 +222,6 @@ Make 把複雜的 API 程式碼變成**視覺化拖拉節點**，讓不懂程式
 **🔔 機器人的警報訊息到了！**
 
 <img width="750" height="601" alt="image" src="https://github.com/user-attachments/assets/f12f9d5f-0e2e-46a5-8ad0-8ad1b56a1772" />
-<img width="852" height="490" alt="image" src="https://github.com/user-attachments/assets/18e6c180-3c87-4aac-97dc-6abfbcb5d217" />
 
 ---
 
@@ -231,6 +230,9 @@ Make 把複雜的 API 程式碼變成**視覺化拖拉節點**，讓不懂程式
 將步驟三的動作模組換成 Gmail：
 
 1. 搜尋「**Gmail**」→「**Send an Email**」
+
+<img width="1107" height="600" alt="image" src="https://github.com/user-attachments/assets/af67123a-89a0-467a-a9c0-42d24870241b" />
+
 2. 授權 Google 帳號後設定：
 
     | 設定項目 | 填入內容 |
@@ -238,6 +240,8 @@ Make 把複雜的 API 程式碼變成**視覺化拖拉節點**，讓不懂程式
     | To | 你自己或團隊負責人的 Email |
     | Subject | `🚨【VIP 報名警報】{{姓名}} 剛剛完成報名` |
     | Content | 同 Discord 的訊息內容 |
+
+<img width="705" height="421" alt="image" src="https://github.com/user-attachments/assets/6e5f3ff8-4336-4132-8347-db8991f1c9c5" />
 
 > [!NOTE]
 > **Gmail 與 Discord Webhook 的本質差異**
@@ -248,6 +252,9 @@ Make 把複雜的 API 程式碼變成**視覺化拖拉節點**，讓不懂程式
 > | 設定複雜度 | 極低，貼 URL 就能用 | 中等，需授權流程 |
 > | 安全風險 | URL 外洩即可被任何人使用 | Token 有效期限，較安全 |
 > | 教學價值 | 展示最純粹的 Webhook 概念 | 展示 OAuth 授權概念 |
+
+<img width="703" height="379" alt="image" src="https://github.com/user-attachments/assets/82629c87-93be-4c37-a3b0-f059e6adfe4b" />
+<img width="852" height="490" alt="image" src="https://github.com/user-attachments/assets/18e6c180-3c87-4aac-97dc-6abfbcb5d217" />
 
 ---
 
