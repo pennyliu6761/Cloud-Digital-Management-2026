@@ -317,28 +317,28 @@
 
 
 4. **如果沒有上述畫面(非首次執行)，請透過以下方式建立Action**
-    <img width="522" height="242" alt="image" src="https://github.com/user-attachments/assets/a015de7a-a482-4a80-a472-e806d1950782" />
+   <img width="522" height="242" alt="image" src="https://github.com/user-attachments/assets/a015de7a-a482-4a80-a472-e806d1950782" />
 
-    <img width="535" height="234" alt="image" src="https://github.com/user-attachments/assets/93a976d3-3a38-4c25-9f43-40cc6c18e756" />
+   <img width="535" height="234" alt="image" src="https://github.com/user-attachments/assets/93a976d3-3a38-4c25-9f43-40cc6c18e756" />
 
-    <img width="523" height="556" alt="image" src="https://github.com/user-attachments/assets/6079d09f-6a1a-4d2b-90a5-7c6c069e8c13" />
+   <img width="523" height="556" alt="image" src="https://github.com/user-attachments/assets/6079d09f-6a1a-4d2b-90a5-7c6c069e8c13" />
 
-    找到您雲端硬碟中的試算表(路徑不一定相同)
-    <img width="943" height="584" alt="image" src="https://github.com/user-attachments/assets/7b4dca40-5b93-4b86-b987-402ead65bf98" />
+   找到您雲端硬碟中的試算表(路徑不一定相同)
+   <img width="943" height="584" alt="image" src="https://github.com/user-attachments/assets/7b4dca40-5b93-4b86-b987-402ead65bf98" />
 
-    <img width="1902" height="695" alt="image" src="https://github.com/user-attachments/assets/e3a281d5-924a-44d3-b703-2c6dd509c696" />
+   <img width="1902" height="695" alt="image" src="https://github.com/user-attachments/assets/e3a281d5-924a-44d3-b703-2c6dd509c696" />
 
-    <img width="684" height="348" alt="image" src="https://github.com/user-attachments/assets/70e88fe0-1b21-4c3f-b0de-5016fa9da510" />
+   <img width="684" height="348" alt="image" src="https://github.com/user-attachments/assets/70e88fe0-1b21-4c3f-b0de-5016fa9da510" />
 
-    <img width="1900" height="653" alt="image" src="https://github.com/user-attachments/assets/3adb7861-8924-4176-bc06-844bb333792c" />
+   <img width="1900" height="653" alt="image" src="https://github.com/user-attachments/assets/3adb7861-8924-4176-bc06-844bb333792c" />
 
-    左側(Behavior)-->上方(Columns)隱藏不想顯示的欄位
-    <img width="1900" height="843" alt="image" src="https://github.com/user-attachments/assets/605f5e95-b23b-492a-a546-35b98b830597" />
+   左側(Behavior)-->上方(Columns)隱藏不想顯示的欄位
+   <img width="1900" height="843" alt="image" src="https://github.com/user-attachments/assets/605f5e95-b23b-492a-a546-35b98b830597" />
 
 
 5. **儲存並測試**
    - 點擊右上角「**SAVE**」→ Open App in Browser
-    <img width="1903" height="687" alt="image" src="https://github.com/user-attachments/assets/56451201-4235-4116-80a6-6043cc2d6501" />
+   <img width="1903" height="687" alt="image" src="https://github.com/user-attachments/assets/56451201-4235-4116-80a6-6043cc2d6501" />
 
    - (可嘗試下載 AppSheet App → 用同一個 Google 帳號登入)
    - 找到一筆資料，點擊「確認報到」按鈕
@@ -347,7 +347,7 @@
    <img width="644" height="293" alt="image" src="https://github.com/user-attachments/assets/cbbea03b-20d5-4fa0-89ac-bc8278cc1fa9" />
 
    - 回到電腦的 Google 試算表，該列應即時更新為「已報到」！
-    <img width="1873" height="153" alt="image" src="https://github.com/user-attachments/assets/4758f427-58e9-4c5b-846f-641f07fc1a7b" />
+   <img width="1873" height="153" alt="image" src="https://github.com/user-attachments/assets/4758f427-58e9-4c5b-846f-641f07fc1a7b" />
 
 
 ---
