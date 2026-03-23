@@ -106,9 +106,9 @@ Make 把複雜的 API 程式碼變成**視覺化拖拉節點**，讓不懂程式
 
 1. 前往 Make.com，點擊「**Get started free**」
 2. 用 Google 帳號登入（不需要信用卡）
-3. 點擊左側「**Scenarios**」→ 右上角「**+ Create a new scenario**」
+3. 點擊左側「**Scenarios**」→ 右上角「**+ Create scenario**」
 
-<!-- 📸 截圖：Make 空白畫布 -->
+<img width="910" height="679" alt="image" src="https://github.com/user-attachments/assets/65ed4d94-e492-41d3-a775-42678f798bbf" />
 
 > [!NOTE]
 > **Make 的核心概念**
@@ -123,7 +123,7 @@ Make 把複雜的 API 程式碼變成**視覺化拖拉節點**，讓不懂程式
 #### 步驟一：設定觸發器（Google Sheets 監控新報名）
 
 1. 點擊畫布中央「**+**」→ 搜尋並選擇「**Google Sheets**」
-2. 選擇觸發動作：「**Watch Rows**」
+2. 選擇觸發動作：「**Watch New Rows**」
 3. 點擊「**Create a connection**」→ 授權你的 Google 帳號
 4. 設定如下：
 
@@ -133,9 +133,11 @@ Make 把複雜的 API 程式碼變成**視覺化拖拉節點**，讓不懂程式
     | Sheet | `表單回覆 1` |
     | Limit | `2` |
 
+<img width="706" height="922" alt="image" src="https://github.com/user-attachments/assets/d18a3681-6560-471e-84c8-1c74c590056a" />
+
 5. 點擊「**OK**」→「**Choose manually**」→ 選擇最後一筆現有資料 → 儲存
 
-<!-- 📸 截圖：Google Sheets Watch Rows 節點設定完成 -->
+<img width="647" height="610" alt="image" src="https://github.com/user-attachments/assets/18816c07-6aee-4fbc-85f3-79de93c3cfb8" />
 
 ---
 
