@@ -36,56 +36,52 @@
 #### 步驟說明
 
 1. **建立主資料夾**
-   登入 Google Drive，點擊左上角「**+ 新增**」→「**新資料夾**」，命名為：
+登入 Google Drive，點擊左上角「**+ 新增**」→「**新資料夾**」，命名為：
 
-    ```
-    2026_金門聚落文化營_專案大腦
-    ```
+```
+2026_金門聚落文化營_專案大腦
+```
 
 2. **建立三層子資料夾**（這是企業標準的 **3-Stage 工作流**）
+在主資料夾內建立以下三個子資料夾：
 
-    在主資料夾內建立以下三個子資料夾：
+| 資料夾名稱 | 用途說明 |
+|-----------|---------|
+| `01_參考素材` | 蒐集到的靈感、範例、原始資料 |
+| `02_執行草稿` | 工作中的文件，可能頻繁修改 |
+| `03_最終定稿` | 對外發送或存檔的版本，不隨意更動 |
 
-    | 資料夾名稱 | 用途說明 |
-    |-----------|---------|
-    | `01_參考素材` | 蒐集到的靈感、範例、原始資料 |
-    | `02_執行草稿` | 工作中的文件，可能頻繁修改 |
-    | `03_最終定稿` | 對外發送或存檔的版本，不隨意更動 |
-    
-    <img width="528" height="393" alt="image" src="https://github.com/user-attachments/assets/46641a7e-88c4-4ff4-9497-bf9e59f4a45f" />
-
+<img width="528" height="393" alt="image" src="https://github.com/user-attachments/assets/46641a7e-88c4-4ff4-9497-bf9e59f4a45f" />
 
 3. **建立第一份工作文件（命名有學問！）**
+進入 `02_執行草稿`，新增一份 Google 文件，命名為：
+```
+20260317_聚落營隊_對外報價單_v1
+```
 
-   進入 `02_執行草稿`，新增一份 Google 文件，命名為：
-   ```
-   20260317_聚落營隊_對外報價單_v1
-   ```
-   
-   > [!TIP]
-   > 💡 **命名公式解析：**
-   > `YYYYMMDD` + `_` + `專案名稱` + `_` + `文件用途` + `_` + `版本號`
-   > 這個命名規則在任何公司都通用，讓你三年後也能秒找到檔案！
-   >
-   > <img width="703" height="291" alt="image" src="https://github.com/user-attachments/assets/95cfc277-f762-4e76-8183-f20c41651970" />
-
+> [!TIP]
+> 💡 **命名公式解析：**
+> `YYYYMMDD` + `_` + `專案名稱` + `_` + `文件用途` + `_` + `版本號`
+> 這個命名規則在任何公司都通用，讓你三年後也能秒找到檔案！
+<img width="703" height="291" alt="image" src="https://github.com/user-attachments/assets/95cfc277-f762-4e76-8183-f20c41651970" />
 
 4. **設定機密防洩漏權限**
+- 點擊文件右上角「**共用**」
 
-    - 點擊文件右上角「**共用**」
-    <img width="1816" height="310" alt="image" src="https://github.com/user-attachments/assets/b4e8145d-c774-470d-8bf2-2a01e5637b6a" />
+<img width="1816" height="310" alt="image" src="https://github.com/user-attachments/assets/b4e8145d-c774-470d-8bf2-2a01e5637b6a" />
+- 在「新增使用者」欄位輸入同學信箱，角色設定為「**加註者**」（可以留言但無法編輯，更無法下載）
 
-    - 在「新增使用者」欄位輸入同學信箱，角色設定為「**加註者**」（可以留言但無法編輯，更無法下載）
-    <img width="498" height="408" alt="image" src="https://github.com/user-attachments/assets/d5f349c5-a670-46b5-b7e8-3086618dad57" />
+<img width="498" height="408" alt="image" src="https://github.com/user-attachments/assets/d5f349c5-a670-46b5-b7e8-3086618dad57" />
 
-    - 點擊右上角「**⚙️ 設定**」→ **取消勾選** 以下兩個選項：
-        - `檢視者和加註者可以看見下載、列印和複製選項`
-        - `編輯者可以變更權限並新增使用者`
-    
-        <img width="485" height="373" alt="image" src="https://github.com/user-attachments/assets/a1c42c0f-53a8-4108-9381-2e03627907ad" />
-    > [!WARNING]
-    > 🔒 **為什麼這很重要？**
-    > 企業常見資料外洩場景：員工把「可下載」的投標文件分享給外部廠商，對方一鍵下載後直接轉賣競爭對手。這個設定就是防火牆。
+- 點擊右上角「**⚙️ 設定**」→ **取消勾選** 以下兩個選項：
+   - `檢視者和加註者可以看見下載、列印和複製選項`
+   - `編輯者可以變更權限並新增使用者`
+
+<img width="485" height="373" alt="image" src="https://github.com/user-attachments/assets/a1c42c0f-53a8-4108-9381-2e03627907ad" />
+
+> [!WARNING]
+> 🔒 **為什麼這很重要？**
+> 企業常見資料外洩場景：員工把「可下載」的投標文件分享給外部廠商，對方一鍵下載後直接轉賣競爭對手。這個設定就是防火牆。
 
 **實戰**
 1. 擁有者建立內容
@@ -133,12 +129,15 @@
     <img width="640" height="886" alt="image" src="https://github.com/user-attachments/assets/1223f07c-5993-4b5d-bea5-2de99dd59f43" />
 
 4. 點擊右上角「📤 傳送」→「🔗 連結」→ 縮短 URL 並複製備用
+
     <img width="539" height="482" alt="image" src="https://github.com/user-attachments/assets/44fc5726-cf3d-48bd-bf0c-93e16cd7b36f" />
 
 5. 填寫問卷
+   
     <img width="645" height="891" alt="image" src="https://github.com/user-attachments/assets/2c254cfa-1334-40df-b92c-70a09f33956f" />
 
 6. 點擊右上角「**⋮**」→「**回覆**」→ 點擊綠色試算表圖示「**建立試算表**」→ 命名為 `金門聚落文化營_報名總表`
+   
     <img width="788" height="842" alt="image" src="https://github.com/user-attachments/assets/53180fef-734b-45aa-9b47-5d5e1b9e1f0f" />
 
     <img width="550" height="257" alt="image" src="https://github.com/user-attachments/assets/04185617-cbaa-4d96-b7b3-8b97995096ab" />
