@@ -1,4 +1,4 @@
-## ⏰ 第 2 小時：API 串接初體驗 — Make 視覺化工作流 × Discord 推播警報
+## ⏰ 2 ：API 串接初體驗 — Make 視覺化工作流 × Discord 推播警報
 
 > 🎯 **本小時目標：** 讓系統主動通知人，而不是讓人主動去看系統。
 > 理解 API 與 Webhook 的運作邏輯，完成第一個「條件觸發式」自動化通知。
@@ -201,10 +201,13 @@ Make 把複雜的 API 程式碼變成**視覺化拖拉節點**，讓不懂程式
     請於 30 分鐘內完成接待確認。
 ```
 
+<img width="443" height="763" alt="image" src="https://github.com/user-attachments/assets/65715b9c-a5cb-4662-847d-79b23feca681" />
+
+
 > [!TIP]
 > Discord 支援 Markdown 語法，`**文字**` 顯示為粗體，讓警報訊息排版更清晰易讀。
 
-<!-- 📸 截圖：Make 劇本完整畫布（Google Sheets + Filter + Discord 三個節點） -->
+<img width="765" height="379" alt="image" src="https://github.com/user-attachments/assets/58dc3628-d297-49ff-8bfe-59aee6b7a69b" />
 
 ---
 
@@ -218,7 +221,7 @@ Make 把複雜的 API 程式碼變成**視覺化拖拉節點**，讓不懂程式
 
 **🔔 機器人的警報訊息到了！**
 
-<!-- 📸 截圖：Discord 頻道收到警報訊息的畫面 -->
+<img width="750" height="601" alt="image" src="https://github.com/user-attachments/assets/f12f9d5f-0e2e-46a5-8ad0-8ad1b56a1772" />
 
 ---
 
@@ -260,7 +263,7 @@ Make 把複雜的 API 程式碼變成**視覺化拖拉節點**，讓不懂程式
 > 這就是**多路分流自動化**的基礎架構！
 
 > [!TIP]
-> **🏆 第 2 小時 Checkpoint 完成！**
+> **🏆 2 Checkpoint 完成！**
 >
 > 你剛剛完成了：
 > - ✅ 理解 API 與 Webhook 的核心概念（URL 即端點）
@@ -272,7 +275,7 @@ Make 把複雜的 API 程式碼變成**視覺化拖拉節點**，讓不懂程式
 
 ---
 
-### 🎯 第 2 小時學生練習題
+### 🎯 2 學生練習題
 
 > [!NOTE]
 > **⏱️ 練習時間：15 分鐘｜個人作業**
