@@ -63,6 +63,7 @@
 > 💡 **命名公式解析：**
 > `YYYYMMDD` + `_` + `專案名稱` + `_` + `文件用途` + `_` + `版本號`
 > 這個命名規則在任何公司都通用，讓你三年後也能秒找到檔案！
+
 <img width="703" height="291" alt="image" src="https://github.com/user-attachments/assets/95cfc277-f762-4e76-8183-f20c41651970" />
 
 4. **設定機密防洩漏權限**
@@ -151,7 +152,7 @@
 1. 新建一份 Google 文件，命名為 `【模板】報到憑證`
 2. 輸入以下內文（`<<標籤>>` 是 AutoCrat 的特殊語法，等下會自動替換成真實資料）：
 
-<img width="1064" height="717" alt="image" src="https://github.com/user-attachments/assets/061a2111-92fd-4d33-b735-a5dc1bff42d8" />
+    <img width="1064" height="717" alt="image" src="https://github.com/user-attachments/assets/061a2111-92fd-4d33-b735-a5dc1bff42d8" />
 
 ---
 
