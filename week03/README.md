@@ -209,13 +209,15 @@
 1. 新增「**JSON**」→「**Parse JSON**」
 2. **JSON string** 欄位：帶入 OCR.space 節點傳來的 `Data` 變數
 
-<!-- 📸 截圖：Parse JSON 節點設定 -->
+<img width="688" height="354" alt="image" src="https://github.com/user-attachments/assets/7e0a9314-42a1-45db-ad0e-e1b5e6f9d272" />
 
 ---
 
 #### 節點五：Google Sheets Update Row（回填辨識結果）
 
 1. 先回到 Google 試算表，手動新增一欄：`AI判讀結果`
+
+<img width="554" height="147" alt="image" src="https://github.com/user-attachments/assets/e7312dea-cb2e-44aa-b0a1-d997e8526a66" />
 
 2. 新增「**Google Sheets**」→「**Update a Row**」
 3. 設定如下：
