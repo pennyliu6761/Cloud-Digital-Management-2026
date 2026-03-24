@@ -133,6 +133,9 @@
 | Sheet | `表單回覆 1` |
 | Limit | `2` |
 
+<img width="649" height="857" alt="image" src="https://github.com/user-attachments/assets/fa759969-e22f-4a01-b66a-525c7aa21ea1" />
+<img width="366" height="556" alt="image" src="https://github.com/user-attachments/assets/b827412b-ca53-46c6-9347-e40ce8b4e252" />
+
 ---
 
 #### 節點二：HTTP - Download a File（下載收據圖片）
@@ -156,7 +159,7 @@
     > - `substring(...; 33)` 從第 33 個字元開始取到結尾，只留下純 ID
     > - 組裝成 `uc?export=download&id=純ID` 格式，才能直接下載圖片
 
-<!-- 📸 截圖：HTTP Download a File 節點 URL 設定畫面 -->
+<img width="1051" height="400" alt="image" src="https://github.com/user-attachments/assets/728b54eb-c9cd-4aa8-bb5f-e208358a5609" />
 
 ---
 
@@ -171,6 +174,8 @@
     | Method | `POST` |
     | Authentication type | `No authentication` |
     | Body content type | `multipart/form-data` |
+
+<img width="658" height="694" alt="image" src="https://github.com/user-attachments/assets/d680696f-437c-42c3-9392-416d05e4496e" />
 
 3. **Body content** 新增三個 Field：
 
@@ -194,7 +199,8 @@
 
 4. **Parse response** → 選 `Yes`
 
-<!-- 📸 截圖：OCR.space HTTP 節點完整設定畫面 -->
+<img width="395" height="713" alt="image" src="https://github.com/user-attachments/assets/66d626e8-4967-4d1c-bdb4-90cb7e46f68b" />
+<img width="382" height="594" alt="image" src="https://github.com/user-attachments/assets/1c0c1d30-4baf-4d89-a915-1798ccfb88c9" />
 
 ---
 
