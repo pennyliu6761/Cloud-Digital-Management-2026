@@ -401,7 +401,7 @@ https://drive.google.com/file/d/1EuxDcNWbN96EUv9fPMI6rcVZLIvvVM6m/view
 3. **延伸應用：** 除了收據核銷，「圖片上傳 → OCR 辨識 → 自動入庫」這個流程還可以用在哪些場景？
 
 
-### 💡 進階補充：用 Google Apps Script 取代 Make
+## 💡 進階補充：用 Google Apps Script 取代 Make
 
 > [!NOTE]
 > 這是給對程式有興趣的同學的延伸閱讀。
@@ -409,7 +409,7 @@ https://drive.google.com/file/d/1EuxDcNWbN96EUv9fPMI6rcVZLIvvVM6m/view
 
 ---
 
-#### 為什麼要取代 Make？
+### 為什麼要取代 Make？
 
 | | Make 免費版 | Google Apps Script |
 |---|---|---|
@@ -423,9 +423,10 @@ https://drive.google.com/file/d/1EuxDcNWbN96EUv9fPMI6rcVZLIvvVM6m/view
 
 ---
 
-#### Google Apps Script 是什麼？
+### Google Apps Script 是什麼？
 
-Google Apps Script 是 Google 提供的**免費雲端程式環境**，語法類似 JavaScript，可以直接操控所有 Google 服務（試算表、表單、Gmail、Drive 等），不需要架設任何伺服器。
+Google Apps Script 是 Google 提供的**免費雲端程式環境**，語法類似 JavaScript，
+可以直接操控所有 Google 服務（試算表、表單、Gmail、Drive 等），不需要架設任何伺服器。
 ```
 Make 的做法：
 Google 表單 → Make（第三方平台）→ Discord
@@ -436,60 +437,164 @@ Google 表單 → Apps Script（住在 Google 裡面）→ Discord
 
 ---
 
-#### 實際範例：表單送出時自動推播 Discord
+### 📌 任務：建立 Discord 多頻道自動分流通知系統
 
-以下是取代「VIP 報名警報」Make 劇本的完整 Apps Script 程式碼：
+#### 步驟一：在 Discord 為每個頻道建立 Webhook
 
-**步驟一：開啟 Apps Script**
+為以下每個頻道各建立一個 Webhook：
+
+| 頻道 | 用途 |
+|------|------|
+| `#vip-報名警報` | VIP 貴賓報名時通知 |
+| `#a場次報到` | A 場次新報名通知 |
+| `#b場次報到` | B 場次新報名通知 |
+| `#c場次報到` | C 場次新報名通知 |
+
+**每個頻道的操作步驟：**
+
+1. 對頻道點擊「**⚙️ 編輯頻道**」
+2. 左側選單「**整合**」→「**Webhook**」
+3. 點擊「**新 Webhook**」
+
+    > [!WARNING]
+    > 必須點「新 Webhook」自己建立，才能複製 URL。
+    > 由 Make 或其他平台建立的 Webhook，Discord 不允許複製網址。
+
+4. 名稱填入對應頻道名稱（例如：`a場次報到機器人`）
+5. 確認頻道是正確的
+6. 點擊剛建立的 Webhook 展開 →「**複製 Webhook 網址**」
+7. 貼到記事本備用
+
+<!-- 📸 截圖：Discord Webhook 設定頁面，顯示複製網址按鈕 -->
+
+---
+
+#### 步驟二：開啟 Google Apps Script
 
 1. 開啟 `金門聚落文化營_報名總表` 試算表
 2. 上方選單「**擴充功能**」→「**Apps Script**」
 3. 會開啟一個程式碼編輯器
 
-**步驟二：貼入以下程式碼**
-```javascript
-// 設定你的 Discord Webhook URL
-const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/你的webhook網址";
+<!-- 📸 截圖：Apps Script 編輯器畫面 -->
 
-// 這個函式會在每次表單送出時自動執行
-function onFormSubmit(e) {
-  
-  // 取得這次送出的資料
-  const values = e.values;
-  
-  // 對應試算表的欄位順序（從第0欄開始數）
-  const timestamp    = values[0];
-  const name         = values[1];  // 姓名
-  const email        = values[2];  // Email信箱
-  const scene        = values[3];  // 參加場次
-  const phone        = values[4];  // 聯絡電話
-  const isVip        = values[5];  // 是否為VIP貴賓
-  
-  // 只有 VIP 才發送警報
-  if (isVip !== "是") return;
-  
-  // 組裝 Discord 訊息
-  const message = {
-    content: `🚨 **【VIP 報名警報】** 🚨\n\n` +
-             `有貴賓剛剛完成報名，請相關人員注意！\n\n` +
-             `▸ **姓名：** ${name}\n` +
-             `▸ **場次：** ${scene}\n` +
-             `▸ **信箱：** ${email}\n` +
-             `▸ **電話：** ${phone}\n` +
-             `▸ **報名時間：** ${timestamp}\n\n` +
-             `請於 30 分鐘內完成接待確認。`
-  };
-  
-  // 發送到 Discord
-  UrlFetchApp.fetch(DISCORD_WEBHOOK_URL, {
+---
+
+#### 步驟三：貼入程式碼
+
+清空編輯器原有內容，貼入以下完整程式碼：
+```javascript
+// ====== 設定區（只需要修改這裡）======
+const WEBHOOK_VIP     = "https://discord.com/api/webhooks/vip頻道URL";
+const WEBHOOK_SCENE_A = "https://discord.com/api/webhooks/a場次頻道URL";
+const WEBHOOK_SCENE_B = "https://discord.com/api/webhooks/b場次頻道URL";
+const WEBHOOK_SCENE_C = "https://discord.com/api/webhooks/c場次頻道URL";
+// =====================================
+
+// 發送訊息到指定頻道的共用函式
+function sendToDiscord(webhookUrl, message) {
+  UrlFetchApp.fetch(webhookUrl, {
     method: "post",
     contentType: "application/json",
-    payload: JSON.stringify(message)
+    payload: JSON.stringify({ content: message })
   });
+}
+
+// 表單送出時自動執行
+function onFormSubmit(e) {
+  const values    = e.values;
+  const timestamp = values[0];  // Timestamp
+  const name      = values[1];  // 姓名
+  const email     = values[2];  // Email信箱
+  const scene     = values[3];  // 參加場次
+  const phone     = values[4];  // 聯絡電話
+  const isVip     = values[5];  // 是否為VIP貴賓
+
+  // VIP 警報 → #vip-報名警報 頻道
+  if (isVip === "是") {
+    sendToDiscord(WEBHOOK_VIP,
+      `🚨 **【VIP 報名警報】** 🚨\n\n` +
+      `有貴賓剛剛完成報名，請相關人員注意！\n\n` +
+      `▸ **姓名：** ${name}\n` +
+      `▸ **場次：** ${scene}\n` +
+      `▸ **信箱：** ${email}\n` +
+      `▸ **電話：** ${phone}\n` +
+      `▸ **時間：** ${timestamp}\n\n` +
+      `請於 30 分鐘內完成接待確認。`
+    );
+  }
+
+  // 場次分流 → 各場次頻道
+  const sceneMessage =
+    `📋 **【新報名通知】**\n\n` +
+    `▸ **姓名：** ${name}\n` +
+    `▸ **場次：** ${scene}\n` +
+    `▸ **時間：** ${timestamp}`;
+
+  if (scene === "A場：週六上午") {
+    sendToDiscord(WEBHOOK_SCENE_A, sceneMessage);
+  } else if (scene === "B場：週六下午") {
+    sendToDiscord(WEBHOOK_SCENE_B, sceneMessage);
+  } else if (scene === "C場：週日全天") {
+    sendToDiscord(WEBHOOK_SCENE_C, sceneMessage);
+  }
+}
+
+// ====== 測試函式（測試完成後可以保留備用）======
+function testOnFormSubmit() {
+  const fakeEvent = {
+    values: [
+      "2026/03/24 14:00:00",  // Timestamp
+      "王小明",                // 姓名
+      "wang@test.com",         // Email信箱
+      "C場：週日全天",          // 參加場次
+      "0912345678",            // 聯絡電話
+      "是"                     // 是否為VIP貴賓
+    ]
+  };
+  onFormSubmit(fakeEvent);
 }
 ```
 
-**步驟三：設定表單觸發器**
+> [!WARNING]
+> **欄位順序很重要！**
+> `values[0]`、`values[1]`... 對應的是試算表從左到右的欄位順序。
+> 如果你的表單欄位順序不同，請對應調整數字。
+> 可以開啟試算表，從左到右數欄位順序來確認。
+
+---
+
+#### 步驟四：填入真實的 Webhook URL
+
+把設定區的四個 `"...URL"` 換成你在步驟一複製的真實網址：
+```javascript
+const WEBHOOK_VIP     = "https://discord.com/api/webhooks/123456/abcdef...";
+const WEBHOOK_SCENE_A = "https://discord.com/api/webhooks/234567/bcdefg...";
+const WEBHOOK_SCENE_B = "https://discord.com/api/webhooks/345678/cdefgh...";
+const WEBHOOK_SCENE_C = "https://discord.com/api/webhooks/456789/defghi...";
+```
+
+點擊上方「**💾 儲存**」（或 `Ctrl+S`）
+
+---
+
+#### 步驟五：先用測試函式驗證
+
+在編輯器上方的函式選單，**切換成 `testOnFormSubmit`**，點擊「**▶ 執行**」。
+
+**預期結果：**
+- ✅ `#vip-報名警報` 收到 VIP 警報（因為測試資料 isVip = 是）
+- ✅ `#c場次報到` 收到新報名通知（因為測試資料場次 = C場）
+- ❌ `#a場次報到` 和 `#b場次報到` 不應該收到
+
+<!-- 📸 截圖：Discord 兩個頻道同時收到測試通知 -->
+
+---
+
+#### 步驟六：設定觸發條件（讓系統自動執行）
+
+> [!NOTE]
+> 這步驟完成後，GAS 就會在每次表單送出時**自動執行**，
+> 不需要你在場，也不需要手動點執行。
 
 1. 左側選單點擊「**⏰ 觸發條件**」（時鐘圖示）
 2. 右下角「**+ 新增觸發條件**」
@@ -498,29 +603,44 @@ function onFormSubmit(e) {
     | 設定項目 | 填入內容 |
     |---------|---------|
     | 執行的函式 | `onFormSubmit` |
+    | 執行部署 | `Head` |
     | 活動來源 | `試算表` |
     | 活動類型 | `提交表單時` |
+    | 失敗通知設定 | `每天通知` |
 
-4. 點擊「**儲存**」→ 授權 Google 帳號
+4. 點擊「**儲存**」
+5. 跳出 Google 授權視窗 → 選擇你的帳號 → 點擊「**允許**」
+
+<!-- 📸 截圖：觸發條件設定完成畫面 -->
 
 ---
 
-#### 程式碼解析（給想學的同學）
-```javascript
-const isVip = values[5];      // 取得第5欄的值
-if (isVip !== "是") return;   // 不是VIP就直接結束，不做任何事
-```
+#### 步驟七：真實表單最終測試
 
-這兩行就是 Make 裡「過濾器」的程式碼版本。
-```javascript
-UrlFetchApp.fetch(DISCORD_WEBHOOK_URL, {
-  method: "post",             // HTTP POST 請求
-  contentType: "application/json",
-  payload: JSON.stringify(message)  // 把訊息轉成 JSON 格式傳出去
-});
-```
+1. 開啟報名表單連結
+2. 填寫一筆真實資料：
+    - 姓名：任意
+    - 場次：「**A場：週六上午**」
+    - VIP：「**否**」
+3. 送出表單
 
-這幾行就是 Make 裡「Discord Webhook Bot」節點的程式碼版本。
+**預期結果：**
+- ✅ `#a場次報到` 收到通知
+- ❌ `#vip-報名警報` 不收到（因為不是 VIP）
+
+<!-- 📸 截圖：真實表單送出後，Discord #a場次報到 頻道收到通知 -->
+
+---
+
+### 程式碼邏輯對照表
+
+| GAS 程式碼 | 對應的 Make 功能 |
+|-----------|---------------|
+| `const values = e.values` | Google Sheets Watch Rows 取得資料 |
+| `if (isVip === "是")` | Make Filter 過濾器 |
+| `sendToDiscord(WEBHOOK_VIP, ...)` | Discord Send Message 節點 |
+| `if / else if` 場次判斷 | Make Router 多路分流 |
+| 觸發條件「提交表單時」 | Make Scenario 的 Form Trigger |
 
 > [!TIP]
 > **你會發現：**
@@ -532,17 +652,16 @@ UrlFetchApp.fetch(DISCORD_WEBHOOK_URL, {
 
 ---
 
-#### Make vs Apps Script 選擇建議
+### Make vs Apps Script 選擇建議
 
 | 情境 | 建議工具 |
 |------|---------|
-| 活動報名人數 < 200 人 | Make 免費版就夠 |
-| 活動報名人數 > 200 人 | Apps Script |
-| 需要串接非 Google 的服務 | Make（支援 1,000+ 種服務） |
-| 所有流程都在 Google 生態系內 | Apps Script（更快更穩） |
+| 報名人數 < 200 人 | Make 免費版就夠 |
+| 報名人數 > 200 人 | Apps Script |
+| 需要串接非 Google 的服務 | Make（支援 1,000+ 種服務）|
+| 所有流程都在 Google 生態系內 | Apps Script（更快更穩）|
 | 完全不想寫任何程式碼 | Make |
 | 想學一點程式基礎 | Apps Script |
-
 
 
 ### 📚 課後自學資源
