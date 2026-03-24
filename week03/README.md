@@ -957,7 +957,8 @@ function debugDownload() {
 >    ```
 >    注意：`gid=` 後面的數字是工作表編號，不是試算表 ID。
 
-<!-- 📸 截圖：Apps Script 完整版程式碼畫面 -->
+<img width="1047" height="924" alt="image" src="https://github.com/user-attachments/assets/e03ea735-614d-48e3-8721-57df129772d1" />
+
 
 ---
 
@@ -976,8 +977,11 @@ function debugDownload() {
     | `#ai辨識` | ✅ 收到 OCR 覆核通知 |
     | 試算表 `AI判讀結果` 欄 | ✅ 自動填入辨識文字 |
 
-<!-- 📸 截圖：Discord 四個頻道同時收到通知的畫面 -->
-<!-- 📸 截圖：試算表 AI判讀結果欄位自動填入的畫面 -->
+<img width="1008" height="750" alt="image" src="https://github.com/user-attachments/assets/0ba44908-60d4-49c5-a984-a2218dad0744" />
+<img width="750" height="739" alt="image" src="https://github.com/user-attachments/assets/a6ebb98e-4f14-4e04-9ad9-d2135c41b0fb" />
+<img width="372" height="239" alt="image" src="https://github.com/user-attachments/assets/e5beffca-acfb-4ebd-bd5c-2081761e3d38" />
+<img width="292" height="121" alt="image" src="https://github.com/user-attachments/assets/dd8a46f1-e364-47c3-b469-f8d020ac723f" />
+<img width="163" height="440" alt="image" src="https://github.com/user-attachments/assets/f4c57c3a-5e74-4a4d-8f90-f1c66d4a25cc" />
 
 ---
 
@@ -993,7 +997,8 @@ function debugDownload() {
     | `image/jpeg` | 檔案是 JPG 圖片 ✅ |
     | `text/html` | 下載失敗，檢查 Drive 資料夾是否已設為公開 ❌ |
 
-<!-- 📸 截圖：執行記錄顯示檔案類型判斷結果 -->
+<img width="790" height="932" alt="image" src="https://github.com/user-attachments/assets/6a30af23-ad35-4645-8cb8-d9653f18b6e2" />
+<img width="542" height="465" alt="image" src="https://github.com/user-attachments/assets/652fe334-2dbd-4da3-a41b-36b5499db809" />
 
 ---
 
