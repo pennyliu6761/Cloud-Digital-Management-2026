@@ -301,7 +301,7 @@
 > 但最終確認金額的責任還是在人。
 
 > [!TIP]
-> **🏆 第 3 小時 Checkpoint 完成！**
+> **🏆 3  Checkpoint 完成！**
 >
 > 你串接完成的系統：
 > - ✅ 表單上傳圖片 → OCR 自動辨識文字
@@ -314,7 +314,7 @@
 
 ---
 
-### 🎯 第 3 小時學生練習題
+### 🎯 3 學生練習題
 
 > [!NOTE]
 > **⏱️ 練習時間：20 分鐘｜個人 + 分組討論**
@@ -336,10 +336,10 @@
 在通知最後加入一個試算表的直接連結，讓覆核人員點一下就能開啟：
 ```
 📊 點此開啟試算表覆核：
-https://docs.google.com/spreadsheets/d/你的試算表ID
+https://drive.google.com/file/d/1EuxDcNWbN96EUv9fPMI6rcVZLIvvVM6m/view
 ```
 
-截圖 Discord 收到的新格式通知。
+<img width="535" height="718" alt="image" src="https://github.com/user-attachments/assets/3a54070f-5583-41c0-a7f6-970ef7c86302" />
 
 ---
 
