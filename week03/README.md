@@ -63,14 +63,18 @@
     | 最大檔案數量 | 1 |
     | 最大檔案大小 | 10 MB |
 
+<img width="837" height="711" alt="image" src="https://github.com/user-attachments/assets/101e69a1-6af5-46a8-afa3-3957c671f551" />
+
 3. 建立測試資料：找一張收據或轉帳截圖，填寫表單並上傳，送出
+
+<img width="1102" height="597" alt="image" src="https://github.com/user-attachments/assets/ee2278b5-c673-4a70-a5ef-49f743883e61" />
 
 4. 確認試算表出現一個 Google Drive 連結，格式如下：
 ```
     https://drive.google.com/open?id=xxxxx
 ```
 
-<!-- 📸 截圖：試算表顯示收據圖片的 Drive 連結 -->
+<img width="400" height="379" alt="image" src="https://github.com/user-attachments/assets/89da4031-76e4-4c42-966d-fdbb0d92cfae" />
 
 ---
 
@@ -90,7 +94,7 @@
 5. 右側角色確認是「**檢視者**」
 6. 點擊「**完成**」
 
-<!-- 📸 截圖：Google Drive 資料夾共用設定畫面 -->
+<img width="493" height="429" alt="image" src="https://github.com/user-attachments/assets/d22d13ee-8a8d-47c3-bb08-5915f035810c" />
 
 ---
 
@@ -107,7 +111,7 @@
     K8xxxxxxxxxxxxxxxxx
 ```
 
-<!-- 📸 截圖：OCR.space API Key 信件（Key 遮住後五碼） -->
+<img width="799" height="430" alt="image" src="https://github.com/user-attachments/assets/1c782b1f-c6be-4968-8630-2a367c0918cf" />
 
 ---
 
