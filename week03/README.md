@@ -32,6 +32,8 @@
     | 最大檔案數量 | 1 |
     | 最大檔案大小 | 10 MB |
 
+<img width="833" height="511" alt="image" src="https://github.com/user-attachments/assets/ea2b303b-0a2e-4dfb-b563-c6f73dd3cb4f" />
+
 3. **建立測試資料：**
    - 在網路上搜尋「匯款收據截圖範例」存成圖檔，或直接拍一張任何收據
    - 填寫一次表單並上傳這張圖片，送出
