@@ -400,6 +400,151 @@ https://drive.google.com/file/d/1EuxDcNWbN96EUv9fPMI6rcVZLIvvVM6m/view
 
 3. **延伸應用：** 除了收據核銷，「圖片上傳 → OCR 辨識 → 自動入庫」這個流程還可以用在哪些場景？
 
+
+### 💡 進階補充：用 Google Apps Script 取代 Make
+
+> [!NOTE]
+> 這是給對程式有興趣的同學的延伸閱讀。
+> 不需要完全看懂，理解「為什麼要這樣做」比「怎麼寫」更重要。
+
+---
+
+#### 為什麼要取代 Make？
+
+| | Make 免費版 | Google Apps Script |
+|---|---|---|
+| 每月操作次數 | 1,000 次 | **無限制** |
+| 費用 | 超過要付費 | **完全免費** |
+| 執行速度 | 受方案限制 | 毫秒級 |
+| 與 Google 整合 | 需要授權設定 | **原生整合，不需要授權** |
+| 學習門檻 | 低（拖拉介面） | 中（需要寫簡單程式碼） |
+
+**結論：** 活動規模大、報名人數多時，Apps Script 比 Make 更穩定、更省錢。
+
+---
+
+#### Google Apps Script 是什麼？
+
+Google Apps Script 是 Google 提供的**免費雲端程式環境**，語法類似 JavaScript，可以直接操控所有 Google 服務（試算表、表單、Gmail、Drive 等），不需要架設任何伺服器。
+```
+Make 的做法：
+Google 表單 → Make（第三方平台）→ Discord
+
+Apps Script 的做法：
+Google 表單 → Apps Script（住在 Google 裡面）→ Discord
+```
+
+---
+
+#### 實際範例：表單送出時自動推播 Discord
+
+以下是取代「VIP 報名警報」Make 劇本的完整 Apps Script 程式碼：
+
+**步驟一：開啟 Apps Script**
+
+1. 開啟 `金門聚落文化營_報名總表` 試算表
+2. 上方選單「**擴充功能**」→「**Apps Script**」
+3. 會開啟一個程式碼編輯器
+
+**步驟二：貼入以下程式碼**
+```javascript
+// 設定你的 Discord Webhook URL
+const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/你的webhook網址";
+
+// 這個函式會在每次表單送出時自動執行
+function onFormSubmit(e) {
+  
+  // 取得這次送出的資料
+  const values = e.values;
+  
+  // 對應試算表的欄位順序（從第0欄開始數）
+  const timestamp    = values[0];
+  const name         = values[1];  // 姓名
+  const email        = values[2];  // Email信箱
+  const scene        = values[3];  // 參加場次
+  const phone        = values[4];  // 聯絡電話
+  const isVip        = values[5];  // 是否為VIP貴賓
+  
+  // 只有 VIP 才發送警報
+  if (isVip !== "是") return;
+  
+  // 組裝 Discord 訊息
+  const message = {
+    content: `🚨 **【VIP 報名警報】** 🚨\n\n` +
+             `有貴賓剛剛完成報名，請相關人員注意！\n\n` +
+             `▸ **姓名：** ${name}\n` +
+             `▸ **場次：** ${scene}\n` +
+             `▸ **信箱：** ${email}\n` +
+             `▸ **電話：** ${phone}\n` +
+             `▸ **報名時間：** ${timestamp}\n\n` +
+             `請於 30 分鐘內完成接待確認。`
+  };
+  
+  // 發送到 Discord
+  UrlFetchApp.fetch(DISCORD_WEBHOOK_URL, {
+    method: "post",
+    contentType: "application/json",
+    payload: JSON.stringify(message)
+  });
+}
+```
+
+**步驟三：設定表單觸發器**
+
+1. 左側選單點擊「**⏰ 觸發條件**」（時鐘圖示）
+2. 右下角「**+ 新增觸發條件**」
+3. 設定如下：
+
+    | 設定項目 | 填入內容 |
+    |---------|---------|
+    | 執行的函式 | `onFormSubmit` |
+    | 活動來源 | `試算表` |
+    | 活動類型 | `提交表單時` |
+
+4. 點擊「**儲存**」→ 授權 Google 帳號
+
+---
+
+#### 程式碼解析（給想學的同學）
+```javascript
+const isVip = values[5];      // 取得第5欄的值
+if (isVip !== "是") return;   // 不是VIP就直接結束，不做任何事
+```
+
+這兩行就是 Make 裡「過濾器」的程式碼版本。
+```javascript
+UrlFetchApp.fetch(DISCORD_WEBHOOK_URL, {
+  method: "post",             // HTTP POST 請求
+  contentType: "application/json",
+  payload: JSON.stringify(message)  // 把訊息轉成 JSON 格式傳出去
+});
+```
+
+這幾行就是 Make 裡「Discord Webhook Bot」節點的程式碼版本。
+
+> [!TIP]
+> **你會發現：**
+> Make 的每個「節點」，背後都對應著幾行程式碼。
+> 學會 Make 之後再來看程式碼，會發現其實沒有那麼難——
+> 因為你已經理解了背後的邏輯。
+>
+> **No-Code 工具是學習程式邏輯最好的跳板。**
+
+---
+
+#### Make vs Apps Script 選擇建議
+
+| 情境 | 建議工具 |
+|------|---------|
+| 活動報名人數 < 200 人 | Make 免費版就夠 |
+| 活動報名人數 > 200 人 | Apps Script |
+| 需要串接非 Google 的服務 | Make（支援 1,000+ 種服務） |
+| 所有流程都在 Google 生態系內 | Apps Script（更快更穩） |
+| 完全不想寫任何程式碼 | Make |
+| 想學一點程式基礎 | Apps Script |
+
+
+
 ### 📚 課後自學資源
 
 | 資源 | 用途 |
