@@ -52,6 +52,8 @@
 
 **工具：** [Google AI Studio](https://aistudio.google.com/)（免費，每分鐘 15 次請求）
 
+<img width="1791" height="873" alt="image" src="https://github.com/user-attachments/assets/a68478ca-1ca6-4e69-80a1-b3f1b425b46e" />
+
 1. 前往 Google AI Studio，用 Google 帳號登入
 2. 點擊左側「**Get API key**」
 3. 點擊「**Create API key**」→ 選擇 Google Cloud 專案（若無，點擊建立新專案）
@@ -61,7 +63,7 @@
     AIzaSy_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
-<!-- 📸 截圖：AI Studio 介面（API Key 遮住後八碼） -->
+<img width="478" height="390" alt="image" src="https://github.com/user-attachments/assets/f9c2fc6d-3dd1-4c64-9c53-31b7ea8ad764" />
 
 5. **先在 AI Studio 內測試辨識能力：**
    - 點擊左側「**Stream realtime**」
