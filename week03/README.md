@@ -63,7 +63,7 @@
     | 最大檔案數量 | 1 |
     | 最大檔案大小 | 10 MB |
 
-<img width="837" height="711" alt="image" src="https://github.com/user-attachments/assets/101e69a1-6af5-46a8-afa3-3957c671f551" />
+<img width="840" height="693" alt="image" src="https://github.com/user-attachments/assets/186ed59e-1da4-43ab-aa83-43a5aca3d50d" />
 
 3. 建立測試資料：找一張收據或轉帳截圖，填寫表單並上傳，送出
 
