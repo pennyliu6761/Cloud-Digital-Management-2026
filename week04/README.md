@@ -1,4 +1,4 @@
-## ⏰ Week 02：Google 表單魔法 — 從問卷到自動化文件工廠
+<img width="684" height="307" alt="image" src="https://github.com/user-attachments/assets/eb9aa6b9-8376-410c-bdbd-81bd14c1f1c4" />## ⏰ Week 02：Google 表單魔法 — 從問卷到自動化文件工廠
 
 **雲端與數位內容管理 ｜ 國立金門大學 工業工程與管理學系**
 
@@ -170,6 +170,8 @@
     | 值 | `^\d{7}$` |
     | 錯誤訊息 | `學號格式錯誤，請輸入 7 位數字（例如：1112001）` |
 
+<img width="795" height="381" alt="image" src="https://github.com/user-attachments/assets/5a93b34f-7b9d-457b-bcd2-56f7613d69f6" />
+
 #### Email 驗證
 
 1. 點擊 Q3「Email 信箱」→「**回應驗證**」
@@ -181,6 +183,8 @@
     | 條件 | 包含 |
     | 值 | `@` |
     | 錯誤訊息 | `請輸入有效的 Email 格式` |
+
+<img width="792" height="361" alt="image" src="https://github.com/user-attachments/assets/78c1eb37-3561-4f7b-a489-2ca5bb74b385" />
 
 #### 企業統一編號驗證（區段 4）
 
@@ -194,7 +198,7 @@
     | 值 | `^\d{8}$` |
     | 錯誤訊息 | `統一編號必須是 8 位數字` |
 
-<!-- 📸 截圖：學號資料驗證設定畫面 -->
+<img width="785" height="385" alt="image" src="https://github.com/user-attachments/assets/d24ae643-1696-4c45-853c-2be33717dde3" />
 
 ---
 
@@ -221,7 +225,11 @@
 
 5. 每題設定正確答案、分數、答案說明後點「**完成**」
 
-<!-- 📸 截圖：測驗模式設定畫面 + 其中一題的答案說明設定 -->
+<img width="684" height="307" alt="image" src="https://github.com/user-attachments/assets/10e6cb57-4ae3-4562-87ef-1a6e408ce782" />
+<img width="683" height="386" alt="image" src="https://github.com/user-attachments/assets/772a6b38-c47f-4551-abad-132ace20a728" />
+<img width="683" height="219" alt="image" src="https://github.com/user-attachments/assets/fce8590b-5d72-43c1-9d4c-e701cd515993" />
+<img width="681" height="384" alt="image" src="https://github.com/user-attachments/assets/fa1ee4cc-4682-40a0-8e1a-dca23b3e32a7" />
+<img width="563" height="856" alt="image" src="https://github.com/user-attachments/assets/e7e0d29c-30eb-41df-bd48-e599d9771393" />
 
 > [!TIP]
 > **🏆 第 1 小時 Checkpoint 完成！**
