@@ -659,14 +659,6 @@ const WEBHOOK_SCENE_C = "https://discord.com/api/webhooks/456789/defghi...";
 
 ---
 
-## 💡 進階補充：用 Google Apps Script 取代 Make
-
-> [!NOTE]
-> 這是給對程式有興趣的同學的延伸閱讀。
-> 不需要完全看懂，理解「為什麼要這樣做」比「怎麼寫」更重要。
-
----
-
 ### 為什麼要取代 Make？
 
 | | Make 免費版 | Google Apps Script |
@@ -679,19 +671,27 @@ const WEBHOOK_SCENE_C = "https://discord.com/api/webhooks/456789/defghi...";
 
 **結論：** 活動規模大、報名人數多時，Apps Script 比 Make 更穩定、更省錢。
 
+
 ---
 
-### Google Apps Script 是什麼？
+## 💡 進階補充 Part 2：GAS 整合 OCR.space 收據辨識
 
-Google Apps Script 是 Google 提供的**免費雲端程式環境**，語法類似 JavaScript，
-可以直接操控所有 Google 服務（試算表、表單、Gmail、Drive 等），不需要架設任何伺服器。
-```
-Make 的做法：
-Google 表單 → Make（第三方平台）→ Discord
+> [!NOTE]
+> 本節在 Part 1 的基礎上，加入 OCR 收據辨識功能。
+> 完成後整個系統完全不需要 Make，一支程式搞定所有事。
 
-Apps Script 的做法：
-Google 表單 → Apps Script（住在 Google 裡面）→ Discord
-```
+---
+
+### 與 Part 1 的差異
+
+| | Part 1（基礎版） | Part 2（完整版） |
+|---|---|---|
+| VIP 警報 | ✅ | ✅ |
+| 場次分流 | ✅ | ✅ |
+| OCR 收據辨識 | ❌ | ✅ |
+| 自動判斷 PDF / 圖片 | ❌ | ✅ |
+| 回填試算表 | ❌ | ✅ |
+| Discord #ai辨識 覆核通知 | ❌ | ✅ |
 
 ---
 
@@ -712,50 +712,70 @@ Google 表單 → Apps Script（住在 Google 裡面）→ Discord
 
 ---
 
-### 📌 步驟一：在 Discord 為每個頻道建立 Webhook
+### 📌 步驟一：申請 OCR.space 免費 API Key
 
-為以下每個頻道各建立一個 Webhook：
+**工具：** [OCR.space](https://ocr.space/ocrapi/freekey)（完全免費，不需要信用卡）
 
-| 頻道 | 用途 |
-|------|------|
-| `#vip-報名警報` | VIP 貴賓報名時通知 |
-| `#ai辨識` | OCR 收據辨識結果通知 |
-| `#a場次報到` | A 場次新報名通知 |
-| `#b場次報到` | B 場次新報名通知 |
-| `#c場次報到` | C 場次新報名通知 |
+1. 前往 [ocr.space/ocrapi/freekey](https://ocr.space/ocrapi/freekey)
+2. 填入你的 Email（其他欄位可以不填）
+3. 點擊送出
+4. 收第一封驗證信 → 點擊確認連結
+5. 收第二封信 → 裡面有你的 API Key，格式如下：
+```
+    K8xxxxxxxxxxxxxxxxx
+```
 
-**每個頻道的操作步驟：**
+<!-- 📸 截圖：OCR.space API Key 信件（Key 遮住後五碼） -->
 
-1. 對頻道點擊「**⚙️ 編輯頻道**」
-2. 左側選單「**整合**」→「**Webhook**」
-3. 點擊「**新 Webhook**」
+---
+
+### 📌 步驟二：在 Discord 新增 #ai辨識 頻道的 Webhook
+
+在 Part 1 的基礎上，再為 `#ai辨識` 頻道建立一個 Webhook：
+
+1. 對 `#ai辨識` 頻道點擊「**⚙️ 編輯頻道**」
+2. 「**整合**」→「**Webhook**」→「**新 Webhook**」
+3. 名稱填：`OCR辨識機器人`
+4. 展開後「**複製 Webhook 網址**」備用
+
+<!-- 📸 截圖：#ai辨識 頻道 Webhook 設定完成 -->
+
+---
+
+### 📌 步驟三：設定 Google Drive 資料夾公開權限
 
 > [!WARNING]
-> 必須點「新 Webhook」自己建立，才能複製 URL。
-> 由 Make 或其他平台建立的 Webhook，Discord 不允許複製網址。
+> Google 表單上傳的圖片預設是私人的，GAS 無法直接下載。
+> 需要先把資料夾設為公開，這個步驟只需要做一次。
 
-4. 名稱填入對應頻道名稱（例如：`a場次報到機器人`）
-5. 確認頻道正確
-6. 點擊剛建立的 Webhook 展開 →「**複製 Webhook 網址**」
-7. 貼到記事本備用，五個頻道都要做
+1. 開啟 [Google Drive](https://drive.google.com)
+2. 找到表單自動建立的上傳資料夾，名稱類似：
+```
+    金門聚落文化營 2026 — 線上報名表（檔案回覆）
+```
+3. 右鍵 →「**共用**」
+4. 「**一般存取權**」從「**受限**」改成「**知道連結的人**」
+5. 右側角色確認是「**檢視者**」
+6. 點擊「**完成**」
 
-<!-- 📸 截圖：Discord Webhook 設定頁面，顯示複製網址按鈕 -->
+<!-- 📸 截圖：Google Drive 資料夾共用設定畫面 -->
 
 ---
 
-### 📌 步驟二：開啟 Google Apps Script
+### 📌 步驟四：在試算表新增 AI判讀結果 欄位
 
 1. 開啟 `金門聚落文化營_報名總表` 試算表
-2. 上方選單「**擴充功能**」→「**Apps Script**」
-3. 清空編輯器原有內容
+2. 在最後一欄新增欄位名稱：`AI判讀結果`
+3. 記下這個欄位是第幾欄（A=1, B=2...）
+4. 待會填入程式碼的 `OCR_COLUMN` 設定
 
-<!-- 📸 截圖：Apps Script 編輯器畫面 -->
+<!-- 📸 截圖：試算表新增 AI判讀結果 欄位 -->
 
 ---
 
-### 📌 步驟三：填入完整程式碼
+### 📌 步驟五：用完整版程式碼取代 Part 1
 
-貼入以下完整程式碼：
+開啟 Apps Script，**清空全部內容**，貼入以下完整版程式碼：
 ```javascript
 // ====== 設定區（只需要修改這裡）======
 const WEBHOOK_VIP     = "https://discord.com/api/webhooks/vip頻道URL";
@@ -778,7 +798,7 @@ function sendToDiscord(webhookUrl, message) {
   });
 }
 
-// 下載圖片並呼叫 OCR.space 辨識
+// 下載檔案並呼叫 OCR.space 辨識
 function runOcr(driveUrl) {
 
   // 取出純 ID
@@ -869,7 +889,7 @@ function onFormSubmit(e) {
   const scene       = values[3];          // 參加場次
   const phone       = values[4];          // 聯絡電話
   const isVip       = values[5];          // 是否為VIP貴賓
-  const receiptUrl  = values[6];          // 請上傳匯款收據截圖（圖片格式）
+  const receiptUrl  = values[6];          // 請上傳匯款收據截圖
 
   // ── 1. VIP 警報 ──────────────────────────
   if (isVip === "是") {
@@ -904,13 +924,9 @@ function onFormSubmit(e) {
   // 只有上傳了收據才執行
   if (receiptUrl && receiptUrl.includes("drive.google.com")) {
 
-    // 呼叫 OCR 辨識
     const ocrText = runOcr(receiptUrl);
-
-    // 回填試算表
     updateSheet(rowNumber, ocrText);
 
-    // 推播 Discord 覆核通知
     sendToDiscord(WEBHOOK_AI_OCR,
       `💰 **【收據辨識通知】**\n\n` +
       `系統已自動辨識新報名者的匯款收據，請人工覆核。\n\n` +
@@ -927,21 +943,21 @@ function onFormSubmit(e) {
 // ====== 測試函式 ======
 function testOnFormSubmit() {
   const fakeEvent = {
-    range: { getRow: () => 2 },  // 假設資料在第 2 列
+    range: { getRow: () => 2 },
     values: [
-      "2026/03/24 14:00:00",                                      // Timestamp
-      "王小明",                                                    // 姓名
-      "wang@test.com",                                             // Email信箱
-      "C場：週日全天",                                              // 參加場次
-      "0912345678",                                                // 聯絡電話
-      "是",                                                        // 是否為VIP貴賓
-      "https://drive.google.com/open?id=你的測試收據圖片ID"          // 收據圖片
+      "2026/03/24 14:00:00",
+      "王小明",
+      "wang@test.com",
+      "C場：週日全天",
+      "0912345678",
+      "是",
+      "https://drive.google.com/open?id=你的測試收據圖片ID"
     ]
   };
   onFormSubmit(fakeEvent);
 }
 
-// ====== 除錯函式（測試下載是否正常）======
+// ====== 除錯函式（OCR 失敗時使用）======
 function debugDownload() {
   const driveUrl = "https://drive.google.com/open?id=你的測試收據圖片ID";
   const fileId = driveUrl.replace("https://drive.google.com/open?id=", "");
@@ -959,77 +975,24 @@ function debugDownload() {
 }
 ```
 
----
-
-### 設定區填寫說明
-
-| 變數 | 如何取得 |
-|------|---------|
-| `WEBHOOK_VIP` | Discord `#vip-報名警報` 頻道 → 整合 → Webhook → 複製網址 |
-| `WEBHOOK_AI_OCR` | Discord `#ai辨識` 頻道 → 整合 → Webhook → 複製網址 |
-| `WEBHOOK_SCENE_A/B/C` | 各場次頻道 → 同上 |
-| `OCR_API_KEY` | OCR.space 註冊信件裡的 API Key |
-| `SPREADSHEET_ID` | 試算表網址中 `/d/` 和 `/edit` 之間的那串字 |
-| `OCR_COLUMN` | 試算表裡 `AI判讀結果` 欄位是第幾欄（A=1, B=2...） |
+> [!WARNING]
+> **欄位順序確認：**
+> `values[6]` 對應的是收據上傳欄位。
+> 如果你的表單欄位順序不同，請對應調整數字。
+> 開啟試算表從左到右數欄位順序確認。
 
 > [!NOTE]
 > **如何找試算表 ID：**
-> 開啟試算表，看網址列：
 > ```
 > https://docs.google.com/spreadsheets/d/【這裡就是ID】/edit#gid=874013079
 > ```
 > 注意：`gid=` 後面的數字是工作表編號，不是試算表 ID。
 
-<img width="1108" height="83" alt="image" src="https://github.com/user-attachments/assets/46631b20-8c3e-48dd-ae3f-77d1f3f48041" />
+<!-- 📸 截圖：Apps Script 完整版程式碼畫面 -->
 
 ---
 
-### 檔案類型自動判斷邏輯
-```
-下載檔案
-    │
-    ├→ Content-Type 包含 "pdf"          → receipt.pdf
-    ├→ Content-Type 包含 "png"          → receipt.png
-    ├→ Content-Type 包含 "jpeg"/"jpg"   → receipt.jpg
-    └→ 以上都不符合，看檔案開頭內容：
-          ├→ 開頭是 "%PDF"              → receipt.pdf
-          └→ 其他                       → receipt.jpg（預設）
-```
-
-> [!NOTE]
-> **為什麼需要判斷檔案類型？**
-> Google Drive 有時會把圖片轉成 PDF 格式儲存，
-> 尤其是透過表單上傳的檔案。
-> 如果不判斷直接當圖片處理，OCR.space 會回傳辨識失敗。
-
----
-
-### 📌 步驟四：設定觸發條件
-
-> [!NOTE]
-> 這步驟完成後，GAS 就會在每次表單送出時**自動執行**，
-> 不需要你在場，也不需要手動點執行。
-
-1. 左側選單點擊「**⏰ 觸發條件**」（時鐘圖示）
-2. 右下角「**+ 新增觸發條件**」
-3. 設定如下：
-
-    | 設定項目 | 填入內容 |
-    |---------|---------|
-    | 執行的函式 | `onFormSubmit` |
-    | 執行部署 | `Head` |
-    | 活動來源 | `試算表` |
-    | 活動類型 | `提交表單時` |
-    | 失敗通知設定 | `每天通知` |
-
-4. 點擊「**儲存**」
-5. 跳出 Google 授權視窗 → 選擇你的帳號 → 點擊「**允許**」
-
-<!-- 📸 截圖：觸發條件設定完成畫面 -->
-
----
-
-### 📌 步驟五：測試
+### 📌 步驟六：測試
 
 #### 先用測試函式驗證
 
@@ -1044,32 +1007,55 @@ function debugDownload() {
     | `#ai辨識` | ✅ 收到 OCR 覆核通知 |
     | 試算表 `AI判讀結果` 欄 | ✅ 自動填入辨識文字 |
 
-#### 若 OCR 失敗，先執行除錯函式
-
-1. 函式選單切換到 `debugDownload` → 點「**▶ 執行**」
-2. 點擊下方「**執行記錄**」
-3. 確認 `Content type` 和 `First 500 chars` 的內容
-
-    | Content type 顯示 | 代表意思 |
-    |------------------|---------|
-    | `application/pdf` | 檔案是 PDF，程式會自動處理 |
-    | `image/jpeg` | 檔案是 JPG 圖片 |
-    | `text/html` | 下載失敗，拿到 HTML 頁面，檢查 Drive 資料夾是否已設為公開 |
-
-#### 最終真實表單測試
-
-1. 開啟報名表單，填寫一筆真實資料並上傳收據
-2. 觀察 Discord 各頻道是否在 10 秒內收到通知
-3. 確認試算表 `AI判讀結果` 欄位自動填入
-
-<!-- 📸 截圖：GAS 程式碼完整畫面 -->
-<!-- 📸 截圖：執行記錄顯示檔案類型判斷結果 -->
 <!-- 📸 截圖：Discord 四個頻道同時收到通知的畫面 -->
 <!-- 📸 截圖：試算表 AI判讀結果欄位自動填入的畫面 -->
 
 ---
 
-### 程式碼對照表：GAS vs Make
+#### 若 OCR 失敗，先執行除錯函式
+
+1. 函式選單切換到 `debugDownload` → 點「**▶ 執行**」
+2. 點擊下方「**執行記錄**」
+3. 確認輸出內容：
+
+    | Content type 顯示 | 代表意思 |
+    |------------------|---------|
+    | `application/pdf` | 檔案是 PDF，程式會自動處理 ✅ |
+    | `image/jpeg` | 檔案是 JPG 圖片 ✅ |
+    | `text/html` | 下載失敗，檢查 Drive 資料夾是否已設為公開 ❌ |
+
+<!-- 📸 截圖：執行記錄顯示檔案類型判斷結果 -->
+
+---
+
+#### 觸發條件不需要重新設定
+
+Part 1 已經設定好「提交表單時執行 `onFormSubmit`」，
+完整版程式碼的主函式名稱相同，**不需要重新設定觸發條件**。
+
+---
+
+### 檔案類型自動判斷邏輯說明
+```
+下載檔案
+    │
+    ├→ Content-Type 包含 "pdf"          → receipt.pdf
+    ├→ Content-Type 包含 "png"          → receipt.png
+    ├→ Content-Type 包含 "jpeg"/"jpg"   → receipt.jpg
+    └→ 以上都不符合，看檔案開頭：
+          ├→ 開頭是 "%PDF"              → receipt.pdf
+          └→ 其他                       → receipt.jpg（預設）
+```
+
+> [!NOTE]
+> **為什麼需要自動判斷？**
+> Google Drive 有時會把圖片轉成 PDF 格式儲存，
+> 尤其是透過表單上傳的檔案。
+> 如果不判斷直接當圖片處理，OCR.space 會回傳辨識失敗。
+
+---
+
+### 完整程式碼對照表：GAS vs Make
 
 | GAS 程式碼 | 對應的 Make 功能 |
 |-----------|----------------|
@@ -1081,17 +1067,9 @@ function debugDownload() {
 | `updateSheet(rowNumber, ocrText)` | Google Sheets Update Row 節點 |
 | 觸發條件「提交表單時」 | Make Scenario 的 Form Trigger |
 
-> [!TIP]
-> **你會發現：**
-> Make 的每個「節點」，背後都對應著幾行程式碼。
-> 學會 Make 之後再來看程式碼，會發現其實沒有那麼難——
-> 因為你已經理解了背後的邏輯。
->
-> **No-Code 工具是學習程式邏輯最好的跳板。**
-
 ---
 
-### Make vs Apps Script 選擇建議
+### Make vs Apps Script 最終選擇建議
 
 | 情境 | 建議工具 |
 |------|---------|
@@ -1102,15 +1080,14 @@ function debugDownload() {
 | 完全不想寫任何程式碼 | Make |
 | 想學一點程式基礎 | Apps Script |
 
-### 學習路徑建議
-
 > [!TIP]
+> **學習路徑建議：**
 > ```
 > Make（理解自動化邏輯）
 >     ↓
-> GAS 基礎版（看懂程式碼和 Make 的對應關係）
+> GAS Part 1（VIP 警報 + 場次分流，看懂程式碼和 Make 的對應關係）
 >     ↓
-> GAS 完整版（自己修改程式碼，加入新功能）
+> GAS Part 2（加入 OCR，學會呼叫外部 API）
 >     ↓
 > 期末專題：自選情境，自己設計整套系統
 > ```
