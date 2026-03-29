@@ -350,7 +350,7 @@
     	國立金門大學 工業工程與管理學系 ｜ 2026 學年度
 ```
 
-<!-- 📸 截圖：實習同意書模板的 Google 文件畫面 -->
+<img width="552" height="725" alt="image" src="https://github.com/user-attachments/assets/1102f6b0-ad81-465e-bdfa-d87e8231b007" />
 
 ---
 
