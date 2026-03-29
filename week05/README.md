@@ -1,183 +1,258 @@
-# ⚙️ Week 03：Make 進階 — 打造有商業邏輯的自動化架構
+# 🔌 Week 05：API 深潛 — REST API × JSON × HTTP 方法
 
 **雲端與數位內容管理 ｜ 國立金門大學 工業工程與管理學系**
 
-> **本週課程理念：** Week 01 我們學會了「讓資料從 A 流到 B」。
-> 但真實的商業流程很少是一條直線——資料需要根據條件分流、需要逐筆處理、需要在出錯時通知人。
+> **本週課程理念：** Week 01 你已經成功呼叫了 OCR.space API——
+> 但你知道為什麼要用 POST 而不是 GET 嗎？
+> 為什麼 `apikey` 要放在 Body 而不是 URL？
+> JSON 格式到底是什麼？
 >
-> **今天我們要讓自動化流程真正「有智慧」。**
+> **今天我們補上理論，讓你從「照著做」進化到「知道為什麼這樣做」。**
+> 理解了原理，你就能串接任何 API，不再依賴教學文件。
 
 ---
 
 ## 🎯 本週學習目標
 
 學完本週，你將能夠：
-- ✅ 用 **Router** 讓一個觸發器分岔成多條支線，根據條件執行不同動作
-- ✅ 用 **Iterator** 把陣列資料拆開，讓 Make 逐筆處理每一項
-- ✅ 設計**錯誤處理機制**，系統出錯時自動推播通知，不讓流程默默失敗
-- ✅ 理解 **Webhook** 的雙向應用：不只接收，還能主動觸發外部系統
-- ✅ 把多個劇本組合成一套**完整的自動化工作流系統**
+- ✅ 用白話解釋什麼是 REST API、端點（Endpoint）、請求與回應
+- ✅ 分辨 HTTP 方法（GET / POST / PUT / DELETE）的差異與適用情境
+- ✅ 讀懂 JSON 格式，並手動撰寫簡單的 JSON 資料
+- ✅ 用 **Hoppscotch**（免費線上工具）親手呼叫真實 API，不需要寫任何程式碼
+- ✅ 把 API 知識回頭應用到 Make，解釋 Week 01 每個設定的原因
 
 ---
 
-## 🏢 本週實作情境：【工管系廠商實習處理中心 2.0】
+## 🏢 本週實作情境：【API 偵探任務】
 
-> 💼 **情境升級：** Week 02 你建立了實習申請表和 AutoCrat 文件工廠。
-> 但系辦反映：
+> 🔍 **你的角色：** 你是工管系「數位化委員會」的 API 審查員。
+> 系上每季都會引進新的雲端服務，你的任務是在串接到 Make 之前，
+> 先「手動測試」這些 API，確認它們正常運作、回傳的資料格式正確。
 >
-> 1. 不同場次的申請要通知不同的工作人員頻道（**需要分流**）
-> 2. 一份申請可能有多個附件，需要逐一處理（**需要迭代**）
-> 3. 昨天 OCR 流程靜靜失敗了三小時，沒有人知道（**需要錯誤處理**）
->
-> **今天的任務：把 Week 01 的單線流程升級成企業級的健壯系統。**
+> **今天要測試三個 API：**
+> 1. 公開天氣 API（練習 GET 請求）
+> 2. JSONPlaceholder 測試 API（練習 POST 請求）
+> 3. 回頭驗證 OCR.space API（把 Week 01 的設定用理論解釋一遍）
 
 ---
 
-## ⏰ 第 1 小時：Router — 讓資料根據條件分流
+## ⏰ 第 1 小時：API 與 HTTP 基礎概念
 
-> 🎯 **本小時目標：** 理解並實作 Make 的 Router 模組，
-> 讓同一個觸發器根據不同條件，執行完全不同的動作。
+> 🎯 **本小時目標：** 建立對 API 和 HTTP 的正確心智模型，
+> 讓你能用日常語言解釋這些概念。
 
 ---
 
-### 💡 觀念講解：Router 是什麼？
+### 💡 觀念一：什麼是 API？
 
-**Router（路由器）** 是 Make 最重要的流程控制模組。
+**API（Application Programming Interface）** 是兩個軟體之間的「服務窗口」。
+
+現實比喻：
 ```
-沒有 Router 的世界：
-[ 觸發器 ] → [ 動作 A ]
-
-有 Router 的世界：
-                    ┌→ 條件1成立 → [ 動作 A ]
-[ 觸發器 ] → Router ┤
-                    ├→ 條件2成立 → [ 動作 B ]
-                    │
-                    └→ 其他條件  → [ 動作 C ]
+你（客人）        服務生（API）        廚房（伺服器）
+    │                  │                   │
+    │ 我要一份牛排      │                   │
+    │ ─────────────→   │                   │
+    │                  │ 牛排，5分熟，不加醬 │
+    │                  │ ─────────────────→ │
+    │                  │                   │ 準備中...
+    │                  │         ←───────── │
+    │ 這是你的牛排      │                   │
+    │ ←─────────────   │                   │
 ```
 
-**生活比喻：** Router 就像交通號誌。
-同樣是「一輛車」（資料），根據車牌顏色（條件）分流到不同車道（支線）。
-
-| 沒有 Router | 有 Router |
-|-----------|---------|
-| 所有資料執行相同動作 | 根據條件執行不同動作 |
-| 邏輯只能靠 Filter 過濾 | 可以同時處理多種情況 |
-| A 不符合就什麼都不做 | A 不符合可以走 B 路線 |
-
----
-
-### 📌 任務 1-1：實習申請場次分流系統
-
-**情境：** 實習申請表有三種申請類型（國內／海外／自行開發），
-每種類型要通知不同的 Discord 頻道：
-
-| 實習類型 | 通知頻道 |
+| 現實場景 | API 對應 |
 |---------|---------|
-| 國內企業實習 | `#國內實習-審核` |
-| 海外實習 | `#海外實習-審核` |
-| 自行開發 | `#自開發-審核` |
-
-#### 步驟一：在 Discord 建立三個頻道並取得 Webhook URL
-
-依照 Week 01 的方式，為以下三個頻道各建立一個 Webhook：
-- `#國內實習-審核`
-- `#海外實習-審核`
-- `#自開發-審核`
-
-把三個 Webhook URL 分別貼到記事本備用。
-
-<!-- 📸 截圖：Discord 三個頻道建立完成 -->
+| 你（客人）| 你的程式 / Make |
+| 服務生 | API |
+| 廚房 | 伺服器（資料庫、運算系統）|
+| 你的點餐 | HTTP Request（請求）|
+| 送來的牛排 | HTTP Response（回應）|
 
 ---
 
-#### 步驟二：建立新的 Make 劇本
+### 💡 觀念二：什麼是 REST API？
 
-1. 前往 Make.com，建立新劇本
-2. 新增觸發器：**Google Sheets → Watch New Rows**
-3. 連結到 Week 02 的實習申請試算表
+**REST（Representational State Transfer）** 是目前最普遍的 API 設計規範。
 
-<!-- 📸 截圖：Google Sheets 觸發器設定 -->
+符合 REST 規範的 API 稱為 **RESTful API**，它有幾個特徵：
 
----
-
-#### 步驟三：新增 Router 模組
-
-1. 點擊 Google Sheets 節點右側的「**+**」
-2. 搜尋「**Flow Control**」→ 選擇「**Router**」
-3. Router 會自動展開成兩條支線，你可以繼續點擊「**+**」新增第三條
-
-<!-- 📸 截圖：Router 模組展開後的三條支線畫布 -->
-
----
-
-#### 步驟四：為每條支線設定過濾條件
-
-**支線 1 — 國內企業實習：**
-
-1. 點擊支線 1 上的**扳手圖示（Filter）**
-2. 設定：
-
-    | 設定項目 | 填入內容 |
-    |---------|---------|
-    | Label | `國內企業實習` |
-    | Condition | `實習類型` → `Equal to (text)` → `國內企業實習` |
-
-**支線 2 — 海外實習：**
-
-條件：`實習類型` Equal to `海外實習`
-
-**支線 3 — 自行開發：**
-
-條件：`實習類型` Equal to `自行開發實習單位`
-
-<!-- 📸 截圖：其中一條支線的 Filter 設定畫面 -->
-
----
-
-#### 步驟五：為每條支線加入 Discord 通知
-
-每條支線各自新增一個 **Discord → Send a Message by Webhook Bot**，
-填入對應頻道的 Webhook URL 和通知訊息：
-
-**支線 1 訊息範例：**
+1. **用 URL 表示資源**
 ```
-📋 **【國內企業實習申請】**
-
-▸ **申請人：** {{姓名}}
-▸ **學號：** {{學號}}
-▸ **實習企業：** {{實習企業名稱}}
-▸ **申請時間：** {{Timestamp}}
-
-請於 3 個工作天內完成審核。
+    https://api.example.com/users          → 所有使用者
+    https://api.example.com/users/42       → 第 42 號使用者
+    https://api.example.com/users/42/posts → 第 42 號使用者的所有文章
 ```
 
-**支線 2 / 3** 訊息格式相同，只換開頭標題和對應欄位。
+2. **用 HTTP 方法表示動作**
 
-<!-- 📸 截圖：Make 完整劇本畫布（Google Sheets → Router → 三條支線） -->
+    | HTTP 方法 | 動作 | 白話說 |
+    |---------|------|-------|
+    | **GET** | 讀取 | 給我看這個資源 |
+    | **POST** | 新增 | 幫我建立一個新的資源 |
+    | **PUT** | 更新（全部） | 把這個資源整個換掉 |
+    | **PATCH** | 更新（部分） | 只改這個資源的某些欄位 |
+    | **DELETE** | 刪除 | 刪掉這個資源 |
 
----
+3. **用 HTTP 狀態碼表示結果**
 
-#### 步驟六：壓力測試
-
-填寫三筆不同類型的實習申請，確認三個 Discord 頻道各自收到對應的通知。
-
-<!-- 📸 截圖：三個 Discord 頻道各自收到通知的畫面 -->
+    | 狀態碼 | 意思 | 常見情境 |
+    |--------|------|---------|
+    | **200** | 成功 | 一切正常 |
+    | **201** | 已建立 | POST 新增成功 |
+    | **400** | 請求錯誤 | 你傳的資料格式有問題 |
+    | **401** | 未授權 | API Key 錯誤或未提供 |
+    | **403** | 禁止存取 | 你沒有權限 |
+    | **404** | 找不到 | 這個資源不存在 |
+    | **429** | 太多請求 | 超過 API 速率限制 |
+    | **500** | 伺服器錯誤 | 對方的系統出問題了 |
 
 > [!NOTE]
-> **Router vs Filter 的差異**
->
-> | | Filter | Router |
-> |---|---|---|
-> | 不符合條件時 | 整個流程停止 | 走其他支線 |
-> | 適合情境 | 只有一種條件需要處理 | 多種條件各有對應動作 |
-> | 支線數量 | 只有一條（通過或不通過）| 可以有無限條支線 |
+> **為什麼要記狀態碼？**
+> Week 03 的錯誤處理中，`{{error.message}}` 通常包含狀態碼。
+> 看到 `401` 你就知道是 API Key 問題，看到 `429` 就知道要降低呼叫頻率。
+> 這讓你能快速診斷問題，不需要每次都去查文件。
+
+---
+
+### 💡 觀念三：什麼是 JSON？
+
+**JSON（JavaScript Object Notation）** 是 API 資料交換最常用的格式。
+
+把 JSON 想成是**有格式的文字**，讓電腦和人類都能讀懂：
+```json
+{
+  "姓名": "王大明",
+  "學號": "1112001",
+  "實習類型": "國內企業",
+  "企業清單": ["台積電", "聯電", "鴻海"],
+  "是否核准": true,
+  "月薪": 32000
+}
+```
+
+**JSON 的六種資料類型：**
+
+| 類型 | 範例 | 說明 |
+|------|------|------|
+| **String（字串）** | `"王大明"` | 用雙引號包住的文字 |
+| **Number（數字）** | `32000` | 不用引號 |
+| **Boolean（布林）** | `true` / `false` | 只有這兩個值 |
+| **Array（陣列）** | `["台積電", "聯電"]` | 用方括號，多個值 |
+| **Object（物件）** | `{"key": "value"}` | 用大括號，鍵值對 |
+| **Null（空值）** | `null` | 表示沒有值 |
+
+**常見錯誤：**
+```json
+// ❌ 錯誤：用單引號
+{'姓名': '王大明'}
+
+// ❌ 錯誤：最後一個元素有逗號
+{"姓名": "王大明", "學號": "1112001",}
+
+// ✅ 正確
+{"姓名": "王大明", "學號": "1112001"}
+```
+
+---
+
+### 📌 任務 1-1：安裝並認識 Hoppscotch
+
+**工具：** [Hoppscotch](https://hoppscotch.io/)（完全免費，不需要安裝，瀏覽器直接用）
+
+1. 前往 [hoppscotch.io](https://hoppscotch.io/)
+2. 不需要登入，直接使用
+3. 認識介面的四個區域：
+```
+┌─────────────────────────────────────────────┐
+│  方法 [GET▼]  URL 欄位                [Send] │  ← 請求設定區
+├─────────────────────────────────────────────┤
+│  Params │ Headers │ Body │ Auth             │  ← 請求細節區
+├─────────────────────────────────────────────┤
+│  Response                                    │  ← 回應顯示區
+│  Status: 200 OK                             │
+│  {"result": "..."}                          │
+└─────────────────────────────────────────────┘
+```
+
+<!-- 📸 截圖：Hoppscotch 介面初始畫面 -->
+
+---
+
+### 📌 任務 1-2：第一個 API 呼叫 — GET 天氣資料
+
+**API：** Open-Meteo（完全免費，不需要 API Key）
+
+1. 在 Hoppscotch 的方法下拉選 **GET**
+2. URL 欄位輸入：
+```
+    https://api.open-meteo.com/v1/forecast?latitude=24.43&longitude=118.32&current=temperature_2m,wind_speed_10m
+```
+
+3. 點擊「**Send**」
+4. 觀察右側 Response 區域出現的 JSON 資料
+
+**Response 解析：**
+```json
+{
+  "latitude": 24.43,
+  "longitude": 118.32,
+  "current": {
+    "temperature_2m": 26.4,
+    "wind_speed_10m": 12.3
+  }
+}
+```
+
+> [!NOTE]
+> **URL 解析：**
+> ```
+> https://api.open-meteo.com/v1/forecast
+>     ?latitude=24.43          ← 金門的緯度
+>     &longitude=118.32        ← 金門的經度
+>     &current=temperature_2m  ← 要哪些資料（當前氣溫）
+>     ,wind_speed_10m          ← 加逗號表示要多個欄位
+> ```
+> URL 裡 `?` 後面的部分叫做 **Query String（查詢參數）**，
+> 這是 GET 請求傳遞資料的方式——直接夾在 URL 裡。
+
+<!-- 📸 截圖：Hoppscotch 呼叫天氣 API 成功，顯示 JSON 回應 -->
+
+---
+
+### 📌 任務 1-3：在 Hoppscotch 的 Params 分頁設定參數
+
+URL 裡的查詢參數也可以在 **Params** 分頁填寫，效果完全相同：
+
+1. 清空 URL 欄位，只保留：
+```
+    https://api.open-meteo.com/v1/forecast
+```
+2. 點擊「**Params**」分頁
+3. 新增以下參數：
+
+    | Key | Value |
+    |-----|-------|
+    | `latitude` | `24.43` |
+    | `longitude` | `118.32` |
+    | `current` | `temperature_2m,wind_speed_10m` |
+
+4. 點擊「**Send**」，確認結果和剛才一樣
+
+> [!TIP]
+> **Params 分頁 vs 直接寫在 URL 裡：**
+> 效果完全相同，Params 分頁只是讓你看得更清楚，
+> Hoppscotch 會自動把它們組合成正確的 URL 格式。
+> 在 Make 的 HTTP 模組裡，也有一樣的 Query Parameters 設定。
+
+<!-- 📸 截圖：Hoppscotch Params 分頁填寫參數後的畫面 -->
 
 > [!TIP]
 > **🏆 第 1 小時 Checkpoint 完成！**
 >
-> - ✅ 同一個觸發器根據實習類型分流到三個不同 Discord 頻道
-> - ✅ 理解 Router 和 Filter 的本質差異
-> - ✅ 完成企業級的多條件分流自動化架構
+> - ✅ 能用白話解釋 API、REST、HTTP 方法、狀態碼
+> - ✅ 能讀懂 JSON 格式，知道六種資料類型
+> - ✅ 成功用 Hoppscotch 呼叫第一個真實 API，取得金門即時天氣資料
 
 ---
 
@@ -188,176 +263,238 @@
 
 ---
 
-#### 【練習 1-A】Router 四路分流（基礎）
+#### 【練習 1-A】改變 API 參數（基礎）
 
-把你的 Router 擴充成四條支線，加入第四條：
+修改天氣 API 的請求，加入更多資料欄位：
 
-- 條件：`審核狀態` Equal to `退件`
-- 動作：發送 Discord 通知到 `#退件通知` 頻道
-- 訊息內容：包含申請人姓名、學號、退件時間，以及「請於 5 個工作天內重新申請」的說明
+1. 在 `current` 參數加入 `relative_humidity_2m`（相對濕度）和 `precipitation`（降雨量）
+2. 新增一個參數 `timezone=Asia/Taipei`，讓時間顯示台灣時區
 
-完成後填寫一筆審核狀態為「退件」的測試資料，截圖 Discord 收到通知的畫面。
-
----
-
-#### 【練習 1-B】Router + Gmail 雙通知（進階）
-
-在支線 1（國內企業實習）的 Discord 通知之後，**再串接一個 Gmail 通知**，
-自動寄信給申請學生確認收件：
-
-- 收件人：`{{Email信箱}}`
-- 主旨：`【工管系實習處理中心】您的實習申請已收件 — {{姓名}}`
-- 內文：包含申請人姓名、企業名稱、預計審核完成時間（3 個工作天後）
-
-> [!TIP]
-> 在同一條支線上，Router 後面可以串接多個動作模組，
-> 依序執行：Discord 通知 → Gmail 寄信，兩個動作都會完成。
-
-截圖 Make 支線 1 的完整流程（Discord + Gmail 兩個節點）。
-
----
-
-#### 【練習 1-C】觀念問答（思考題）
-
-請用自己的話（100 字以內）回答，貼到課堂共用文件：
-
-> ❓ 如果你的 Router 有三條支線，但某一筆資料三個條件都不符合，
-> Make 會怎麼處理這筆資料？這會不會造成問題？
-> 你有什麼方法可以確保每一筆資料都被某條支線處理到？
-
----
-
-## ⏰ 第 2 小時：Iterator — 讓 Make 逐筆處理陣列資料
-
-> 🎯 **本小時目標：** 理解陣列（Array）的概念，
-> 並用 Iterator 把陣列拆開，讓 Make 對每一項資料執行相同的動作。
-
----
-
-### 💡 觀念講解：陣列是什麼？Iterator 解決什麼問題？
-
-**陣列（Array）** 是一個裝著多個值的容器。
+更新後的 URL 應該類似：
 ```
-一般變數：  姓名 = "王大明"           （一個值）
-陣列變數：  附件清單 = ["合約.pdf",    （多個值）
-                       "成績單.pdf",
-                       "推薦信.pdf"]
+https://api.open-meteo.com/v1/forecast?latitude=24.43&longitude=118.32&current=temperature_2m,wind_speed_10m,relative_humidity_2m,precipitation&timezone=Asia/Taipei
 ```
 
-**問題：** Make 的大部分模組一次只能處理一個值。
-如果你有一個包含三個附件的陣列，直接帶入模組，它不知道要處理哪一個。
+截圖 Response 顯示新增欄位的結果。
 
-**Iterator 的解法：**
+---
+
+#### 【練習 1-B】手寫 JSON（進階）
+
+不用任何工具，純手動在記事本寫出以下資料的 JSON 格式：
+
+> 一份實習申請資料：
+> - 姓名：陳小明
+> - 學號：1113005
+> - 實習類型：海外實習
+> - 申請的企業清單（陣列）：日立製作所、豐田汽車
+> - 是否已取得簽證：否（用布林值）
+> - 預計實習天數：90
+> - 指導教授資訊（巢狀物件）：姓名為「林教授」，分機為「2345」
+
+寫完後貼到 [jsonlint.com](https://jsonlint.com/) 驗證格式是否正確，截圖驗證通過的畫面。
+
+---
+
+#### 【練習 1-C】狀態碼診斷（思考題）
+
+以下三個錯誤場景，請說明最可能的狀態碼是什麼，以及如何解決：
+
+1. 你把 API Key 打錯了
+2. 你要查詢的使用者 ID 不存在
+3. 你的 Make 劇本在 1 分鐘內呼叫 API 超過 100 次
+
+---
+
+## ⏰ 第 2 小時：POST 請求與 Headers — API 的身份驗證
+
+> 🎯 **本小時目標：** 學會 POST 請求的結構，
+> 理解 API Key 的各種傳遞方式，並用理論重新解釋 Week 01 的 OCR.space 設定。
+
+---
+
+### 💡 觀念一：GET vs POST 的核心差異
 ```
-陣列 ["合約.pdf", "成績單.pdf", "推薦信.pdf"]
-         ↓ Iterator 拆開
-    第1次執行 → "合約.pdf"    → 後續模組處理
-    第2次執行 → "成績單.pdf"  → 後續模組處理
-    第3次執行 → "推薦信.pdf"  → 後續模組處理
-```
+GET 請求：資料放在 URL 裡（公開可見）
+    https://api.example.com/search?q=台積電&page=1
+    └─ 所有人看網址就能看到你在搜尋什麼
 
-> Iterator 就像是把一疊卡片一張一張翻開，
-> 讓後面的人每次只看到一張，處理完再換下一張。
-
----
-
-### 📌 任務 2-1：建立含多個附件的測試情境
-
-**情境：** 系辦要把試算表中每位學生的「需繳交文件清單」，
-逐一發送 Discord 提醒給對應的審核人員。
-
-試算表新增一欄「**需繳交文件**」，填入以下格式（用逗號分隔）：
-
-| 姓名 | 需繳交文件 |
-|------|---------|
-| 王大明 | 實習同意書,成績單,在學證明 |
-| 李美麗 | 實習同意書,護照影本,簽證影本,保險證明 |
-| 陳志偉 | 實習同意書,統一編號證明,接洽說明書 |
-
-<!-- 📸 截圖：試算表填入需繳交文件欄位 -->
-
----
-
-### 📌 任務 2-2：用 Iterator 逐一處理文件清單
-
-#### 步驟一：建立新劇本
-
-1. 新增觸發器：**Google Sheets → Watch New Rows**
-2. 連結實習申請試算表
-
----
-
-#### 步驟二：新增 Text Parser 把字串轉成陣列
-
-「需繳交文件」欄位的值是一段文字（`"實習同意書,成績單,在學證明"`），
-不是陣列，需要先轉換。
-
-1. 新增「**Text Parser**」→「**Split text into segments**」
-2. 設定：
-
-    | 設定項目 | 填入內容 |
-    |---------|---------|
-    | Text | `{{需繳交文件}}` 變數 |
-    | Separator | `,`（逗號）|
-
-<!-- 📸 截圖：Text Parser 設定畫面 -->
-
----
-
-#### 步驟三：新增 Iterator
-
-1. 新增「**Flow Control**」→「**Iterator**」
-2. **Array** 欄位：選擇 Text Parser 輸出的陣列變數
-
-<!-- 📸 截圖：Iterator 設定畫面 -->
-
----
-
-#### 步驟四：Iterator 後面串接 Discord 通知
-
-1. 新增 **Discord → Send a Message by Webhook Bot**
-2. Message 欄位：
-```
-    📎 **【文件繳交提醒】**
-
-    申請人 **{{姓名}}** 需繳交以下文件：
-    ▸ {{value}}
-
-    請確認上述文件已備妥後，至系辦完成繳交。
+POST 請求：資料放在 Body 裡（不在 URL 裡）
+    https://api.example.com/apply
+    Body: {"姓名": "王大明", "密碼": "mypassword"}
+    └─ 資料在請求內容裡，URL 看不到
 ```
 
-    > `{{value}}` 是 Iterator 每次傳出的單一項目值，
-    > 也就是每次只顯示一個文件名稱。
+**選擇原則：**
 
-<!-- 📸 截圖：Make 完整劇本（Sheets → Text Parser → Iterator → Discord） -->
+| 情境 | 用 GET | 用 POST |
+|------|--------|---------|
+| 查詢資料 | ✅ | |
+| 新增資料 | | ✅ |
+| 傳送敏感資訊（密碼、API Key） | ❌ 不安全 | ✅ |
+| 上傳檔案 | ❌ 無法 | ✅ |
+| 可以被書籤收藏的請求 | ✅ | ❌ |
 
 ---
 
-#### 步驟五：執行測試
+### 💡 觀念二：API Key 的三種傳遞方式
 
-點擊「**Run once**」，觀察 Discord 頻道收到幾則訊息：
+不同的 API 設計者選擇不同的 Key 傳遞位置：
 
-- 王大明：應收到 **3 則**（3 個文件）
-- 李美麗：應收到 **4 則**（4 個文件）
-- 陳志偉：應收到 **3 則**（3 個文件）
+**方式 1：放在 URL 的 Query String**
+```
+https://api.example.com/data?apikey=K84827219788957
+```
+⚠️ 最不安全，Key 暴露在 URL 裡，會被記錄在伺服器 Log 中
 
-<!-- 📸 截圖：Discord 頻道收到多則逐項文件通知 -->
+**方式 2：放在 Headers**
+```
+GET https://api.example.com/data
+Headers:
+  Authorization: Bearer K84827219788957
+```
+✅ 最常見、最安全，Key 不在 URL 裡
+
+**方式 3：放在 Body（表單欄位）**
+```
+POST https://api.example.com/parse
+Body (multipart/form-data):
+  apikey = K84827219788957
+  file = [圖片檔案]
+```
+✅ 上傳檔案時使用，OCR.space 用這種方式
 
 > [!NOTE]
-> **Iterator 執行邏輯**
+> **這就是為什麼 Week 01 的 OCR.space 要這樣設定！**
 >
-> Iterator 每次只輸出陣列的一個元素，然後讓後面的模組執行一次。
-> 陣列有幾個元素，後面的模組就執行幾次。
+> OCR.space 需要同時接收：
+> - `apikey`（身份驗證）
+> - `file`（圖片檔案二進位資料）
 >
-> 這就是為什麼 3 個文件會產生 3 則 Discord 訊息。
+> 只有 `multipart/form-data` 格式的 POST 請求才能同時傳送文字和檔案，
+> 所以 Body type 必須選 `multipart/form-data`，不能選 `JSON`。
+
+---
+
+### 📌 任務 2-1：POST 請求練習 — JSONPlaceholder
+
+**API：** [JSONPlaceholder](https://jsonplaceholder.typicode.com/)（免費測試用 API，不需要 Key）
+
+這個 API 模擬一個「部落格系統」，提供文章、留言、使用者等假資料，
+是練習 HTTP 方法最好的工具。
+
+#### 步驟一：先用 GET 查詢現有文章
+
+1. 方法選 **GET**
+2. URL：`https://jsonplaceholder.typicode.com/posts/1`
+3. 點擊「**Send**」
+
+Response：
+```json
+{
+  "userId": 1,
+  "id": 1,
+  "title": "sunt aut facere...",
+  "body": "quia et suscipit..."
+}
+```
+
+<!-- 📸 截圖：GET 查詢單篇文章的結果 -->
+
+---
+
+#### 步驟二：用 POST 新增一篇文章
+
+1. 方法改為 **POST**
+2. URL：`https://jsonplaceholder.typicode.com/posts`
+3. 點擊「**Body**」分頁 → 選擇 **raw** → 右側格式選 **JSON**
+4. 輸入以下 JSON：
+```json
+    {
+      "title": "工管系實習申請系統說明",
+      "body": "本系統整合 Google 表單、AutoCrat 與 Make，實現實習申請全流程自動化。",
+      "userId": 1
+    }
+```
+
+5. 點擊「**Send**」
+
+Response（注意狀態碼是 **201 Created**）：
+```json
+{
+  "title": "工管系實習申請系統說明",
+  "body": "本系統整合 Google 表單...",
+  "userId": 1,
+  "id": 101
+}
+```
+
+> [!NOTE]
+> 伺服器回傳的 JSON 比你送出的多了一個 `"id": 101`，
+> 這是伺服器自動分配的新資源 ID。
+> 這是 RESTful API 的標準行為——新增成功後，
+> 伺服器告訴你「你的資源被分配到 ID 101」。
+
+<!-- 📸 截圖：POST 新增文章成功，狀態碼 201 -->
+
+---
+
+#### 步驟三：用 Headers 傳遞 Content-Type
+
+如果你的 POST 請求沒有指定 Content-Type，
+伺服器可能不知道 Body 裡的資料是什麼格式。
+
+1. 點擊「**Headers**」分頁
+2. 新增一個 Header：
+
+    | Key | Value |
+    |-----|-------|
+    | `Content-Type` | `application/json` |
+
+3. 重新送出，確認伺服器正確解析
+
+> [!NOTE]
+> **Content-Type 是什麼？**
+> 是你告訴伺服器「我送給你的 Body 資料是什麼格式」的 Header。
+>
+> | Content-Type | 對應格式 |
+> |-------------|---------|
+> | `application/json` | JSON 格式 |
+> | `multipart/form-data` | 表單格式（可含檔案）|
+> | `application/x-www-form-urlencoded` | 傳統表單格式 |
+>
+> 這就是 Week 01 Make 裡 **Body content type** 設定的意義！
+
+---
+
+### 📌 任務 2-2：用理論重新解釋 Week 01 的 OCR.space 設定
+
+現在你有了足夠的理論知識，可以解釋 Week 01 的每一個設定：
+
+打開你在 Week 01 的 Make 截圖（HTTP Make a Request 節點），
+對照以下解析表，確認每個設定你都能說出原因：
+
+| Make 設定 | 值 | 原因 |
+|---------|---|------|
+| URL | `https://api.ocr.space/parse/image` | OCR.space 的 API 端點（Endpoint） |
+| Method | `POST` | 需要上傳圖片檔案，GET 無法傳送檔案 |
+| Authentication type | `No authentication` | OCR.space 的 Key 放在 Body 裡，不用 Make 的 Auth 機制 |
+| Body content type | `multipart/form-data` | 唯一能同時傳送文字（apikey）和檔案的格式 |
+| Field 1 Name: `apikey` | 你的 Key | 身份驗證，放在 Body 而非 URL，避免 Key 洩漏 |
+| Field 2 Name: `file` | 圖片 Data | 圖片的二進位內容 |
+| Field 2 File name: `receipt.jpg` | `receipt.jpg` | 告訴 OCR.space 這是 jpg 格式，否則無法判斷檔案類型 |
+| Field 3 Name: `language` | `cht` | 指定辨識繁體中文（cht = Chinese Traditional） |
+| Parse response | `Yes` | 讓 Make 自動把 JSON 字串解析成結構化變數 |
+
+<!-- 📸 截圖：Week 01 的 OCR.space Make 截圖，旁邊手寫（或截圖）說明每個設定的原因 -->
 
 > [!TIP]
 > **🏆 第 2 小時 Checkpoint 完成！**
 >
-> - ✅ 理解陣列和一般變數的差異
-> - ✅ 用 Text Parser 把逗號分隔的字串轉成陣列
-> - ✅ 用 Iterator 拆解陣列，讓後續模組逐筆執行
-> - ✅ 完成「一筆資料觸發多次動作」的進階流程
+> - ✅ 理解 GET vs POST 的本質差異
+> - ✅ 知道 API Key 的三種傳遞方式及各自的安全性
+> - ✅ 成功用 POST 新增資源，並看懂 201 狀態碼
+> - ✅ 能用 API 理論完整解釋 Week 01 的每一個 OCR.space 設定
 
 ---
 
@@ -368,244 +505,215 @@
 
 ---
 
-#### 【練習 2-A】Iterator 計數（基礎）
+#### 【練習 2-A】PUT 和 DELETE 練習（基礎）
 
-在 Iterator 之後、Discord 通知之前，新增一個
-**Tools → Set Variable** 模組，把「目前處理到第幾個文件」記錄下來：
+用 JSONPlaceholder 繼續練習其他 HTTP 方法：
 
-- Variable name：`document_index`
-- Variable value：`{{i}}` （Iterator 的內建計數變數）
-
-修改 Discord 訊息格式，加入序號：
+**PUT（更新文章）：**
+- 方法：PUT
+- URL：`https://jsonplaceholder.typicode.com/posts/1`
+- Body：
+```json
+    {
+      "id": 1,
+      "title": "更新後的標題",
+      "body": "更新後的內容",
+      "userId": 1
+    }
 ```
-📎 文件 {{i}}/{{total}} — {{value}}
-```
+- 截圖回應，確認狀態碼為 200
 
-> [!TIP]
-> Iterator 提供兩個內建變數：
-> - `{{i}}` = 目前是第幾次迭代（從 1 開始）
-> - `{{total}}` = 陣列總共有幾個元素
+**DELETE（刪除文章）：**
+- 方法：DELETE
+- URL：`https://jsonplaceholder.typicode.com/posts/1`
+- 不需要 Body
+- 截圖回應，確認狀態碼為 200，Body 為空 `{}`
 
 ---
 
-#### 【練習 2-B】Router + Iterator 組合（進階）
+#### 【練習 2-B】Authorization Header 練習（進階）
 
-設計一個「智慧文件提醒系統」，結合本週所學：
+有些 API 的 Key 是放在 Headers 的 `Authorization` 欄位。
+練習在 Hoppscotch 的 Headers 分頁模擬這種情境：
 
-1. **Router** 根據實習類型分流：
-    - 國內實習 → 文件清單 A（實習同意書、成績單、在學證明）
-    - 海外實習 → 文件清單 B（實習同意書、護照影本、簽證影本、保險證明）
-    - 自行開發 → 文件清單 C（實習同意書、統一編號證明、接洽說明書）
+1. URL：`https://jsonplaceholder.typicode.com/posts`
+2. 方法：GET
+3. 在 Headers 新增：
+    - Key：`Authorization`
+    - Value：`Bearer my-fake-api-key-12345`
+4. 送出請求，觀察結果
 
-2. **每條支線** 用 Iterator 逐一發送文件提醒到 Discord
-
-截圖 Make 完整劇本畫布（Router + 三條支線各自有 Iterator 的完整架構）。
-
----
-
-#### 【練習 2-C】觀念問答（思考題）
-
-請用自己的話回答，貼到課堂共用文件：
-
-> ❓ 如果試算表裡某位學生的「需繳交文件」欄位是空白的，
-> Iterator 會怎麼處理？整個劇本會出錯嗎？
-> 你要在哪個步驟加入什麼防護措施？
+> JSONPlaceholder 不會真的驗證這個 Key，但你已經學會了如何傳送。
+> 截圖 Headers 分頁設定和 Response 結果。
 
 ---
 
-## ⏰ 第 3 小時：錯誤處理 — 讓系統出錯時主動告訴你
+#### 【練習 2-C】API 文件閱讀練習（思考題）
 
-> 🎯 **本小時目標：** 設計「永不靜悄悄失敗」的自動化系統。
-> 當任何步驟出錯時，系統會立即推播通知，並記錄錯誤資訊到試算表。
+前往 [OCR.space API 文件](https://ocr.space/ocrapi)，找到以下問題的答案：
+
+1. 除了 `cht`（繁體中文），還有哪個 language code 是繁體中文？
+2. `OCREngine` 參數有幾個選項？各自適合什麼情境？
+3. 免費版 API Key 的每月請求上限是多少次？
+
+貼到課堂共用文件，並說明你是在文件的哪個段落找到這些資訊。
 
 ---
 
-### 💡 觀念講解：為什麼錯誤處理很重要？
+## ⏰ 第 3 小時：把 API 知識用回 Make — 串接新的公開 API
 
-**沒有錯誤處理的系統：**
+> 🎯 **本小時目標：** 不靠任何教學文件，
+> 自己閱讀 API 文件後，在 Make 裡成功串接一個從未用過的 API。
+
+---
+
+### 💡 觀念：如何閱讀 API 文件？
+
+任何 API 文件都會包含這些資訊：
 ```
-Week 01 的 OCR 流程發生錯誤
-    ↓
-Make 靜悄悄停止執行
-    ↓
-沒有人知道
-    ↓
-3 小時後才發現有 50 筆收據沒有被處理
+1. Base URL（基礎網址）
+   → 這是所有請求的前綴
+
+2. Endpoints（端點）
+   → 各種功能的 URL 路徑
+
+3. Authentication（身份驗證）
+   → API Key 要放在哪裡
+
+4. Request Parameters（請求參數）
+   → 必填和選填的參數有哪些
+
+5. Response Format（回應格式）
+   → 回傳的 JSON 結構長什麼樣
 ```
 
-**有錯誤處理的系統：**
+**閱讀 API 文件的 SOP：**
 ```
-Week 01 的 OCR 流程發生錯誤
-    ↓
-錯誤處理路線立即啟動
-    ↓
-Discord 推播：「OCR 流程發生錯誤！錯誤訊息：...」
-    ↓
-管理員 30 秒內收到通知，立即處理
+第一步：找 Authentication → 知道 Key 怎麼傳
+第二步：找你要用的 Endpoint → 知道 URL 是什麼
+第三步：找 Required Parameters → 知道一定要填什麼
+第四步：看 Response Example → 知道回傳資料的結構
+第五步：在 Hoppscotch 測試 → 確認設定正確
+第六步：搬到 Make → 照著 Hoppscotch 的設定填
 ```
+
+---
+
+### 📌 任務 3-1：串接匯率 API — 從文件到 Make
+
+**API：** [ExchangeRate-API](https://www.exchangerate-api.com/)
+（免費版每月 1,500 次請求，不需要信用卡）
+
+#### 步驟一：申請免費 API Key
+
+1. 前往 [exchangerate-api.com](https://www.exchangerate-api.com/)
+2. 輸入 Email → 點擊「**Get Free Key**」
+3. 確認 Email，取得 API Key
+
+<!-- 📸 截圖：ExchangeRate-API 取得 API Key 畫面（Key 遮住後五碼）-->
+
+---
+
+#### 步驟二：閱讀文件，找到端點
+
+前往 [文件頁面](https://www.exchangerate-api.com/docs/standard-requests)，找到：
+
+| 資訊 | 內容 |
+|------|------|
+| Endpoint | `https://v6.exchangerate-api.com/v6/YOUR-API-KEY/pair/TWD/JPY` |
+| 方法 | GET |
+| 說明 | 查詢兩種貨幣之間的匯率 |
+
+---
+
+#### 步驟三：在 Hoppscotch 測試
+
+1. 方法：**GET**
+2. URL：把 `YOUR-API-KEY` 換成你的真實 Key：
+```
+    https://v6.exchangerate-api.com/v6/你的Key/pair/TWD/JPY
+```
+3. 送出，確認回應包含匯率資料
+
+Response 範例：
+```json
+{
+  "result": "success",
+  "base_code": "TWD",
+  "target_code": "JPY",
+  "conversion_rate": 4.52
+}
+```
+
+<!-- 📸 截圖：Hoppscotch 成功取得 TWD 兌 JPY 匯率 -->
+
+---
+
+#### 步驟四：搬到 Make
+
+不靠任何教學，只憑你現在的知識，在 Make 裡串接這個 API：
+
+1. 新建劇本，觸發器選 **Schedule**（定時執行，設為每天早上 9:00）
+2. 新增 **HTTP → Make a request**
+3. 根據你在 Hoppscotch 測試成功的設定填入 Make：
+
+    | 設定 | 填入內容 |
+    |------|---------|
+    | URL | 你測試成功的完整 URL |
+    | Method | GET |
+
+4. 新增 **JSON → Parse JSON**，帶入 HTTP 回傳的 `Data`
+5. 新增 **Discord → Send a Message by Webhook Bot**，訊息填入：
+```
+    💱 **【每日匯率通知】**
+
+    📅 更新時間：{{formatDate(now; "YYYY/MM/DD HH:mm")}}
+
+    ▸ 新台幣 → 日圓：1 TWD = {{conversion_rate}} JPY
+
+    資料來源：ExchangeRate-API
+```
+
+6. 開啟劇本排程，等待自動執行
+
+<!-- 📸 截圖：Make 完整劇本畫布（Schedule → HTTP → JSON → Discord） -->
+<!-- 📸 截圖：Discord 收到每日匯率通知 -->
+
+---
+
+### 📌 任務 3-2：把匯率資訊回寫到 Google Sheets
+
+在 Discord 通知之後，再新增一個 **Google Sheets → Add a Row**，
+把每天的匯率記錄下來，方便追蹤趨勢：
+
+建立一個新試算表「**匯率追蹤記錄**」，欄位設定：
+
+| 欄位 | 資料來源 |
+|------|---------|
+| 日期 | `{{formatDate(now; "YYYY/MM/DD")}}` |
+| 基礎貨幣 | `{{base_code}}` |
+| 目標貨幣 | `{{target_code}}` |
+| 匯率 | `{{conversion_rate}}` |
+
+<!-- 📸 截圖：Google Sheets 每日自動記錄匯率的試算表 -->
 
 > [!NOTE]
-> **Make 的錯誤處理機制**
->
-> Make 提供三種錯誤處理路線（Error Handler Route）：
->
-> | 類型 | 說明 | 適用情境 |
-> |------|------|---------|
-> | **Ignore** | 忽略錯誤，繼續執行下一筆 | 錯誤不影響後續流程 |
-> | **Resume** | 忽略錯誤，繼續執行同一筆的後續模組 | 某步驟非必要 |
-> | **Break** | 停止執行，並將失敗的資料存入佇列等待重試 | 資料必須成功處理 |
-
----
-
-### 📌 任務 3-1：為 OCR 流程加入錯誤處理
-
-**情境：** 把 Week 01 建立的 OCR 收據辨識劇本升級，加入完整的錯誤處理。
-
-#### 步驟一：開啟 Week 01 的 OCR 劇本
-
-1. 進入 Make → 找到 Week 01 建立的 OCR 劇本
-2. 點擊「**Edit**」進入編輯模式
-
----
-
-#### 步驟二：為 OCR.space 節點加入錯誤處理路線
-
-1. 對 **HTTP Make a Request（OCR.space）** 節點按右鍵
-2. 選擇「**Add error handler**」
-3. 選擇「**Break**」（停止執行並記錄失敗資料，等待重試）
-
-Make 會在 OCR 節點下方出現一條**紅色的錯誤路線**。
-
-<!-- 📸 截圖：OCR 節點下方出現錯誤處理路線 -->
-
----
-
-#### 步驟三：在錯誤路線加入 Discord 緊急通知
-
-1. 點擊錯誤路線末端的「**+**」
-2. 新增 **Discord → Send a Message by Webhook Bot**
-3. 連結到 `#系統錯誤警報` 頻道（先建立這個頻道並取得 Webhook URL）
-4. Message 填入：
-```
-    🚨 **【系統錯誤警報】OCR 流程發生錯誤**
-
-    ▸ **時間：** {{now}}
-    ▸ **申請人：** {{姓名}}
-    ▸ **錯誤訊息：** {{error.message}}
-    ▸ **錯誤模組：** {{error.name}}
-
-    ⚠️ 請立即登入 Make 查看錯誤詳情，並手動處理這筆資料。
-```
-
-<!-- 📸 截圖：錯誤路線的 Discord 通知設定 -->
-
----
-
-#### 步驟四：在錯誤路線加入試算表記錄
-
-除了推播通知，同時把錯誤記錄到試算表，方便事後追蹤：
-
-1. 在 Discord 通知之後，再新增 **Google Sheets → Add a Row**
-2. 連結到一個新的試算表「**系統錯誤記錄**」
-3. 欄位對應：
-
-    | 試算表欄位 | Make 變數 |
-    |---------|---------|
-    | 錯誤時間 | `{{now}}` |
-    | 申請人 | `{{姓名}}` |
-    | 錯誤訊息 | `{{error.message}}` |
-    | 錯誤模組 | `{{error.name}}` |
-    | 處理狀態 | `待處理`（固定文字） |
-
-<!-- 📸 截圖：Google Sheets Add a Row 設定畫面 -->
-
----
-
-### 📌 任務 3-2：製造錯誤來測試！
-
-> [!NOTE]
-> 這是少數「故意讓系統出錯」的時刻——為了驗證錯誤處理真的有效。
-
-**方法：** 暫時把 OCR.space 的 API Key 改成一個錯誤的值（例如 `WRONG_KEY`），
-然後執行劇本。
-
-1. 進入 HTTP Make a Request（OCR.space）節點
-2. 把 `apikey` 欄位的值改成 `WRONG_KEY`
-3. 點擊「**Run once**」
-4. 確認：
-    - Make 劇本沒有靜悄悄失敗
-    - Discord `#系統錯誤警報` 頻道收到錯誤通知
-    - 試算表「系統錯誤記錄」新增了一筆錯誤記錄
-
-<!-- 📸 截圖：Discord 收到錯誤警報通知 -->
-<!-- 📸 截圖：試算表錯誤記錄新增一筆 -->
-
-5. 測試完成後，把 API Key 改回正確的值
-
----
-
-### 📌 任務 3-3：Webhook 雙向應用
-
-**情境：** 系辦審核完實習申請後，
-希望直接在試算表把「審核狀態」改為「已核准」，
-系統就自動觸發 AutoCrat 產出同意書並寄出。
-
-> [!NOTE]
-> **這和 Week 01 的差異：**
-> Week 01 是「表單送出時」觸發 Make（被動等待）。
-> 這個任務是「試算表欄位被修改時」觸發（主動偵測變化）。
-
-#### 步驟一：建立新劇本，觸發器改為 Watch Changes
-
-1. 新建劇本
-2. 觸發器選 **Google Sheets → Watch Changes**（不是 Watch New Rows）
-3. 設定：
-
-    | 設定項目 | 填入內容 |
-    |---------|---------|
-    | Spreadsheet | 實習申請試算表 |
-    | Sheet | 表單回覆 1 |
-    | Trigger On | `Updated rows`（監控列的修改）|
-
-<!-- 📸 截圖：Watch Changes 觸發器設定 -->
-
----
-
-#### 步驟二：加入 Filter 只處理「已核准」的變更
-
-1. 在觸發器後加入 Filter
-2. 條件：`審核狀態` Equal to `已核准`
-
-這樣只有當審核狀態被改成「已核准」時，後續流程才會執行。
-
----
-
-#### 步驟三：串接 Discord 通知（模擬 AutoCrat 觸發）
-
-實際串接 AutoCrat 需要額外設定，這裡先用 Discord 通知來驗證邏輯：
-
-1. 新增 Discord 通知，訊息：
-```
-    ✅ **【實習申請已核准】**
-
-    ▸ **申請人：** {{姓名}}
-    ▸ **實習企業：** {{企業名稱}}
-    ▸ **核准時間：** {{now}}
-
-    系統正在產出實習同意書，請稍候...
-```
-
-2. 回到試算表，把某一筆申請的「審核狀態」欄位改為「已核准」
-3. 確認 Discord 收到通知
-
-<!-- 📸 截圖：試算表修改審核狀態後，Discord 收到通知 -->
+> **這個練習的教學意義：**
+> 你剛才完成的流程是：
+> ```
+> 閱讀 API 文件 → Hoppscotch 測試 → 搬到 Make → 串接 Discord + Sheets
+> ```
+> 這個 SOP 適用於任何 API！
+> 往後不管是什麼新 API，你都有能力自己串接，
+> 不需要依賴別人寫好的教學。
 
 > [!TIP]
 > **🏆 第 3 小時 Checkpoint 完成！**
 >
-> - ✅ 為 OCR 流程加入錯誤處理，系統出錯時主動推播通知
-> - ✅ 錯誤資訊自動記錄到試算表，方便事後追蹤
-> - ✅ 理解 Webhook 的雙向應用：監控試算表修改事件
+> - ✅ 學會閱讀 API 文件的 SOP
+> - ✅ 從文件到 Hoppscotch 測試，再到 Make 串接，獨立完成全流程
+> - ✅ 建立每日自動匯率通知 + 試算表記錄系統
+> - ✅ 確認「會用 API」的能力可以泛化到任何未知的 API
 
 ---
 
@@ -616,44 +724,46 @@ Make 會在 OCR 節點下方出現一條**紅色的錯誤路線**。
 
 ---
 
-#### 【練習 3-A】全流程錯誤處理（個人，基礎）
+#### 【練習 3-A】換一組貨幣（個人，基礎）
 
-為你的「實習申請場次分流系統」（Week 03 第 1 小時）也加入錯誤處理：
+修改你的匯率劇本，改成追蹤 **TWD → USD（美元）** 的匯率：
 
-- 對 Router 的每條支線末端的 Discord 節點加入錯誤處理
-- 錯誤時推播到 `#系統錯誤警報` 頻道
-- 訊息包含：錯誤時間、申請人姓名、錯誤訊息
-
-截圖加入錯誤處理後的完整劇本畫布。
+1. 修改 HTTP 模組的 URL，把 `JPY` 換成 `USD`
+2. 修改 Discord 訊息內容
+3. 手動執行一次，截圖 Discord 收到美元匯率通知的畫面
 
 ---
 
-#### 【練習 3-B】整合挑戰（分組，2～3 人）
+#### 【練習 3-B】串接你自己找的 API（個人，進階）
 
-情境：你的小組要設計一套「完整的實習處理自動化系統 2.0」，整合本週所有技術：
+從以下清單選一個免費 API，獨立完成從文件閱讀到 Make 串接的完整流程：
 
-系統需求：
-1. **Router** 根據實習類型分流到三個 Discord 頻道
-2. **Iterator** 逐一發送每位申請者的必繳文件提醒
-3. **錯誤處理** 確保任何步驟出錯都會推播通知並記錄
-4. **Watch Changes** 監控審核狀態，核准後自動發送確認通知給申請學生（Gmail）
+| API | 功能 | 文件網址 |
+|-----|------|---------|
+| wttr.in | 天氣（不需要 Key）| `wttr.in/:city?format=j1` |
+| RestCountries | 國家資訊（不需要 Key）| `restcountries.com/v3.1/name/{name}` |
+| PokeAPI | 寶可夢資料（不需要 Key）| `pokeapi.co/api/v2/pokemon/{id}` |
 
-繳交：Make 劇本的截圖（展示完整架構）+ 說明文件（解釋每個模組的設計邏輯）
-展示：下週上課前，每組 3 分鐘上台說明系統設計。
+要求：
+1. 在 Hoppscotch 成功取得資料（截圖）
+2. 在 Make 串接並推播到 Discord（截圖）
+3. 用表格說明你閱讀文件後找到的四個關鍵資訊（Base URL、Endpoint、Auth、Response 結構）
 
 ---
 
-#### 【練習 3-C】Make vs GAS 比較（思考題）
+#### 【練習 3-C】整合挑戰（分組，2～3 人）
 
-本週學的三個 Make 進階功能（Router、Iterator、錯誤處理），都可以用 GAS 程式碼實現。
+情境：你們小組要為「工管系廠商實習處理中心」新增一個「即時資訊看板」功能，
+在 Notion 網站（Week 04 建立的）上嵌入以下自動更新的資訊：
 
-請用表格比較這兩種方式，貼到課堂共用文件：
+1. **即時匯率**（給海外實習學生參考）：用本週建立的匯率 API
+2. **即時天氣**（金門）：用 Week 01 的 Open-Meteo API
+3. 兩個資訊每天自動更新到 Google Sheets
+4. 把 Google Sheets 用 Looker Studio 做成儀表板，嵌入 Notion 頁面
 
-| 功能 | Make 做法 | GAS 做法 | 你認為哪個更適合？為什麼？ |
-|------|---------|---------|----------------------|
-| Router 分流 | Router 模組 + Filter | `if / else if` | |
-| Iterator 迭代 | Iterator 模組 | `for` 迴圈 | |
-| 錯誤處理 | Error Handler Route | `try / catch` | |
+繳交：
+- Make 劇本截圖（兩個 API 串接）
+- Notion 頁面網址（含嵌入的 Looker Studio 儀表板）
 
 ---
 
@@ -661,56 +771,78 @@ Make 會在 OCR 節點下方出現一條**紅色的錯誤路線**。
 
 ### 📊 本週技能地圖
 ```
-【Make 基礎（Week 01）】
-單線流程：觸發 → 條件 → 動作
+【API 基礎理論】
+    ├── REST API 概念：資源、端點、方法、狀態碼
+    ├── HTTP 方法：GET（查詢）/ POST（新增）/ PUT（更新）/ DELETE（刪除）
+    └── JSON 格式：六種資料類型，如何讀懂和手寫
 
-        ↓ 本週升級
+        ↓ 理論 → 實作
 
-【Make 進階（Week 03）】
+【Hoppscotch 實戰】
+    ├── GET：天氣 API（Query String 參數）
+    ├── POST：JSONPlaceholder（Body + Headers）
+    └── 解析 Week 01 OCR.space 每個設定的原因
 
-Router：一個觸發器 → 多條支線 → 各自執行不同動作
-    └─ 實習類型分流 → 三個 Discord 頻道
+        ↓ Hoppscotch → Make
 
-Iterator：陣列資料 → 拆開 → 逐筆執行
-    └─ 文件清單 → 逐一發送提醒
+【獨立串接新 API】
+    ├── 閱讀 API 文件的 SOP
+    ├── ExchangeRate-API：每日匯率自動通知
+    └── 資料自動記錄到 Google Sheets
+```
 
-錯誤處理：任何節點出錯 → 錯誤路線啟動 → 推播 + 記錄
-    └─ OCR 失敗 → Discord 緊急通知 → 試算表記錄
+### 🔄 API 知識和前幾週的連結
+```
+Week 01：用了 HTTP 模組但不知道為什麼
+    ↓ Week 05 補上理論
+    → 現在你能解釋 Week 01 每一個設定的原因
 
-Watch Changes：試算表修改 → 觸發後續動作
-    └─ 審核狀態改為已核准 → 自動發送確認通知
+Week 03：錯誤處理的狀態碼（400、401、429）
+    ↓ Week 05 解釋了狀態碼的意義
+    → 現在看到 401 就知道是 Key 問題，429 就知道要降頻率
+
+Week 07（下下週）：ParseHub 爬蟲 → Make 串接
+    ↓ 有了 Week 05 的 API 基礎
+    → 看得懂 ParseHub 的 API 文件，能自己設定參數
 ```
 
 ### 🤔 課後思考問題
 
-1. **Router 的盲點：** 如果你的 Router 有三條支線，但某一筆資料三個條件都不符合，這筆資料會消失不見。你在設計 Router 時，應該加入什麼「保底支線」來確保每一筆資料都有對應的處理方式？
+1. **安全性思考：** 如果你的 API Key 不小心被推到公開的 GitHub Repository，會發生什麼事？你應該採取什麼緊急措施？（提示：搜尋「API Key rotation」和「GitHub secret scanning」）
 
-2. **Iterator 的效能問題：** 如果一個陣列有 100 個元素，Iterator 就會讓後面的模組執行 100 次。如果每次執行都要呼叫一個外部 API（例如傳送 Email），可能會很慢甚至觸發 API 的速率限制。你有什麼方法可以改善？
+2. **速率限制的商業邏輯：** ExchangeRate-API 免費版每月 1,500 次請求，付費版無限次。從商業角度，為什麼 API 提供者要設定速率限制而不是完全免費？這對你設計系統有什麼啟發？
 
-3. **錯誤處理的設計哲學：** 「Ignore（忽略）」和「Break（停止並重試）」兩種錯誤處理策略，分別適合什麼情境？如果是財務相關的資料處理流程（例如發薪水），你會選擇哪種？為什麼？
+3. **RESTful 設計原則：** 以下兩個 API 設計，哪個更符合 RESTful 規範？為什麼？
+    - 設計 A：`POST /deleteUser?id=42`
+    - 設計 B：`DELETE /users/42`
 
 ### 📚 本週自學資源
 
 | 資源 | 用途 |
 |------|------|
-| [Make 官方：Router 說明](https://www.make.com/en/help/tools/router) | Router 進階設定 |
-| [Make 官方：Iterator 說明](https://www.make.com/en/help/tools/iterator) | Iterator 使用方式 |
-| [Make 官方：Error Handling](https://www.make.com/en/help/errors/error-handling) | 三種錯誤處理策略詳解 |
+| [Hoppscotch](https://hoppscotch.io/) | 線上 API 測試工具 |
+| [JSONLint](https://jsonlint.com/) | 驗證 JSON 格式是否正確 |
+| [HTTP Status Codes](https://httpstatuses.com/) | 所有狀態碼的完整說明 |
+| [Public APIs List](https://github.com/public-apis/public-apis) | 數百個免費公開 API 清單 |
+| [ExchangeRate-API 文件](https://www.exchangerate-api.com/docs/standard-requests) | 本週匯率 API 的完整文件 |
 
 ---
 
 ### 📝 下週預告
 
-> 🔜 **Week 04：Notion 架站 — 免寫程式，打造你的第一個對外網站**
+> 🔜 **Week 06：資料庫設計實戰 — Google Sheets 進階架構**
 >
-> - Notion 頁面結構設計（資料庫、Gallery、Kanban）
-> - Super.so 或 Notion Sites 一鍵發布為公開網站
-> - 自訂網域、SEO 基礎設定
-> - 把實習處理中心的資訊整合成一個對外的說明頁面
+> - 為什麼你的試算表越做越亂？認識「正規化（Normalization）」
+> - 多表關聯設計：主表、子表、外鍵的概念
+> - VLOOKUP 進階：跨試算表查詢和動態範圍
+> - 資料清洗技巧：TRIM、CLEAN、TEXT 函數組合
+> - 把你的實習申請試算表重構成正規化的多表架構
 >
-> **課前任務：** 確認你的 Notion 帳號可以正常登入，並瀏覽幾個用 Notion 做的網站感受一下效果。
+> **課前任務：** 打開你在 Week 02 建立的實習媒合試算表，
+> 觀察看看：有哪些資料是重複存在多個欄位的？
+> 哪些資料應該獨立成一張表？
 
 ---
 
 *雲端與數位內容管理 ｜ 國立金門大學 工業工程與管理學系 ｜ 2026 春季學期*
-*Week 03 of 14*
+*Week 05 of 14*
