@@ -275,13 +275,13 @@
 
 試算表新增一欄「**需繳交文件**」，填入以下格式（用逗號分隔）：
 
-| 姓名 | 需繳交文件 |
-|------|---------|
-| 王大明 | 實習同意書,成績單,在學證明 |
-| 李美麗 | 實習同意書,護照影本,簽證影本,保險證明 |
-| 陳志偉 | 實習同意書,統一編號證明,接洽說明書 |
+| 姓名 | 需繳交文件 | 實習類型 |
+|---|---|---|
+| 王大明 | 實習同意書,成績單,在學證明 | 國內企業 |
+| 許雯婷 | 實習同意書,護照影本,簽證影本,保險證明 | 海外實習 |
+| 林小芳 | 實習同意書,統一編號證明,接洽說明書 | 自行開發 |
 
-<!-- 📸 截圖：試算表填入需繳交文件欄位 -->
+<img width="806" height="244" alt="image" src="https://github.com/user-attachments/assets/b5c00c78-bf60-42a7-88fd-faac8d389f15" />
 
 ---
 
@@ -292,35 +292,28 @@
 1. 新增觸發器：**Google Sheets → Watch New Rows**
 2. 連結實習申請試算表
 
----
-
-#### 步驟二：新增 Text Parser 把字串轉成陣列
-
-「需繳交文件」欄位的值是一段文字（`"實習同意書,成績單,在學證明"`），
-不是陣列，需要先轉換。
-
-1. 新增「**Text Parser**」→「**Split text into segments**」
-2. 設定：
-
-    | 設定項目 | 填入內容 |
-    |---------|---------|
-    | Text | `{{需繳交文件}}` 變數 |
-    | Separator | `,`（逗號）|
-
-<!-- 📸 截圖：Text Parser 設定畫面 -->
+<img width="682" height="593" alt="image" src="https://github.com/user-attachments/assets/f8853d56-ba33-460c-b7aa-060f7e73b5a0" />
 
 ---
 
-#### 步驟三：新增 Iterator
+#### 步驟二：新增 Iterator
 
 1. 新增「**Flow Control**」→「**Iterator**」
-2. **Array** 欄位：選擇 Text Parser 輸出的陣列變數
+2. **Array** 欄位：
 
-<!-- 📸 截圖：Iterator 設定畫面 -->
+```
+{{split(`需繳交文件`; ",")}}
+```
+
+「需繳交文件」欄位的值是一段文字（`"實習同意書,成績單,在學證明"`），
+不是陣列，需要先轉換，把字串轉成陣列。
+
+<img width="762" height="342" alt="image" src="https://github.com/user-attachments/assets/685681e9-dc1e-4dcc-ab39-19f0c06601a2" />
+
 
 ---
 
-#### 步驟四：Iterator 後面串接 Discord 通知
+#### 步驟三：Iterator 後面串接 Discord 通知
 
 1. 新增 **Discord → Send a Message by Webhook Bot**
 2. Message 欄位：
@@ -336,7 +329,7 @@
     > `{{value}}` 是 Iterator 每次傳出的單一項目值，
     > 也就是每次只顯示一個文件名稱。
 
-<!-- 📸 截圖：Make 完整劇本（Sheets → Text Parser → Iterator → Discord） -->
+<img width="1466" height="628" alt="image" src="https://github.com/user-attachments/assets/67b87638-8816-489b-8e49-b0918f15e5bf" />
 
 ---
 
@@ -344,11 +337,10 @@
 
 點擊「**Run once**」，觀察 Discord 頻道收到幾則訊息：
 
-- 王大明：應收到 **3 則**（3 個文件）
-- 李美麗：應收到 **4 則**（4 個文件）
-- 陳志偉：應收到 **3 則**（3 個文件）
+- 許雯婷：應收到 **4 則**（4 個文件）
 
-<!-- 📸 截圖：Discord 頻道收到多則逐項文件通知 -->
+<img width="381" height="314" alt="image" src="https://github.com/user-attachments/assets/4eb5c23f-e002-47e8-8990-15aad0d90c9d" />
+
 
 > [!NOTE]
 > **Iterator 執行邏輯**
