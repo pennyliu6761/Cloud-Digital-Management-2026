@@ -339,8 +339,7 @@
 
 - 許雯婷：應收到 **4 則**（4 個文件）
 
-<img width="381" height="314" alt="image" src="https://github.com/user-attachments/assets/4eb5c23f-e002-47e8-8990-15aad0d90c9d" />
-
+<img width="394" height="407" alt="image" src="https://github.com/user-attachments/assets/d3c9f393-f185-4d5d-a8f3-073121b0f9ae" />
 
 > [!NOTE]
 > **Iterator 執行邏輯**
@@ -348,13 +347,12 @@
 > Iterator 每次只輸出陣列的一個元素，然後讓後面的模組執行一次。
 > 陣列有幾個元素，後面的模組就執行幾次。
 >
-> 這就是為什麼 3 個文件會產生 3 則 Discord 訊息。
+> 這就是為什麼 4 個文件會產生 4 則 Discord 訊息。
 
 > [!TIP]
 > **🏆 第 2 小時 Checkpoint 完成！**
 >
 > - ✅ 理解陣列和一般變數的差異
-> - ✅ 用 Text Parser 把逗號分隔的字串轉成陣列
 > - ✅ 用 Iterator 拆解陣列，讓後續模組逐筆執行
 > - ✅ 完成「一筆資料觸發多次動作」的進階流程
 
