@@ -157,7 +157,7 @@
 
 **支線 2 / 3** 訊息格式相同，只換開頭標題和對應欄位。
 
-<!-- 📸 截圖：Make 完整劇本畫布（Google Sheets → Router → 三條支線） -->
+<img width="880" height="850" alt="image" src="https://github.com/user-attachments/assets/d09bf485-88a3-419a-acf4-4126fa872aae" />
 
 ---
 
@@ -165,7 +165,10 @@
 
 填寫三筆不同類型的實習申請，確認三個 Discord 頻道各自收到對應的通知。
 
-<!-- 📸 截圖：三個 Discord 頻道各自收到通知的畫面 -->
+<img width="422" height="396" alt="image" src="https://github.com/user-attachments/assets/7a975534-6a7f-443c-98ec-4c0c93be8070" />
+<img width="390" height="383" alt="image" src="https://github.com/user-attachments/assets/015d4d69-a67f-4015-86c1-9ab6aff35817" />
+<img width="395" height="390" alt="image" src="https://github.com/user-attachments/assets/e3414a86-8a68-4342-9107-8f991ce5fda4" />
+
 
 > [!NOTE]
 > **Router vs Filter 的差異**
