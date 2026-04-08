@@ -237,7 +237,7 @@ Q：指導教授不在學校，同意書要怎麼簽？
     └── A：可請指導教授以 Email 確認，再由系辦協助核章。
 ```
 
-<!-- 📸 截圖：FAQ 頁面 Toggle 展開效果 -->
+<img width="733" height="731" alt="image" src="https://github.com/user-attachments/assets/c122ca84-9513-405d-a99c-b79b7910616f" />
 
 > [!TIP]
 > **🏆 第 1 小時 Checkpoint 完成！**
@@ -245,6 +245,9 @@ Q：指導教授不在學校，同意書要怎麼簽？
 > - ✅ 規劃完整的網站資訊架構（5 個頁面）
 > - ✅ 用 Notion Block 組合出專業的首頁排版
 > - ✅ 建立申請說明頁和 FAQ 頁，減少重複詢問
+
+<img width="1872" height="976" alt="image" src="https://github.com/user-attachments/assets/67b9f073-594d-4528-8021-84c89fa7b59e" />
+<img width="1466" height="444" alt="image" src="https://github.com/user-attachments/assets/61124467-a780-45e7-be31-e4437eb6bc75" />
 
 ---
 
