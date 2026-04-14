@@ -492,7 +492,9 @@ Response（注意狀態碼是 **201 Created**）：
 | Field 3 Name: `language` | `cht` | 指定辨識繁體中文（cht = Chinese Traditional） |
 | Parse response | `Yes` | 讓 Make 自動把 JSON 字串解析成結構化變數 |
 
-<!-- 📸 截圖：Week 01 的 OCR.space Make 截圖，旁邊手寫（或截圖）說明每個設定的原因 -->
+<img width="658" height="694" alt="image" src="https://github.com/user-attachments/assets/048e39ae-5a47-42eb-8dc4-c688cb32e025" />
+<img width="263" height="475" alt="image" src="https://github.com/user-attachments/assets/f09b19cd-0d88-4dbd-9640-917cede387ea" />
+<img width="382" height="594" alt="image" src="https://github.com/user-attachments/assets/ca326eda-140c-4498-b29c-43e59d04cd96" />
 
 > [!TIP]
 > **🏆 第 2 小時 Checkpoint 完成！**
@@ -528,12 +530,14 @@ Response（注意狀態碼是 **201 Created**）：
     }
 ```
 - 截圖回應，確認狀態碼為 200
+<img width="689" height="647" alt="image" src="https://github.com/user-attachments/assets/29962576-bea5-4ca8-b1e4-af65ade3f277" />
 
 **DELETE（刪除文章）：**
 - 方法：DELETE
 - URL：`https://jsonplaceholder.typicode.com/posts/1`
 - 不需要 Body
 - 截圖回應，確認狀態碼為 200，Body 為空 `{}`
+<img width="806" height="547" alt="image" src="https://github.com/user-attachments/assets/3d1fba9b-2a97-4e94-bedd-d8d1e9f6b38b" />
 
 ---
 
@@ -550,7 +554,7 @@ Response（注意狀態碼是 **201 Created**）：
 4. 送出請求，觀察結果
 
 > JSONPlaceholder 不會真的驗證這個 Key，但你已經學會了如何傳送。
-> 截圖 Headers 分頁設定和 Response 結果。
+<img width="742" height="873" alt="image" src="https://github.com/user-attachments/assets/f68e387b-0102-4ca9-91e9-8b2783e8f5fb" />
 
 ---
 
@@ -561,8 +565,6 @@ Response（注意狀態碼是 **201 Created**）：
 1. 除了 `cht`（繁體中文），還有哪個 language code 是繁體中文？
 2. `OCREngine` 參數有幾個選項？各自適合什麼情境？
 3. 免費版 API Key 的每月請求上限是多少次？
-
-貼到課堂共用文件，並說明你是在文件的哪個段落找到這些資訊。
 
 ---
 
@@ -610,13 +612,16 @@ Response（注意狀態碼是 **201 Created**）：
 **API：** [ExchangeRate-API](https://www.exchangerate-api.com/)
 （免費版每月 1,500 次請求，不需要信用卡）
 
+<img width="1116" height="758" alt="image" src="https://github.com/user-attachments/assets/b4c468b2-e816-4151-b9bd-02c541bd70d7" />
+
 #### 步驟一：申請免費 API Key
 
 1. 前往 [exchangerate-api.com](https://www.exchangerate-api.com/)
 2. 輸入 Email → 點擊「**Get Free Key**」
 3. 確認 Email，取得 API Key
 
-<!-- 📸 截圖：ExchangeRate-API 取得 API Key 畫面（Key 遮住後五碼）-->
+<img width="1067" height="436" alt="image" src="https://github.com/user-attachments/assets/c8da39d9-e793-4b35-97f4-69cc9ef205f6" />
+<img width="765" height="637" alt="image" src="https://github.com/user-attachments/assets/0913bff7-5653-47ac-9b55-9f55b2fff92f" />
 
 ---
 
@@ -629,6 +634,8 @@ Response（注意狀態碼是 **201 Created**）：
 | Endpoint | `https://v6.exchangerate-api.com/v6/YOUR-API-KEY/pair/TWD/JPY` |
 | 方法 | GET |
 | 說明 | 查詢兩種貨幣之間的匯率 |
+
+<img width="953" height="778" alt="image" src="https://github.com/user-attachments/assets/ed83c4e6-1cf2-4e1b-83d6-906c14dfc418" />
 
 ---
 
@@ -651,7 +658,7 @@ Response 範例：
 }
 ```
 
-<!-- 📸 截圖：Hoppscotch 成功取得 TWD 兌 JPY 匯率 -->
+<img width="534" height="712" alt="image" src="https://github.com/user-attachments/assets/b2bfc67c-12be-4946-b7eb-56abe9e65212" />
 
 ---
 
@@ -682,8 +689,12 @@ Response 範例：
 
 6. 開啟劇本排程，等待自動執行
 
-<!-- 📸 截圖：Make 完整劇本畫布（Schedule → HTTP → JSON → Discord） -->
-<!-- 📸 截圖：Discord 收到每日匯率通知 -->
+<img width="438" height="342" alt="image" src="https://github.com/user-attachments/assets/aab74ab3-a8e5-485a-a8ca-a991099fdc47" />
+<img width="547" height="827" alt="image" src="https://github.com/user-attachments/assets/d00bb7cf-2d6b-4669-90e7-06032fa1a948" />
+<img width="960" height="462" alt="image" src="https://github.com/user-attachments/assets/cd9a45bd-96ab-46c0-adce-09d6c76bb7a4" />
+<img width="624" height="725" alt="image" src="https://github.com/user-attachments/assets/641cd69f-b242-4200-9ff4-c546fbb78576" />
+<img width="1114" height="308" alt="image" src="https://github.com/user-attachments/assets/0fb78d03-69aa-49c8-ad3b-1cc36329795a" />
+<img width="551" height="184" alt="image" src="https://github.com/user-attachments/assets/c0cf447e-9e48-432f-b2de-da37e8def1d2" />
 
 ---
 
@@ -701,7 +712,11 @@ Response 範例：
 | 目標貨幣 | `{{target_code}}` |
 | 匯率 | `{{conversion_rate}}` |
 
-<!-- 📸 截圖：Google Sheets 每日自動記錄匯率的試算表 -->
+<img width="429" height="254" alt="image" src="https://github.com/user-attachments/assets/b65eba89-3417-4295-a392-9c7ad358038b" />
+<img width="425" height="679" alt="image" src="https://github.com/user-attachments/assets/3bf733ff-f64b-4b62-8568-8ef62e4da958" />
+<img width="413" height="652" alt="image" src="https://github.com/user-attachments/assets/3fccf774-bb9b-47a3-826e-82f912ff32f0" />
+<img width="460" height="237" alt="image" src="https://github.com/user-attachments/assets/3f7551a1-8122-42fc-a9fc-e175343a42c6" />
+
 
 > [!NOTE]
 > **這個練習的教學意義：**
@@ -757,13 +772,13 @@ Response 範例：
 
 ---
 
-#### 【練習 3-C】整合挑戰（分組，2～3 人）
+#### 【練習 3-C】整合挑戰（個人，進階）
 
-情境：你們小組要為「工管系廠商實習處理中心」新增一個「即時資訊看板」功能，
+情境：你要為「工管系廠商實習處理中心」新增一個「即時資訊看板」功能，
 在 Notion 網站（Week 04 建立的）上嵌入以下自動更新的資訊：
 
 1. **即時匯率**（給海外實習學生參考）：用本週建立的匯率 API
-2. **即時天氣**（金門）：用 Week 01 的 Open-Meteo API
+2. **即時天氣**（金門）：用 Open-Meteo API
 3. 兩個資訊每天自動更新到 Google Sheets
 4. 把 Google Sheets 用 Looker Studio 做成儀表板，嵌入 Notion 頁面
 
