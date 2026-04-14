@@ -158,7 +158,7 @@
 
 ### 📌 任務 1-1：安裝並認識 Hoppscotch
 
-**工具：** [Hoppscotch](https://hoppscotch.io/)（完全免費，不需要安裝，瀏覽器直接用）
+**工具：** Hoppscotch（完全免費，不需要安裝，瀏覽器直接用）
 
 1. 前往 [hoppscotch.io](https://hoppscotch.io/)
 2. 不需要登入，直接使用
@@ -181,7 +181,9 @@
 
 ### 📌 任務 1-2：第一個 API 呼叫 — GET 天氣資料
 
-**API：** Open-Meteo（完全免費，不需要 API Key）
+**API：** [Open-Meteo](https://open-meteo.com/)（完全免費，不需要 API Key）
+
+<img width="966" height="470" alt="image" src="https://github.com/user-attachments/assets/a03894b5-7208-4fcc-a9a8-3c762e2e771a" />
 
 1. 在 Hoppscotch 的方法下拉選 **GET**
 2. URL 欄位輸入：
@@ -380,12 +382,14 @@ Body (multipart/form-data):
 
 ### 📌 任務 2-1：POST 請求練習 — JSONPlaceholder
 
-**API：** [JSONPlaceholder](https://jsonplaceholder.typicode.com/)（免費測試用 API，不需要 Key）
+**API：** [JSONPlaceholder](https://jsonplaceholder.typicode.com/)
 
 這個 API 模擬一個「部落格系統」，提供文章、留言、使用者等假資料，
 是練習 HTTP 方法最好的工具。
 
-#### 步驟一：先用 GET 查詢現有文章
+<img width="1287" height="969" alt="image" src="https://github.com/user-attachments/assets/ff41fa29-91d3-4cbd-9b95-46e870f5b480" />
+
+#### 步驟一：先用 GET 查詢現有文章 [Hoppscotch](https://hoppscotch.io/)
 
 1. 方法選 **GET**
 2. URL：`https://jsonplaceholder.typicode.com/posts/1`
@@ -401,7 +405,7 @@ Response：
 }
 ```
 
-<!-- 📸 截圖：GET 查詢單篇文章的結果 -->
+<img width="768" height="591" alt="image" src="https://github.com/user-attachments/assets/9563bec0-2d2e-468d-aebb-6abc6f5a622b" />
 
 ---
 
@@ -409,8 +413,8 @@ Response：
 
 1. 方法改為 **POST**
 2. URL：`https://jsonplaceholder.typicode.com/posts`
-3. 點擊「**Body**」分頁 → 選擇 **raw** → 右側格式選 **JSON**
-4. 輸入以下 JSON：
+3. 點擊「**Body**」分頁 → 選擇 **application/json**
+4. 在 **Raw Request Body** 內輸入以下 JSON：
 ```json
     {
       "title": "工管系實習申請系統說明",
@@ -437,7 +441,7 @@ Response（注意狀態碼是 **201 Created**）：
 > 這是 RESTful API 的標準行為——新增成功後，
 > 伺服器告訴你「你的資源被分配到 ID 101」。
 
-<!-- 📸 截圖：POST 新增文章成功，狀態碼 201 -->
+<img width="698" height="626" alt="image" src="https://github.com/user-attachments/assets/92653b7e-32f9-4978-8565-de2cea16dc8d" />
 
 ---
 
@@ -447,13 +451,13 @@ Response（注意狀態碼是 **201 Created**）：
 伺服器可能不知道 Body 裡的資料是什麼格式。
 
 1. 點擊「**Headers**」分頁
-2. 新增一個 Header：
+2. 檢視 Header：
 
     | Key | Value |
     |-----|-------|
     | `Content-Type` | `application/json` |
 
-3. 重新送出，確認伺服器正確解析
+3. 因此伺服器能正確解析
 
 > [!NOTE]
 > **Content-Type 是什麼？**
