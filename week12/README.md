@@ -306,7 +306,7 @@ if(prop("完成率") == 100, "██████████ 100%",
 - 欄位名稱：`平均完成率`
 - 設定：Relation「負責任務」→ Property「完成率」→ Calculate「Average（平均值）」
 
-截圖成員資料庫，顯示四個 Rollup 欄位的完整畫面。
+<img width="785" height="456" alt="image" src="https://github.com/user-attachments/assets/dcc2c2c5-1d91-4c38-baee-1f66c07fb703" />
 
 ---
 
@@ -321,8 +321,10 @@ Notion Formula 目前沒有直接排除週末的函數，
 round(dateBetween(prop("截止日期"), now(), "days") * (5/7))
 ```
 
-解釋為什麼這個公式是「近似值」而不是精確值，
-並說明在什麼情況下這個近似值會出現較大的誤差。
+為什麼這個公式是「近似值」而不是精確值?
+在什麼情況下這個近似值會出現較大的誤差?
+
+<img width="913" height="573" alt="image" src="https://github.com/user-attachments/assets/ee2f3f74-71e6-4f60-b71e-e1cce17a8292" />
 
 ---
 
