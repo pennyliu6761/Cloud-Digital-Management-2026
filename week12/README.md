@@ -112,7 +112,7 @@ Formula（同列計算）：
 
 5. 填入你們組的成員資料（3-4 筆）
 
-<!-- 📸 截圖：成員資料庫建立完成，填入 3-4 筆成員資料 -->
+<img width="909" height="301" alt="image" src="https://github.com/user-attachments/assets/03621c8c-f617-4313-969e-25fd0407aa12" />
 
 ---
 
