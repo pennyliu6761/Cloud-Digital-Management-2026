@@ -190,12 +190,15 @@ Formula（同列計算）：
 **Rollup 1：任務總數**
 
 1. 在成員資料庫點擊「**+**」新增欄位
-2. 類型選「**Rollup**」
+2. 類型選「**匯總(Rollup)**」
 3. 設定：
     - Relation：「負責任務」
     - Property：「任務名稱」
     - Calculate：**Count（計數）**
 4. 命名：`任務總數`
+
+<img width="515" height="446" alt="image" src="https://github.com/user-attachments/assets/336d628f-8ee5-4971-8be0-210e49c2fcc2" />
+<img width="426" height="367" alt="image" src="https://github.com/user-attachments/assets/4a64b8d0-d093-490e-a0f4-f761a360a8ba" />
 
 **Rollup 2：已完成任務數**
 
@@ -207,6 +210,10 @@ Formula（同列計算）：
     - Filter：狀態 = 已完成
 3. 命名：`已完成任務數`
 
+<img width="519" height="462" alt="image" src="https://github.com/user-attachments/assets/b9aa1390-0211-4d18-bf60-b5a2a04135ed" />
+<img width="609" height="377" alt="image" src="https://github.com/user-attachments/assets/7c0cdb4f-ebbc-4393-9a8a-c8a74036b2b1" />
+<img width="1024" height="305" alt="image" src="https://github.com/user-attachments/assets/d15a3118-5e16-42b8-89df-863a50c27783" />
+
 **Rollup 3：最近截止日**
 
 1. 再新增一個 Rollup 欄位
@@ -216,7 +223,8 @@ Formula（同列計算）：
     - Calculate：**Earliest date（最早日期）**
 3. 命名：`最近截止任務日`
 
-<!-- 📸 截圖：成員資料庫加入三個 Rollup 欄位後的完整畫面 -->
+<img width="524" height="206" alt="image" src="https://github.com/user-attachments/assets/670f0132-623f-49c3-b51d-4d8eb1b7c7ff" />
+<img width="765" height="452" alt="image" src="https://github.com/user-attachments/assets/7838b186-4f65-4484-9839-f31a3e7d5f20" />
 
 ---
 
