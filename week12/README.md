@@ -150,7 +150,7 @@ Formula（同列計算）：
     | 系統壓力測試 | 未開始 | 🟡 中 | 2026/05/15 | 自動化 |
     | 成果影片錄製 | 未開始 | 🟡 中 | 2026/05/18 | 文件 |
 
-<!-- 📸 截圖：任務資料庫填入 10 筆任務 -->
+<img width="975" height="613" alt="image" src="https://github.com/user-attachments/assets/07e25de2-e550-458e-b935-aab7515bef63" />
 
 ---
 
@@ -167,7 +167,9 @@ Formula（同列計算）：
 現在為每筆任務指定負責人：
 點擊任務列的「負責人」欄位 → 從成員清單選擇對應的成員。
 
-<!-- 📸 截圖：Relations 設定完成，任務資料庫的負責人欄位顯示成員名稱 -->
+<img width="516" height="402" alt="image" src="https://github.com/user-attachments/assets/419f7b2a-7281-4e83-a0e8-0249dcc0f400" />
+<img width="434" height="288" alt="image" src="https://github.com/user-attachments/assets/30614cd2-0235-443a-b17c-ad7e508161b1" />
+
 
 > [!NOTE]
 > **雙向連結的效果：**
@@ -175,7 +177,9 @@ Formula（同列計算）：
 > 每位成員的「負責任務」欄位會自動顯示他們被指派的所有任務。
 > 這就是 Relations 的力量——在一個地方設定，兩邊都能看到。
 
-<!-- 📸 截圖：成員資料庫的「負責任務」欄位自動顯示關聯的任務 -->
+<img width="1108" height="791" alt="image" src="https://github.com/user-attachments/assets/af09696c-e5af-45bd-9a89-47487f6e6637" />
+<img width="855" height="567" alt="image" src="https://github.com/user-attachments/assets/378f37eb-936c-421b-9e93-4ba51eb3ccd1" />
+<img width="1108" height="403" alt="image" src="https://github.com/user-attachments/assets/6f8f0e55-5062-42e2-ba5b-92cf8d91cb64" />
 
 ---
 
