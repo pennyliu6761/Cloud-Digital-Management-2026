@@ -377,9 +377,14 @@ Notion Database 的精髓在於：
     - 負責人
     - 截止日期
     - 緊急程度標籤（Formula 欄位）
-2. 開啟「**Color columns**」，讓不同狀態的欄有不同顏色
+2. 開啟「**填充欄背景顏色(Color columns)**」，讓不同狀態的欄有不同顏色
 
-<!-- 📸 截圖：Board View 看板，依狀態分成四欄，卡片顯示負責人和截止日 -->
+<img width="399" height="306" alt="image" src="https://github.com/user-attachments/assets/1759e3e5-b684-4f1d-a563-451b15061c58" />
+<img width="283" height="600" alt="image" src="https://github.com/user-attachments/assets/3b3a2061-8290-4cd5-847d-82e2a39cc1a8" />
+<img width="290" height="395" alt="image" src="https://github.com/user-attachments/assets/7e6a3abb-ee6b-451c-b40a-1d7729d66a7c" />
+<img width="506" height="503" alt="image" src="https://github.com/user-attachments/assets/3f15888c-ff1f-4450-9e41-2ba8cc67b844" />
+<img width="281" height="493" alt="image" src="https://github.com/user-attachments/assets/f3d92b72-fb65-4452-9baf-2a9fbcea491b" />
+<img width="1146" height="799" alt="image" src="https://github.com/user-attachments/assets/15146e42-8ea2-4500-ac3b-16fd09aef64e" />
 
 ---
 
