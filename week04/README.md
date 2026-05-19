@@ -339,6 +339,7 @@ List View   → 簡潔的清單模式
     | 企業簡介 | Text | 100 字以內 |
 
 <img width="770" height="352" alt="image" src="https://github.com/user-attachments/assets/6aeff02d-04d2-47ea-b058-bf60b36178a4" />
+<img width="1099" height="622" alt="image" src="https://github.com/user-attachments/assets/f858f6a2-a837-4d46-8d79-b1d3069c497a" />
 <img width="1789" height="735" alt="image" src="https://github.com/user-attachments/assets/f63d4a2c-e94b-4507-86c9-61746647beb6" />
 
 ---
