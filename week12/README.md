@@ -428,7 +428,7 @@ Notion Database 的精髓在於：
 > 讓你一眼看出哪幾天的任務特別密集（截止日堆在一起），
 > 可以提前安排工作節奏，避免最後一週什麼都卡在一起。
 
-<!-- 📸 截圖：Calendar View，顯示五月份的任務截止日分布 -->
+<img width="1008" height="794" alt="image" src="https://github.com/user-attachments/assets/de08eaf8-858a-46fb-999f-a1cfb172ad9c" />
 
 ---
 
@@ -444,7 +444,10 @@ Notion Database 的精髓在於：
 
 這樣每個成員的欄位就只顯示他還沒完成的任務，並按截止日排序。
 
-<!-- 📸 截圖：成員任務分配視圖，每個成員一欄，顯示未完成任務 -->
+<img width="997" height="369" alt="image" src="https://github.com/user-attachments/assets/664271ca-8f75-4d17-a835-3539b3d960a0" />
+<img width="256" height="220" alt="image" src="https://github.com/user-attachments/assets/48b375db-8494-4969-a181-25e5511c3aec" />
+<img width="285" height="133" alt="image" src="https://github.com/user-attachments/assets/f38c02f2-ef73-4e9d-9a44-b8adb97831ae" />
+<img width="701" height="347" alt="image" src="https://github.com/user-attachments/assets/e5e51a4f-406e-432b-97f5-c80688852f8b" />
 
 ---
 
@@ -453,11 +456,13 @@ Notion Database 的精髓在於：
 在「📋 期末專題管理中心」頁面最上方，
 新增一個儀表板區塊，彙整關鍵資訊：
 
+<img width="576" height="161" alt="image" src="https://github.com/user-attachments/assets/5f275244-649f-4f84-9acb-d9c68e4aa5c4" />
+
 使用 Notion 的 **Column Layout（多欄排版）** 建立以下區塊：
 
 **左欄（1/3 寬）— 快速統計：**
 
-用 `/callout` Block 手動填入統計數字（或用 Linked Database 顯示）：
+用 `/callout` Block(`/標註`) 手動填入統計數字（或用 Linked Database 顯示）：
 ```
 📊 專題進度總覽
 
@@ -494,7 +499,7 @@ Notion Database 的精髓在於：
 下次會議：2026/05/03 晚上 8:00
 ```
 
-<!-- 📸 截圖：專題管理中心頁面，顯示儀表板區塊和下方的兩個資料庫 -->
+<img width="1536" height="809" alt="image" src="https://github.com/user-attachments/assets/97bd7a7c-9930-4ef9-9026-b8dd4455671e" />
 
 > [!TIP]
 > **🏆 第 2 小時 Checkpoint 完成！**
