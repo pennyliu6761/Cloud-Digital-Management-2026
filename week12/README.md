@@ -397,6 +397,10 @@ Notion Database 的精髓在於：
     - Show table：開啟（左側顯示任務清單，右側顯示時程條）
 4. 在左側顯示欄位：任務名稱、狀態、負責人、優先程度
 
+<img width="1534" height="615" alt="image" src="https://github.com/user-attachments/assets/d36e5806-5958-4caf-be0b-98f75954c425" />
+<img width="995" height="612" alt="image" src="https://github.com/user-attachments/assets/8dbf0cd4-ad62-483f-9399-8c3a387aee9b" />
+<img width="285" height="535" alt="image" src="https://github.com/user-attachments/assets/bf5a3456-91e8-46bc-8e4b-5ffa4fa5499d" />
+
 **甘特圖視覺化設定：**
 1. 點擊右上角「**Group**」→ 依「**類別**」分組
 2. 點擊「**Color**」→ 依「**狀態**」上色：
@@ -405,7 +409,10 @@ Notion Database 的精髓在於：
     - 未開始：灰色
     - 待審核：橘色
 
-<!-- 📸 截圖：Timeline 甘特圖視圖，顯示所有任務的時程條，依類別分組 -->
+<img width="570" height="632" alt="image" src="https://github.com/user-attachments/assets/78f6dcd3-76b0-4f4d-b165-b6b233c4276c" />
+<img width="278" height="467" alt="image" src="https://github.com/user-attachments/assets/41715f59-ef19-4ddf-ad8e-f7c371f9f097" />
+<img width="757" height="355" alt="image" src="https://github.com/user-attachments/assets/835f908a-5eaf-4a1b-8d63-2d59d8408acb" />
+<img width="1533" height="846" alt="image" src="https://github.com/user-attachments/assets/4f92dba4-5066-4ab3-935f-01d9d9395972" />
 
 ---
 
