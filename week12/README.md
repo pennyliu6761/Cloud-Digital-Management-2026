@@ -237,7 +237,7 @@ Formula（同列計算）：
 1. 在任務資料庫新增欄位，類型選「**Formula**」
 2. 公式：
 ```
-    dateBetween(prop("截止日期"), now(), "days")
+dateBetween(prop("截止日期"), now(), "days")
 ```
 
 3. 命名：`距截止日（天）`
@@ -246,30 +246,41 @@ Formula（同列計算）：
 > 這個公式計算「截止日期 - 今天」的天數。
 > 正數 = 還有幾天，負數 = 已經過期幾天。
 
+<img width="952" height="516" alt="image" src="https://github.com/user-attachments/assets/a0d216ba-9826-4485-ba41-c2929919bf28" />
+
 **Formula 2：任務狀態標籤（含顏色 emoji）**
 ```
 if(prop("狀態") == "已完成", "✅ 完成",
   if(prop("距截止日（天）") < 0, "🔴 已逾期",
-  if(prop("距截止日（天）") <= 3, "🟠 即將到期",
-  if(prop("狀態") == "未開始", "⚪ 未開始",
-  "🔵 進行中"))))
+    if(prop("距截止日（天）") <= 3, "🟠 即將到期",
+      if(prop("狀態") == "未開始", "⚪ 未開始",
+        "🔵 進行中")
+    )
+  )
+)
 ```
 
 命名：`緊急程度標籤`
+
+<img width="1232" height="520" alt="image" src="https://github.com/user-attachments/assets/1098c165-98e1-42b2-b4a4-8bc85aace674" />
 
 **Formula 3：完成率顯示（進度條文字）**
 ```
 if(prop("完成率") == 100, "██████████ 100%",
   if(prop("完成率") >= 80, "████████░░ " + format(prop("完成率")) + "%",
-  if(prop("完成率") >= 60, "██████░░░░ " + format(prop("完成率")) + "%",
-  if(prop("完成率") >= 40, "████░░░░░░ " + format(prop("完成率")) + "%",
-  if(prop("完成率") >= 20, "██░░░░░░░░ " + format(prop("完成率")) + "%",
-  "░░░░░░░░░░ " + format(prop("完成率")) + "%")))))
+    if(prop("完成率") >= 60, "██████░░░░ " + format(prop("完成率")) + "%",
+      if(prop("完成率") >= 40, "████░░░░░░ " + format(prop("完成率")) + "%",
+        if(prop("完成率") >= 20, "██░░░░░░░░ " + format(prop("完成率")) + "%",
+          "░░░░░░░░░░ " + format(prop("完成率")) + "%")
+      )
+    )
+  )
+)
 ```
 
 命名：`進度條`
 
-<!-- 📸 截圖：任務資料庫加入三個 Formula 欄位，顯示距截止日天數和進度條 -->
+<img width="1440" height="573" alt="image" src="https://github.com/user-attachments/assets/ede699aa-54e7-468e-ab4f-6cacd96cb11e" />
 
 > [!TIP]
 > **🏆 第 1 小時 Checkpoint 完成！**
