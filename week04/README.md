@@ -173,7 +173,7 @@ CMS 網站架構：
 
 <img width="363" height="720" alt="image" src="https://github.com/user-attachments/assets/cad568a1-6bb3-4aaf-9f2f-2e2169c9923b" />
 
-#### 申請條件（Callout Block）
+#### 申請條件（/標註 /Callout Block）
 ```
 ✅ 申請資格
 - 本系在學學生（二、三、四年級）
