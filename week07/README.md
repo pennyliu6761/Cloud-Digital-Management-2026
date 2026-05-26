@@ -131,8 +131,9 @@ ParseHub（點擊介面）：
 4. 點擊「**Start Project on this URL**」
 5. ParseHub 會開啟內建瀏覽器，載入目標網頁
 
-<!-- 📸 截圖：ParseHub 桌面版初始畫面 -->
-<!-- 📸 截圖：New Project 設定畫面，輸入目標網址 -->
+<img width="1915" height="915" alt="image" src="https://github.com/user-attachments/assets/888fae10-1729-4334-9cab-8ef0eb45f6f2" />
+<img width="1374" height="976" alt="image" src="https://github.com/user-attachments/assets/f7ee60e9-ac04-4583-933c-3fee5b126106" />
+<img width="1532" height="875" alt="image" src="https://github.com/user-attachments/assets/dfef071d-a51f-4d87-a2dc-7b4348ce6799" />
 
 ---
 
@@ -144,30 +145,31 @@ ParseHub（點擊介面）：
 2. 用滑鼠**點擊**職缺名稱
 3. ParseHub 會用綠色高亮顯示你選取的元素，並自動命名為 `selection1`
 
-<!-- 📸 截圖：ParseHub 選取第一個職缺名稱，顯示綠色高亮 -->
+<img width="1340" height="934" alt="image" src="https://github.com/user-attachments/assets/b9787fd3-c018-4d96-bcc7-db0862ac5df3" />
 
 ---
 
 ### 📌 任務 1-3：讓 ParseHub 自動選取同類元素
 
-點擊第一個職缺名稱後，ParseHub 通常會問你：
 「要選取這一個，還是所有類似的？」
-
-1. 選擇「**Select all**」（選取所有類似的元素）
-2. 確認頁面上所有職缺名稱都被高亮顯示
+點擊第一個職缺名稱後，再選取第二個類似元素
+**確認頁面上所有職缺名稱都被高亮顯示**
 
 > [!NOTE]
 > **ParseHub 怎麼知道「類似的元素」？**
 > 它分析你點擊的元素的 HTML 結構（CSS class、標籤層級），
 > 自動找到所有符合相同規則的元素。
-> 這就是為什麼你只需要點一次，它能抓整頁的資料。
+> 刪除不必要的元素(例如:url)
 
-<!-- 📸 截圖：所有職缺名稱都被綠色高亮顯示 -->
+<img width="1116" height="736" alt="image" src="https://github.com/user-attachments/assets/34690801-6479-47ed-9def-a41f1c452958" />
+<img width="1545" height="975" alt="image" src="https://github.com/user-attachments/assets/42e88b22-aae6-4736-b736-e8280a2f7c33" />
+<img width="1496" height="972" alt="image" src="https://github.com/user-attachments/assets/dc7e77a5-8605-4ac6-ac2c-f990ac504204" />
 
 ---
 
 ### 📌 任務 1-4：新增更多欄位
 
+以選取元素為主，選擇關聯元素，例如:選了第一筆紀錄(品保分析員)，同時選取公司名稱&公司地點&經歷要求&薪資待遇等元素。
 重複以上步驟，依序選取：
 
 | 欄位名稱 | 點擊位置 |
@@ -175,12 +177,19 @@ ParseHub（點擊介面）：
 | `job_title` | 職缺名稱 |
 | `company_name` | 公司名稱 |
 | `location` | 工作地點 |
+| `exp` | 工作經歷 |
 | `salary` | 薪資範圍 |
-| `date_posted` | 刊登日期 |
+
 
 每個欄位選取後，在左側面板重新命名（清楚的英文名稱，方便後續處理）。
 
-<!-- 📸 截圖：ParseHub 左側面板顯示五個欄位都設定完成 -->
+<img width="905" height="546" alt="image" src="https://github.com/user-attachments/assets/d01b14bc-9ddc-4219-ab56-0f31b4687a76" />
+<img width="1499" height="815" alt="image" src="https://github.com/user-attachments/assets/67d3c0c6-9660-4574-b688-a776d5213ce4" />
+<img width="1826" height="994" alt="image" src="https://github.com/user-attachments/assets/d33b1cff-5e95-403c-bd6d-13764d8e0cdc" />
+<img width="1508" height="986" alt="image" src="https://github.com/user-attachments/assets/60819ac6-5888-496c-9bf3-c6e4ed1d0aab" />
+<img width="369" height="376" alt="image" src="https://github.com/user-attachments/assets/69cf5db1-fed6-4d0c-83cf-d0fd47de1aa1" />
+<img width="1826" height="969" alt="image" src="https://github.com/user-attachments/assets/7f79d3e2-dd6a-4c44-bc5c-44ba073203eb" />
+<img width="1811" height="820" alt="image" src="https://github.com/user-attachments/assets/804b0e78-7b09-4b7c-9d49-f1be19fe4fc9" />
 
 ---
 
