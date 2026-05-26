@@ -589,7 +589,7 @@ API 自動模式（第 3 小時）：
     | Key | Value |
     |-----|-------|
     | `api_key` | 你的 API Key |
-    | `format` | json |
+    | `format` | `json` |
 
 <img width="1278" height="910" alt="image" src="https://github.com/user-attachments/assets/ce72fa04-04e9-4168-b79b-d0ad3711df99" />
 <img width="1365" height="912" alt="image" src="https://github.com/user-attachments/assets/f79c5f34-c119-4fd5-89f1-354a52751b04" />
@@ -619,7 +619,7 @@ API 自動模式（第 3 小時）：
 
 ---
 
-#### 節點一：Schedule 觸發器
+#### 節點零：HTTP POST 的 Schedule 觸發器
 
 1. 新建劇本
 2. 觸發器選「**Schedule**」
@@ -632,7 +632,7 @@ API 自動模式（第 3 小時）：
 
 ---
 
-#### 節點二：HTTP POST 觸發 ParseHub
+#### 節點一：HTTP POST 觸發 ParseHub
 
 1. 新增「**HTTP → Make a request**」
 2. 設定：
@@ -656,32 +656,34 @@ API 自動模式（第 3 小時）：
 
 ---
 
-#### 節點三：Sleep（等待執行完成）
+#### 節點二：Sleep（等待執行完成）
 
 ParseHub 執行需要時間，Make 需要暫停等待：
 
 1. 新增「**Flow Control → Sleep**」
-2. **Delay**：`60`（秒，即 1 分鐘）
+2. **Delay**：`180`（秒，即 3 分鐘）
 
 > [!NOTE]
 > **為什麼要 Sleep？**
 > 如果 Make 馬上去拿結果，ParseHub 可能還在執行中，
 > 回傳的資料是空的。
-> 若是空資料，那設定為 3 分鐘通常足夠，如果你的爬蟲很複雜可以調整到 5 分鐘。
+> 設定為 3 分鐘通常足夠，如果你的爬蟲很複雜可以調整到 5 分鐘。
 
-<img width="727" height="369" alt="image" src="https://github.com/user-attachments/assets/124a710f-17ed-4790-9e6f-5cd7dea5cec9" />
+<img width="696" height="307" alt="image" src="https://github.com/user-attachments/assets/aed4fbcb-f688-4092-b011-98096463f6bc" />
 
 ---
 
-#### 節點四：HTTP GET 取得執行結果
+#### 節點三：HTTP GET 取得執行結果
 
 1. 新增「**HTTP → Make a request**」
 2. 設定：
 
     | 設定項目 | 填入內容 |
     |---------|---------|
-    | URL | `https://www.parsehub.com/api/v2/runs/{{2.run_token}}/results` |
+    | URL | `https://www.parsehub.com/api/v2/runs/{{1.run_token}}/data` |
     | Method | `GET` |
+
+<img width="785" height="390" alt="image" src="https://github.com/user-attachments/assets/bd6790a9-fe77-47bc-bfe8-8a7d0b81b420" />
 
 3. Query String 新增：
 
@@ -692,20 +694,24 @@ ParseHub 執行需要時間，Make 需要暫停等待：
 
 4. **Parse response** → `Yes`
 
-> `{{2.run_token}}` 是第二個節點（HTTP POST）回傳的 run_token 變數。
+> `{{1.run_token}}` 是第一個節點（HTTP POST）回傳的 run_token 變數。
+
+<img width="789" height="720" alt="image" src="https://github.com/user-attachments/assets/b7c5bd2b-c141-485f-a9bc-ceeabb164b4a" />
 
 ---
 
-#### 節點五：Iterator 逐筆處理
+#### 節點四：Iterator 逐筆處理
 
 ParseHub 回傳的是一個 JSON 陣列，需要用 Iterator 拆開：
 
 1. 新增「**Flow Control → Iterator**」
-2. **Array**：選擇 HTTP GET 回傳的資料陣列（通常是 `data` 或 `results` 欄位）
+2. **Array**：選擇 HTTP GET 回傳的資料陣列（通常是 `Data` 欄位）
+
+<img width="785" height="523" alt="image" src="https://github.com/user-attachments/assets/c8826acf-3902-473f-b199-494f7c9f27bb" />
 
 ---
 
-#### 節點六：Google Sheets 寫入
+#### 節點五：Google Sheets 寫入
 
 1. 新增「**Google Sheets → Add a Row**」
 2. 連結到 `Week07_職缺情報站` 的 `raw_data` 工作表
@@ -716,28 +722,31 @@ ParseHub 回傳的是一個 JSON 陣列，需要用 Iterator 拆開：
     | job_title | `{{value.job_title}}` |
     | company_name | `{{value.company_name}}` |
     | location | `{{value.location}}` |
+    | exp | `{{value.exp}}` |   
     | salary | `{{value.salary}}` |
-    | date_posted | `{{value.date_posted}}` |
     | 爬取時間 | `{{now}}` |
+
+<img width="670" height="279" alt="image" src="https://github.com/user-attachments/assets/33448649-6c90-4d2a-bad2-d40752452eae" />
+<img width="723" height="594" alt="image" src="https://github.com/user-attachments/assets/6382e524-a793-4697-b364-70a6af8f569f" />
+<img width="727" height="521" alt="image" src="https://github.com/user-attachments/assets/26971dd4-6128-47fe-9273-1177e457bc9a" />
 
 ---
 
-#### 節點七：Discord 完成通知
+#### 節點六：Discord 完成通知
 
 在 Iterator 之外（整個迴圈結束後）新增 Discord 通知：
 
 1. 新增「**Discord → Send a Message by Webhook Bot**」
 2. 訊息：
 ```
-    ✅ **【職缺情報站】本週資料更新完成**
-
-    ▸ **執行時間：** {{formatDate(now; "YYYY/MM/DD HH:mm")}}
-    ▸ **資料來源：** ParseHub 自動採集
-
-    請前往試算表查看最新職缺資訊。
+**【職缺情報站】本週資料更新完成**
+▸ **執行時間：** {{formatDate(now; "YYYY/MM/DD HH:mm")}}
+▸ **資料來源：** ParseHub 自動採集
+請前往試算表查看最新職缺資訊。
+[你的試算表名稱](你的試算表url連結)
 ```
 
-<!-- 📸 截圖：Make 完整劇本畫布（七個節點的完整流程）-->
+<img width="1790" height="596" alt="image" src="https://github.com/user-attachments/assets/f69441d0-8232-42b2-b449-b6fef650f42b" />
 
 ---
 
