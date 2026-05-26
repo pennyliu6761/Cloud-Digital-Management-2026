@@ -580,12 +580,19 @@ API 自動模式（第 3 小時）：
 1. 方法：**GET**
 2. URL：
 ```
-    https://www.parsehub.com/api/v2/runs/你的run_token/results?api_key=你的API_Key&format=json
+    https://parsehub.com/api/v2/runs/{RUN_TOKEN}/data?api_key={YOUR_API_KEY}&format=json
 ```
 3. 點擊「**Send**」
 4. 確認回傳的 JSON 包含爬取的資料
+5. 亦可新增以下 Parameters 欄位：
 
-<!-- 📸 截圖：Hoppscotch 取得 ParseHub 執行結果的 JSON -->
+    | Key | Value |
+    |-----|-------|
+    | `api_key` | 你的 API Key |
+    | `format` | json |
+
+<img width="1278" height="910" alt="image" src="https://github.com/user-attachments/assets/ce72fa04-04e9-4168-b79b-d0ad3711df99" />
+<img width="1365" height="912" alt="image" src="https://github.com/user-attachments/assets/f79c5f34-c119-4fd5-89f1-354a52751b04" />
 
 ---
 
@@ -621,7 +628,7 @@ API 自動模式（第 3 小時）：
     - Day of week：`Monday`
     - Time：`09:00`
 
-<!-- 📸 截圖：Schedule 觸發器設定畫面 -->
+<img width="539" height="448" alt="image" src="https://github.com/user-attachments/assets/c372874d-c4e7-4463-a93a-0cbe4c9b9793" />
 
 ---
 
@@ -644,6 +651,9 @@ API 自動模式（第 3 小時）：
 
 4. **Parse response** → `Yes`
 
+<img width="755" height="384" alt="image" src="https://github.com/user-attachments/assets/57783f1f-e289-4776-9718-b1a8ffa81043" />
+<img width="749" height="496" alt="image" src="https://github.com/user-attachments/assets/ed7c441a-8fd3-4389-bac0-2ad3c871567f" />
+
 ---
 
 #### 節點三：Sleep（等待執行完成）
@@ -651,13 +661,15 @@ API 自動模式（第 3 小時）：
 ParseHub 執行需要時間，Make 需要暫停等待：
 
 1. 新增「**Flow Control → Sleep**」
-2. **Delay**：`180`（秒，即 3 分鐘）
+2. **Delay**：`60`（秒，即 1 分鐘）
 
 > [!NOTE]
 > **為什麼要 Sleep？**
 > 如果 Make 馬上去拿結果，ParseHub 可能還在執行中，
 > 回傳的資料是空的。
-> 3 分鐘通常足夠，如果你的爬蟲很複雜可以調整到 5 分鐘。
+> 若是空資料，那設定為 3 分鐘通常足夠，如果你的爬蟲很複雜可以調整到 5 分鐘。
+
+<img width="727" height="369" alt="image" src="https://github.com/user-attachments/assets/124a710f-17ed-4790-9e6f-5cd7dea5cec9" />
 
 ---
 
