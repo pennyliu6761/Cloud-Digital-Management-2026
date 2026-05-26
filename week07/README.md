@@ -746,7 +746,7 @@ ParseHub 回傳的是一個 JSON 陣列，需要用 Iterator 拆開：
 [你的試算表名稱](你的試算表url連結)
 ```
 
-<img width="1790" height="596" alt="image" src="https://github.com/user-attachments/assets/f69441d0-8232-42b2-b449-b6fef650f42b" />
+<img width="1748" height="593" alt="image" src="https://github.com/user-attachments/assets/2941696c-45dc-45fb-836a-6b65cec6a771" />
 
 ---
 
@@ -759,8 +759,8 @@ ParseHub 回傳的是一個 JSON 陣列，需要用 Iterator 拆開：
 3. 確認 Google Sheets `raw_data` 工作表有新增資料
 4. 確認 Discord 收到完成通知
 
-<!-- 📸 截圖：Make 執行完成，顯示每個節點的處理筆數 -->
-<!-- 📸 截圖：Google Sheets raw_data 工作表新增了職缺資料 -->
+<img width="378" height="145" alt="image" src="https://github.com/user-attachments/assets/6ec71cce-edbf-4881-be4b-fc661ae14fe6" />
+<img width="1508" height="878" alt="image" src="https://github.com/user-attachments/assets/ec5396a9-06e6-4210-89a4-52576184c3a6" />
 
 > [!TIP]
 > **🏆 第 3 小時 Checkpoint 完成！**
