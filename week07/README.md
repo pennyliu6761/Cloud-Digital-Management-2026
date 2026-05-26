@@ -193,36 +193,22 @@ ParseHub（點擊介面）：
 
 ---
 
-### 📌 任務 1-5：設定翻頁（Pagination）
-
-只爬一頁資料量太少，需要設定翻頁：
-
-1. 在左側面板點擊「**Add command → Click**」
-2. 在網頁上點擊「下一頁」或「第 2 頁」按鈕
-3. 設定：
-    - **Click type**：「Click Next Page」
-    - **Max pages**：`3`（免費版建議不超過 5 頁）
-
-<!-- 📸 截圖：翻頁設定完成，顯示 Click 命令 -->
-
----
-
-### 📌 任務 1-6：執行並下載資料
+### 📌 任務 1-5：執行並下載資料
 
 1. 點擊左上角「**Get Data**」→「**Run**」
 2. 等待執行完成（通常 1-3 分鐘）
-3. 執行完成後點擊「**Download**」→ 選擇「**CSV**」格式
-4. 打開下載的 CSV 檔案，確認資料正確
+3. 執行完成後點擊「**Download**」→ 選擇「**JSON**」格式
+4. 打開下載的 JSON 檔案，確認資料正確
 
-<!-- 📸 截圖：ParseHub 執行完成，顯示抓取筆數 -->
-<!-- 📸 截圖：下載的 CSV 檔案，在 Excel 或 Google Sheets 開啟 -->
+<img width="1056" height="541" alt="image" src="https://github.com/user-attachments/assets/61dfac22-c25c-494e-8eff-41d1bf4ba69d" />
+<img width="707" height="740" alt="image" src="https://github.com/user-attachments/assets/457907a9-ca5d-4c83-9373-788ae9ef1068" />
 
 > [!TIP]
 > **🏆 第 1 小時 Checkpoint 完成！**
 >
 > - ✅ 理解爬蟲原理和法律邊界
 > - ✅ 完成第一個 ParseHub 專案，成功抓取職缺資料
-> - ✅ 下載 CSV 並確認資料結構正確
+> - ✅ 下載 JSON 並確認資料結構正確
 
 ---
 
@@ -262,8 +248,6 @@ ParseHub（點擊介面）：
 > 在 ParseHub 中選取連結：點擊元素後，
 > 在左側面板的 **Attribute** 下拉選單選擇 `href`，
 > 就能抓取連結網址而不是文字。
-
-截圖 ParseHub 設定完成，並確認 CSV 下載後有 `job_url` 欄位。
 
 ---
 
@@ -306,8 +290,6 @@ HTML 殘留：「工業工程師&amp;」→ HTML 實體字元
 5. 設定：
     - Import location：`Replace current sheet`
     - Separator type：`Comma`
-
-<!-- 📸 截圖：CSV 成功匯入 raw_data 工作表 -->
 
 ---
 
@@ -430,8 +412,6 @@ HTML 殘留：「工業工程師&amp;」→ HTML 實體字元
 )
 ```
 
-<!-- 📸 截圖：cleaned_data 工作表，顯示清洗前後的對照（至少兩欄並排比較）-->
-
 ---
 
 ### 📌 任務 2-4：建立職缺資料庫的分析視圖
@@ -468,8 +448,6 @@ HTML 殘留：「工業工程師&amp;」→ HTML 實體字元
    ORDER BY E DESC",
   1)
 ```
-
-<!-- 📸 截圖：analysis 工作表，顯示三個 QUERY 分析結果 -->
 
 > [!TIP]
 > **🏆 第 2 小時 Checkpoint 完成！**
@@ -565,7 +543,7 @@ API 自動模式（第 3 小時）：
 5. 在專案設定頁面找到 **Project Token**（格式類似：`txxxxxxxxx`）
 6. 把兩個值貼到記事本備用
 
-<!-- 📸 截圖：ParseHub 網頁版的 API Key 和 Project Token 位置 -->
+<img width="1067" height="898" alt="image" src="https://github.com/user-attachments/assets/473f6e16-13e0-4bcc-ac6f-2a150cfd1722" />
 
 ---
 
@@ -592,7 +570,8 @@ API 自動模式（第 3 小時）：
     }
 ```
 
-<!-- 📸 截圖：Hoppscotch 觸發 ParseHub 執行，回傳 run_token -->
+<img width="1350" height="688" alt="image" src="https://github.com/user-attachments/assets/dd3277a6-9b60-478e-b6b0-e5e373ca9f53" />
+
 
 **步驟二：等待執行完成並取得結果**
 
