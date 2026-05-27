@@ -184,6 +184,8 @@
 **API：** [Open-Meteo](https://open-meteo.com/)（完全免費，不需要 API Key）
 
 <img width="966" height="470" alt="image" src="https://github.com/user-attachments/assets/a03894b5-7208-4fcc-a9a8-3c762e2e771a" />
+<img width="1566" height="681" alt="image" src="https://github.com/user-attachments/assets/c443b277-7b02-4e0e-a01b-d10753b26b08" />
+
 
 1. 在 Hoppscotch 的方法下拉選 **GET**
 2. URL 欄位輸入：
