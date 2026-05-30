@@ -338,7 +338,7 @@ POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:ge
 1. 方法：**POST**
 2. URL：
 ```
-    https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=你的API_KEY
+https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=你的API_KEY
 ```
 3. Headers 新增：
 
@@ -348,26 +348,26 @@ POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:ge
 
 4. Body 選 `raw` → `JSON`，輸入：
 ```json
+{
+  "contents": [
     {
-      "contents": [
+      "parts": [
         {
-          "parts": [
-            {
-              "text": "請分析以下職缺描述，以 JSON 格式回傳：{\"level\": \"入門或中階或資深\", \"ie_score\": 整數1到5, \"skills\": [\"技能1\",\"技能2\",\"技能3\"], \"reason\": \"一句話說明\"}。只回傳 JSON，不要有其他文字。職缺描述：誠徵工業工程師，需2年以上製程改善經驗，熟悉精實生產和六標準差。"
-            }
-          ]
+          "text": "請分析以下職缺描述，以 JSON 格式回傳：{\"level\": \"入門或中階或資深\", \"ie_score\": 整數1到5, \"skills\": [\"技能1\",\"技能2\",\"技能3\"], \"reason\": \"一句話說明\"}。只回傳 JSON，不要有其他文字。職缺描述：誠徵工業工程師，需2年以上製程改善經驗，熟悉精實生產和六標準差。"
         }
-      ],
-      "generationConfig": {
-        "temperature": 0.1,
-        "maxOutputTokens": 500
-      }
+      ]
     }
+  ],
+  "generationConfig": {
+    "temperature": 0.1,
+    "maxOutputTokens": 500
+  }
+}
 ```
 
 5. 點擊「**Send**」，確認 Response 包含 AI 分析結果
 
-<!-- 📸 截圖：Hoppscotch 成功呼叫 Gemini API，回傳 JSON 格式的分析結果 -->
+<img width="1300" height="792" alt="image" src="https://github.com/user-attachments/assets/0acfc235-4cfb-4af4-9acb-5592bb575ec6" />
 
 ---
 
