@@ -118,11 +118,13 @@ Make 的 JSON Parse 模組直接解析，每個欄位都能獨立使用。
 5. 複製 API Key（格式：`AIzaSy...`），貼到記事本備用
 
 > [!WARNING]
-> **重要：本課程固定使用 `gemini-2.0-flash` 模型。**
+> **重要：本課程固定使用 `gemini-2.5` 模型。**
 > 這個模型有免費的 API 額度，不需要信用卡。
-> 不要使用 `gemini-1.5-pro` 或其他模型，免費額度可能為零。
 
-<!-- 📸 截圖：Google AI Studio 取得 API Key 的畫面（Key 遮住後半段）-->
+<img width="1852" height="752" alt="image" src="https://github.com/user-attachments/assets/d7611a6d-4a2c-43bf-9b8f-dcb63d2a9f31" />
+<img width="1648" height="835" alt="image" src="https://github.com/user-attachments/assets/14bb4767-c588-46af-8872-0ef69e78b864" />
+<img width="1796" height="839" alt="image" src="https://github.com/user-attachments/assets/c9dd0cae-678a-4345-82f8-142f82864e13" />
+<img width="1428" height="607" alt="image" src="https://github.com/user-attachments/assets/cd10b1b0-5c56-4c83-89e8-3f6311dd27ec" />
 
 ---
 
@@ -130,40 +132,32 @@ Make 的 JSON Parse 模組直接解析，每個欄位都能獨立使用。
 
 在搬到 Make 之前，先在 AI Studio 的 Playground 調整 Prompt：
 
-1. 點擊左側「**Stream realtime**」或「**Create a prompt**」
-2. 在右側 Model 選擇「**Gemini 2.0 Flash**」
+1. 點擊畫面中央四個大方塊中的第二個 —— Code and Chat（帶有對話框圖標的那一個）。點下去後，中間的畫面就會轉換成對話串形式。
+2. 在右側 Model 選擇「**Gemini 2.5 Flash**」
 3. 在 System instruction 區域輸入：
 ```
-    你是一位工業工程與管理系的就業輔導專家。
-    你的任務是分析職缺描述，評估該職缺對工管系學生的適合程度。
-    你必須嚴格按照要求的 JSON 格式回答，不得輸出任何其他文字。
+你是一位工業工程與管理系的就業輔導專家。
+你的任務是分析職缺描述，評估該職缺對工管系學生的適合程度。
+你必須嚴格按照要求的 JSON 格式回答，不得輸出任何其他文字。
 ```
+
+<img width="1780" height="840" alt="image" src="https://github.com/user-attachments/assets/67da5c06-1ff7-4101-92ee-c36b45995f47" />
+<img width="1904" height="843" alt="image" src="https://github.com/user-attachments/assets/72262ec2-485b-4c81-8f1f-b7dfd020fd9a" />
+<img width="1910" height="843" alt="image" src="https://github.com/user-attachments/assets/d68293b8-427c-4fac-882c-43ddd1eba592" />
+<img width="542" height="795" alt="image" src="https://github.com/user-attachments/assets/6aa9d740-1900-48c2-92c1-ef2f61f80263" />
+<img width="525" height="679" alt="image" src="https://github.com/user-attachments/assets/2ac95348-572c-409f-b7db-12a62937c2f3" />
 
 4. 在對話框輸入以下測試 Prompt：
 ```
-    請分析以下職缺描述，並以 JSON 格式回傳分析結果。
-
-    JSON 格式要求（嚴格遵守）：
-    {
-      "level": "入門 或 中階 或 資深",
-      "ie_score": 1到5的整數,
-      "skills": ["技能1", "技能2", "技能3"],
-      "reason": "一句話說明分類理由（30字以內）"
-    }
-
-    只回傳 JSON，不要有 markdown 代碼框（不要有 ```json），
-    不要有任何說明文字。
-
-    職缺描述：
-    「誠徵工業工程師，需具備2年以上製程改善經驗，
-     熟悉精實生產（Lean Manufacturing）和六標準差（6 Sigma）。
-     負責生產線平衡、瓶頸分析及工時研究。
-     具備 Minitab 統計分析軟體使用經驗者佳。」
+「誠徵工業工程師，需具備2年以上製程改善經驗，
+ 熟悉精實生產（Lean Manufacturing）和六標準差（6 Sigma）。
+ 負責生產線平衡、瓶頸分析及工時研究。
+ 具備 Minitab 統計分析軟體使用經驗者佳。」
 ```
 
 5. 點擊送出，確認 AI 回傳純 JSON 格式
 
-<!-- 📸 截圖：Google AI Studio 測試 Prompt，AI 回傳 JSON 格式的結果 -->
+<img width="983" height="659" alt="image" src="https://github.com/user-attachments/assets/1fa62a27-b7fa-4b88-b88e-e9357404c88d" />
 
 ---
 
@@ -173,31 +167,50 @@ Make 的 JSON Parse 模組直接解析，每個欄位都能獨立使用。
 
 **版本 A（指令不夠明確）：**
 ```
-分析這個職缺是幾年經驗的：「需2年以上製程改善經驗...」
+分析這個職缺是幾年經驗的:
+「誠徵工業工程師，需具備2年以上製程改善經驗，
+ 熟悉精實生產（Lean Manufacturing）和六標準差（6 Sigma）。
+ 負責生產線平衡、瓶頸分析及工時研究。
+ 具備 Minitab 統計分析軟體使用經驗者佳。」
 ```
+
+<img width="989" height="577" alt="image" src="https://github.com/user-attachments/assets/bb61a1fe-388a-4f28-aef6-3275481616e9" />
 
 **版本 B（指令清楚但沒有格式限制）：**
 ```
-分析以下職缺的技能等級（入門/中階/資深）和工管相關性（1-5分）：
-「需2年以上製程改善經驗...」
+分析這個職缺的技能等級（入門/中階/資深）和工管相關性（1-5分）:
+「誠徵工業工程師，需具備2年以上製程改善經驗，
+ 熟悉精實生產（Lean Manufacturing）和六標準差（6 Sigma）。
+ 負責生產線平衡、瓶頸分析及工時研究。
+ 具備 Minitab 統計分析軟體使用經驗者佳。」
 ```
 
+<img width="977" height="393" alt="image" src="https://github.com/user-attachments/assets/3f3e8c3e-67c7-4f8c-ba3f-50b60d272440" />
+
 **版本 C（完整的 Prompt Engineering）：**
-（使用任務 1-2 的完整版本）
+```
+「你是一位工業工程系的就業輔導老師。
+請分析以下職缺描述，並以 JSON 格式回傳以下資訊：
+1. level：入門/中階/資深（依照要求年資判斷）
+2. ie_score：1到5的整數（和工業工程系的相關程度）
+3. skills：陣列，列出最重要的3到5個技能關鍵字
+4. reason：一句話說明分類理由
 
-把三個版本的 AI 回應截圖，填寫以下比較表：
+只回傳 JSON，不要有其他文字。
+職缺描述如下：
+「誠徵工業工程師，需具備2年以上製程改善經驗，
+ 熟悉精實生產（Lean Manufacturing）和六標準差（6 Sigma）。
+ 負責生產線平衡、瓶頸分析及工時研究。
+ 具備 Minitab 統計分析軟體使用經驗者佳。」
+```
 
-| 版本 | AI 回應格式 | 可以直接用程式解析嗎？ | 問題 |
-|------|-----------|-------------------|------|
-| A | | | |
-| B | | | |
-| C | | | |
+<img width="976" height="325" alt="image" src="https://github.com/user-attachments/assets/8435a130-9574-41d9-956c-43fb318c4883" />
 
 > [!TIP]
 > **🏆 第 1 小時 Checkpoint 完成！**
 >
 > - ✅ 取得 Gemini API Key
-> - ✅ 理解 Prompt Engineering 的五個要素
+> - ✅ 理解 Prompt Engineering 的要素
 > - ✅ 在 AI Studio 成功設計出回傳 JSON 的 Prompt
 > - ✅ 透過三版本比較，體驗 Prompt 品質的差異
 
@@ -212,12 +225,13 @@ Make 的 JSON Parse 模組直接解析，每個欄位都能獨立使用。
 
 #### 【練習 1-A】Prompt 改版（基礎）
 
-修改任務 1-2 的 Prompt，讓 AI 額外回傳一個欄位：
+修改任務 1-3C 的 Prompt，讓 AI 額外回傳一個欄位：
 ```json
-"suitable_year": "適合幾年級的學生（大二/大三/大四/研究生）"
+suitable_year: 適合幾年級的學生（大二/大三/大四/研究生）
 ```
 
-在 AI Studio 測試修改後的 Prompt，截圖 AI 回傳包含新欄位的 JSON。
+<img width="997" height="360" alt="image" src="https://github.com/user-attachments/assets/c71b6911-5dee-466b-be96-bf02462e4011" />
+<img width="989" height="342" alt="image" src="https://github.com/user-attachments/assets/24287fb2-fbcc-4496-bc67-71b2ae89789d" />
 
 ---
 
@@ -230,11 +244,16 @@ Make 的 JSON Parse 模組直接解析，每個欄位都能獨立使用。
 「誠徵工程師一名，有興趣者請投履歷。」
 ```
 
+<img width="974" height="323" alt="image" src="https://github.com/user-attachments/assets/51cc8aab-5075-40d3-8d92-340cf4e0a8cd" />
+
+
 **情況二：職缺描述不是工管相關**
 ```
 「誠徵廚師，需有五年中餐料理經驗，
  擅長廣東料理，能獨立管理廚房作業。」
 ```
+
+<img width="981" height="314" alt="image" src="https://github.com/user-attachments/assets/e0be63c4-ffdc-40c0-9679-9d08f7d873fc" />
 
 思考並回答：當 AI 遇到無法判斷的情況，你的 Prompt 應該怎麼設計「防呆機制」，確保它還是回傳合法的 JSON？
 
