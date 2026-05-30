@@ -284,7 +284,7 @@ suitable_year: 適合幾年級的學生（大二/大三/大四/研究生）
 
 **端點：**
 ```
-POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=你的API_KEY
+POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=你的API_KEY
 ```
 
 **Request Body（JSON 格式）：**
