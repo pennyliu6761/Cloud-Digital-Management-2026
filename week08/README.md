@@ -581,8 +581,9 @@ ai_status欄位公式可參考設定:
 3. 確認試算表的 `ai_level`、`ai_ie_score`、`ai_skills`、`ai_reason` 自動填入
 4. 確認高相關職缺（ie_score ≥ 4）的 Discord 頻道收到推薦通知
 
-<!-- 📸 截圖：試算表 AI 分析結果自動填入，五筆都顯示「已完成」 -->
-<!-- 📸 截圖：Discord #優質職缺推薦 收到推薦通知 -->
+<img width="1715" height="564" alt="image" src="https://github.com/user-attachments/assets/7882be3c-8000-41a4-95b4-9e0e7e312091" />
+<img width="1026" height="249" alt="image" src="https://github.com/user-attachments/assets/6cb4312b-919b-4c15-b374-56080d9e6a8b" />
+<img width="765" height="733" alt="image" src="https://github.com/user-attachments/assets/005a48f9-5724-40c5-a8a9-1b6ef1a83b17" />
 
 > [!TIP]
 > **🏆 第 2 小時 Checkpoint 完成！**
