@@ -284,7 +284,7 @@ suitable_year: 適合幾年級的學生（大二/大三/大四/研究生）
 
 **端點：**
 ```
-POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=你的API_KEY
+POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=你的API_KEY
 ```
 
 **Request Body（JSON 格式）：**
@@ -301,7 +301,7 @@ POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:ge
   ],
   "generationConfig": {
     "temperature": 0.1,
-    "maxOutputTokens": 500
+    "maxOutputTokens": 1000
   }
 }
 ```
@@ -338,7 +338,7 @@ POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:ge
 1. 方法：**POST**
 2. URL：
 ```
-https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=你的API_KEY
+https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=你的API_KEY
 ```
 3. Headers 新增：
 
@@ -395,7 +395,13 @@ https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generat
 | 5 | 誠徵行銷企劃專員，具備社群媒體操作經驗，擅長文案撰寫及活動規劃，歡迎應屆畢業生。 |
 | 6 | 製造工程師，負責新產品導入（NPI）及製程設計，需熟悉 FMEA 和 Control Plan，1年以上經驗。 |
 
-<!-- 📸 截圖：試算表新增欄位，填入 5 筆測試職缺描述 -->
+<img width="1463" height="747" alt="image" src="https://github.com/user-attachments/assets/ecd83779-4cdd-4973-913c-354cef05da07" />
+<img width="1642" height="280" alt="image" src="https://github.com/user-attachments/assets/572ec922-1d28-48c2-ba45-272fb5da9210" />
+
+ai_status欄位公式可參考設定:
+```
+=IF(AND(K2<>"", G2<>""), "已完成", "待分析")
+```
 
 ---
 
@@ -403,124 +409,120 @@ https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generat
 
 **劇本架構：**
 ```
-[Google Sheets Watch Rows]（監控 ai_status = "待分析"）
+[Google Sheets Search Rows]（監控 ai_status = "待分析"）
     ↓
-[HTTP POST → Gemini API 分析]
+[HTTP Make a Request (POST) → Gemini API 分析]
     ↓
-[JSON Parse → 解析 AI 回傳結果]
+[Tools Set variable → 字串變數處理，避免```json 標籤產生的解析錯誤]
     ↓
-[JSON Parse 第二層 → 解析 AI 回傳的 JSON 字串]
-    ↓
-[Google Sheets Update Row → 回填分析結果]
+[JSON Parse → 解析 AI 回傳的 JSON 字串]
     ↓
 [Router → 根據 ie_score 分流]
     ├→ 高相關（4-5分）→ Discord #優質職缺推薦
-    └→ 低相關（1-3分）→ 不推播（只更新試算表）
+    └→ [Google Sheets Update Row → 回填分析結果]
 ```
+
+<img width="1716" height="603" alt="image" src="https://github.com/user-attachments/assets/e52b9b42-16ed-4980-b849-d49d2cc17b9c" />
 
 ---
 
-#### 節點一：Google Sheets Watch Rows
+#### 節點一：Google Sheets Search Rows
 
 1. 新建劇本
-2. 觸發器：**Google Sheets → Watch Rows**
+2. 觸發器：**Google Sheets → Search Rows**
 3. 設定：
     - Spreadsheet：`Week07_職缺情報站`
-    - Sheet：`cleaned_data`
+    - Sheet：`raw_data`
     - Limit：`5`
+    - Filter: `ai_reason` = `Does not exist` and `job_describtion` = `Exist`
 
 > [!NOTE]
 > **為什麼不用 Watch New Rows？**
 > 因為我們要處理的是「已存在但尚未分析」的資料（`ai_status = 待分析`），
-> 不是新進來的資料。Watch Rows 可以掃描現有的所有列。
+> 不是新進來的資料。Search Rows 可以掃描現有的所有列。
+> 條件篩選設定好以確保只有需要分析的資料才會送給 AI
+
+<img width="861" height="562" alt="image" src="https://github.com/user-attachments/assets/5f1c2452-7858-4d14-856f-1cb97496ad1c" />
+<img width="866" height="525" alt="image" src="https://github.com/user-attachments/assets/7d444e7c-8ed6-4374-b902-6f71a5f93a46" />
 
 ---
 
-#### 節點二：Filter — 只處理「待分析」的列
-
-在 Watch Rows 後加入 **Filter**：
-
-- 條件：`ai_status` Equal to `待分析`
-- 確保只有待分析的資料才會送給 AI
-
----
-
-#### 節點三：HTTP POST 呼叫 Gemini API
+#### 節點二：HTTP POST 呼叫 Gemini API
 
 1. 新增「**HTTP → Make a request**」
 2. 設定：
 
     | 設定項目 | 填入內容 |
     |---------|---------|
-    | URL | `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=你的API_KEY` |
+    | URL | `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=你的API_KEY` |
     | Method | `POST` |
-    | Body type | `Raw` |
     | Content type | `application/json` |
 
 3. Body 輸入（注意動態帶入 `job_description`）：
 ```json
+{
+  "contents": [
     {
-      "contents": [
+      "parts": [
         {
-          "parts": [
-            {
-              "text": "請分析以下職缺描述，以 JSON 格式回傳分析結果。\n\nJSON 格式（嚴格遵守，只回傳 JSON，不要有其他文字或 markdown）：\n{\"level\": \"入門 或 中階 或 資深\", \"ie_score\": 整數1到5, \"skills\": [\"技能1\",\"技能2\",\"技能3\"], \"reason\": \"一句話說明（30字以內）\"}\n\n職缺描述：{{job_description}}"
-            }
-          ]
+          "text": "請分析以下職缺描述，以 JSON 格式回傳分析結果。\n\nJSON 格式（嚴格遵守，只回傳 JSON，不要有其他文字或 markdown）：\n{\"level\": \"入門 或 中階 或 資深\", \"ie_score\": 整數1到5, \"skills\": [\"技能1\",\"技能2\",\"技能3\"], \"reason\": \"一句話說明（30字以內）\"}\n\n職缺描述：{{job_description}}"
         }
-      ],
-      "generationConfig": {
-        "temperature": 0.1,
-        "maxOutputTokens": 500
-      }
+      ]
     }
+  ],
+  "generationConfig": {
+    "temperature": 0.1,
+    "maxOutputTokens": 1000
+  }
+}
 ```
 
-    > `{{job_description}}` 是 Google Sheets Watch Rows 傳來的變數，
-    > 對應試算表的 `job_description` 欄位。
+> `{{job_description}}` 是 Google Sheets Watch Rows 傳來的變數，
+> 對應試算表的 `job_description` 欄位。
 
 4. **Parse response** → `Yes`
 
-<!-- 📸 截圖：HTTP 模組設定，Body 包含動態變數 job_description -->
+<img width="888" height="684" alt="image" src="https://github.com/user-attachments/assets/4367c62e-675f-4e57-b7e0-b1375a65fd35" />
+<img width="577" height="288" alt="image" src="https://github.com/user-attachments/assets/49162fbd-ef53-4064-b467-c83d605301ef" />
+<img width="881" height="696" alt="image" src="https://github.com/user-attachments/assets/e716bdb3-f44f-48d1-abea-74749f456223" />
+<img width="903" height="686" alt="image" src="https://github.com/user-attachments/assets/ba994bce-d7a3-4e1f-a0c2-24dc90663e34" />
 
 ---
 
-#### 節點四：取出 AI 回傳的文字
-
-Gemini 的回應結構比較深，需要找到 AI 實際說的文字：
-
-1. 新增「**JSON → Parse JSON**」
-2. JSON String 填入：
-```
-    {{candidates[]:content.parts[]:text}}
-```
-
-    > 這個路徑依照 Gemini Response 的結構挖掘到最底層的文字。
-
----
-
-#### 節點五：解析 AI 回傳的 JSON 字串
-
-AI 回傳的是一個 **JSON 格式的字串**，
-需要再解析一次才能取出各個欄位：
-
-1. 再新增一個「**JSON → Parse JSON**」
-2. JSON String 填入上一步解析出的文字變數
-
-解析後，你可以取得：
-- `{{level}}`
-- `{{ie_score}}`
-- `{{skills[]}}`（陣列）
-- `{{reason}}`
+#### 節點三：避免 JSON Parse 失敗
 
 > [!WARNING]
 > **AI 有時會回傳不標準的 JSON（加了 ` ```json ` 代碼框）。**
 > 如果 JSON Parse 失敗，在 Parse 之前先加一個：
->
-> **Tools → Set Variable**，用以下公式清除代碼框：
+>> **Tools → Set Variable**，用以下公式清除代碼框：
+> 這個路徑依照 Gemini Response 的結構挖掘到最底層的文字。
 > ```
-> {{replace(replace(AItext; "```json"; ""); "```"; "")}}
+> {{trim(replace(replace(replace(4.data.candidates[].content.parts[].text; "```json"; ""); "```"; ""); "\n"; ""))}}
 > ```
+
+<img width="907" height="593" alt="image" src="https://github.com/user-attachments/assets/572f34bb-a58f-4fd6-8fbc-9df3bf8a70db" />
+
+---
+
+#### 節點四：取出節點三輸出得乾淨 JSON
+
+1. 新增「**JSON → Parse JSON**」
+2. JSON String 填入：
+```
+{{14.clean_json}}
+```
+
+<img width="816" height="530" alt="image" src="https://github.com/user-attachments/assets/1e234768-71dd-4580-b305-c5a88f557a00" />
+
+---
+
+#### 節點五：分歧路徑
+
+1. 新增一個「**Router**」
+2. 為了高分組設定路徑條件(4分以上好工作要用Discord推播)
+- Filter 條件：`ie_score` Greater than or equal to `4`
+
+<img width="872" height="837" alt="image" src="https://github.com/user-attachments/assets/d2cbb62a-4c02-469d-8bb8-c719f7d18f30" />
 
 ---
 
@@ -529,8 +531,8 @@ AI 回傳的是一個 **JSON 格式的字串**，
 1. 新增「**Google Sheets → Update a Row**」
 2. 設定：
     - Spreadsheet：`Week07_職缺情報站`
-    - Sheet：`cleaned_data`
-    - Row Number：Watch Rows 傳來的列號變數
+    - Sheet：`raw_data`
+    - Row Number：Search Rows 傳來的列號變數
 3. 欄位對應：
 
     | 試算表欄位 | Make 變數 |
@@ -539,43 +541,36 @@ AI 回傳的是一個 **JSON 格式的字串**，
     | `ai_ie_score` | `{{ie_score}}` |
     | `ai_skills` | `{{join(skills[]; "、")}}` |
     | `ai_reason` | `{{reason}}` |
-    | `ai_status` | `已完成` |
 
     > `{{join(skills[]; "、")}}` 把技能陣列用頓號連接成字串，
     > 方便存入試算表單一儲存格。
 
-<!-- 📸 截圖：Update Row 設定，顯示欄位對應關係 -->
+<img width="928" height="896" alt="image" src="https://github.com/user-attachments/assets/ab43efdd-4435-481b-bd15-52b519e6b877" />
+<img width="883" height="496" alt="image" src="https://github.com/user-attachments/assets/3e2132bc-2b24-4ebd-95cb-467caec95096" />
+<img width="839" height="821" alt="image" src="https://github.com/user-attachments/assets/1d0a6c38-697b-4ff2-b329-6d77e3892de2" />
 
 ---
 
-#### 節點七：Router 根據 ie_score 分流
+#### 節點七：Discord 推播
 
-1. 新增「**Flow Control → Router**」
-2. 設定兩條支線：
-
-**支線 1 — 高相關（4-5分）：**
-- Filter 條件：`ie_score` Greater than or equal to `4`
+**高相關（4-5分）：**
 - 動作：Discord 推播到 `#優質職缺推薦` 頻道
 ```
-    ⭐ **【AI 優質職缺推薦】**
+⭐ **【AI 優質職缺推薦】**
 
-    ▸ **職缺名稱：** {{job_title}}
-    ▸ **公司：** {{company_name}}
-    ▸ **地點：** {{location}}
-    ▸ **薪資：** {{salary}}
+▸ **職缺名稱：** {{job_title}}
+▸ **公司：** {{company_name}}
+▸ **地點：** {{location}}
+▸ **薪資：** {{salary}}
 
-    🤖 **AI 分析結果：**
-    ▸ 技能等級：{{level}}
-    ▸ 工管相關性：{{ie_score}}/5 ⭐
-    ▸ 核心技能：{{ai_skills}}
-    ▸ 分類理由：{{reason}}
+🤖 **AI 分析結果：**
+▸ 技能等級：{{level}}
+▸ 工管相關性：{{ie_score}}/5 ⭐
+▸ 核心技能：{{ai_skills}}
+▸ 分類理由：{{reason}}
 ```
 
-**支線 2 — 低相關（1-3分）：**
-- Filter 條件：`ie_score` Less than `4`
-- 動作：不推播，直接結束（或記錄到「低相關職缺」工作表）
-
-<!-- 📸 截圖：Make 完整劇本畫布，顯示所有節點和 Router 分流 -->
+<img width="888" height="769" alt="image" src="https://github.com/user-attachments/assets/c4c7f7c0-6912-4834-b209-ea75565eb438" />
 
 ---
 
